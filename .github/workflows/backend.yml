@@ -1,0 +1,36 @@
+name: backend
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [18.x, 20.x]
+    
+    defaults:
+        run:
+            working-directory: backend
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: backend/package-lock.json
+    - run: npm install
+    - run: npx hardhat clean
+    - run: npx hardhat compile
+    - run: npx hardhat test
+    - run: npx hardhat coverage
+    - run: npx istanbul check-coverage --lines 80
