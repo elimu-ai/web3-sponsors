@@ -8,7 +8,8 @@ contract SponsorshipProgram {
     address public owner;
     uint256 public estimatedCost;
 
-    event EstimatedCostUpdated(uint256 amount);
+    event OwnerUpdated(address owner);
+    event EstimatedCostUpdated(uint256 estimatedCost);
 
     error OnlyOwner();
 
@@ -24,8 +25,13 @@ contract SponsorshipProgram {
         estimatedCost = _estimatedCost;
     }
 
-    function updateEstimatedCost(uint256 amount) public onlyOwner {
-        estimatedCost = amount;
-        emit EstimatedCostUpdated(amount);
+    function updateOwner(address _owner) public onlyOwner() {
+        owner = _owner;
+        emit OwnerUpdated(_owner);
+    }
+
+    function updateEstimatedCost(uint256 _estimatedCost) public onlyOwner {
+        estimatedCost = _estimatedCost;
+        emit EstimatedCostUpdated(_estimatedCost);
     }
 }
