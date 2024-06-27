@@ -1,12 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
+struct Sponsorship {
+    uint256 estimatedCost;
+    uint256 timestamp;
+    address sponsor;
+}
+
 contract SponsorshipQueue {
     address public owner;
     uint256 public estimatedCost;
+    Sponsorship[] public sponsorships;
 
     event OwnerUpdated(address owner);
     event EstimatedCostUpdated(uint256 estimatedCost);
+    event SponsorshipAdded(Sponsorship sponsorship);
 
     error OnlyOwner();
 
@@ -30,5 +38,16 @@ contract SponsorshipQueue {
     function updateEstimatedCost(uint256 _estimatedCost) public onlyOwner {
         estimatedCost = _estimatedCost;
         emit EstimatedCostUpdated(_estimatedCost);
+    }
+
+    function addSponsorship() public payable {
+        payable(address(this)).send(msg.value);
+        Sponsorship memory sponsorship = Sponsorship(
+            msg.value,
+            block.timestamp,
+            msg.sender
+        );
+        sponsorships.push(sponsorship);
+        emit SponsorshipAdded(sponsorship);
     }
 }

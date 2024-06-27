@@ -47,4 +47,13 @@ describe("SponsorshipQueue", function () {
         .withArgs(newEstimatedCost);
     });
   });
+
+  describe("Sponsorships", function () {
+    it("Should emit an event on addSponsorship", async function () {
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
+
+      await expect(sponsorshipQueue.addSponsorship())
+        .to.emit(sponsorshipQueue, "SponsorshipAdded");
+    });
+  });
 });
