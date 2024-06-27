@@ -1,10 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-/**
- * Education sponsorship program, for delivering education to out-of-school children.
- */
-contract SponsorshipProgram {
+contract SponsorshipQueue {
     address public owner;
     uint256 public estimatedCost;
 

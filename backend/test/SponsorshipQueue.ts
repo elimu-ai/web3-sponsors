@@ -4,7 +4,7 @@ import {
 import { expect } from "chai";
 import hre from "hardhat";
 
-describe("SponsorshipProgram", function () {
+describe("SponsorshipQueue", function () {
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
@@ -14,36 +14,36 @@ describe("SponsorshipProgram", function () {
 
     const estimatedCost = hre.ethers.parseUnits("0.02");
 
-    const SponsorshipProgram = await hre.ethers.getContractFactory("SponsorshipProgram");
-    const sponsorshipProgram = await SponsorshipProgram.deploy(estimatedCost);
+    const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
+    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost);
 
-    return { sponsorshipProgram, owner, otherAccount };
+    return { sponsorshipQueue, owner, otherAccount };
   }
 
   describe("Deployment", function () {
     it("Should set the right estimated cost", async function () {
-      const { sponsorshipProgram } = await loadFixture(deployFixture);
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
 
       const expectedValue = hre.ethers.parseUnits("0.02");
       console.log("expectedValue:", expectedValue);
-      expect(await sponsorshipProgram.estimatedCost()).to.equal(expectedValue);
+      expect(await sponsorshipQueue.estimatedCost()).to.equal(expectedValue);
     });
 
     it("Should set the right owner", async function () {
-      const { sponsorshipProgram, owner } = await loadFixture(deployFixture);
+      const { sponsorshipQueue, owner } = await loadFixture(deployFixture);
 
-      expect(await sponsorshipProgram.owner()).to.equal(owner.address);
+      expect(await sponsorshipQueue.owner()).to.equal(owner.address);
     });
   });
 
   describe("EstimatedCost", function () {
     it("Should emit an event on update", async function () {
-      const { sponsorshipProgram } = await loadFixture(deployFixture);
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
 
       const newEstimatedCost = hre.ethers.parseUnits("0.03");
       console.log("newEstimatedCost:", newEstimatedCost);
-      await expect(sponsorshipProgram.updateEstimatedCost(newEstimatedCost))
-        .to.emit(sponsorshipProgram, "EstimatedCostUpdated")
+      await expect(sponsorshipQueue.updateEstimatedCost(newEstimatedCost))
+        .to.emit(sponsorshipQueue, "EstimatedCostUpdated")
         .withArgs(newEstimatedCost);
     });
   });
