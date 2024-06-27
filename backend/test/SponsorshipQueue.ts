@@ -10,14 +10,14 @@ describe("SponsorshipQueue", function () {
   // and reset Hardhat Network to that snapshot in every test.
   async function deployFixture() {
     // Contracts are deployed using the first signer/account by default
-    const [owner, otherAccount] = await hre.ethers.getSigners();
+    const [firstAccount, otherAccount] = await hre.ethers.getSigners();
 
     const estimatedCost = hre.ethers.parseUnits("0.02");
 
     const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
     const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost);
 
-    return { sponsorshipQueue, owner, otherAccount };
+    return { sponsorshipQueue, firstAccount, otherAccount };
   }
 
   describe("Deployment", function () {
@@ -30,9 +30,9 @@ describe("SponsorshipQueue", function () {
     });
 
     it("Should set the right owner", async function () {
-      const { sponsorshipQueue, owner } = await loadFixture(deployFixture);
+      const { sponsorshipQueue, firstAccount } = await loadFixture(deployFixture);
 
-      expect(await sponsorshipQueue.owner()).to.equal(owner.address);
+      expect(await sponsorshipQueue.owner()).to.equal(firstAccount.address);
     });
   });
 
@@ -50,10 +50,27 @@ describe("SponsorshipQueue", function () {
 
   describe("Sponsorships", function () {
     it("Should emit an event on addSponsorship", async function () {
-      const { sponsorshipQueue } = await loadFixture(deployFixture);
+      const { sponsorshipQueue, firstAccount } = await loadFixture(deployFixture);
 
-      await expect(sponsorshipQueue.addSponsorship())
+      const firstAccountBalance = await hre.ethers.provider.getBalance(firstAccount.address);
+      console.log("firstAccountBalance:", firstAccountBalance);
+
+      await expect(sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") }))
         .to.emit(sponsorshipQueue, "SponsorshipAdded");
+    });
+
+    it("Should increase contract balance on addSponsorship", async function () {
+      const { sponsorshipQueue, firstAccount } = await loadFixture(deployFixture);
+
+      const firstAccountBalance = await hre.ethers.provider.getBalance(firstAccount.address);
+      console.log("firstAccountBalance:", firstAccountBalance);
+
+      console.log("sponsorshipQueue.target:", sponsorshipQueue.target);
+
+      await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
+      const contractBalance = await hre.ethers.provider.getBalance(sponsorshipQueue.target);
+      console.log("contractBalance:", contractBalance);
+      expect(contractBalance).to.equal(hre.ethers.parseUnits("0.02"));
     });
   });
 });
