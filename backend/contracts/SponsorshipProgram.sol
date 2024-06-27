@@ -2,13 +2,13 @@
 pragma solidity ^0.8.24;
 
 /**
- * A system for sponsoring the education of one individual child.
+ * Education sponsorship program, for delivering education to out-of-school children.
  */
 contract SponsorshipProgram {
     address public owner;
-    uint256 public sponsorshipCost;
+    uint256 public estimatedCost;
 
-    event SponsorshipCostUpdated(uint256 amount);
+    event EstimatedCostUpdated(uint256 amount);
 
     error OnlyOwner();
 
@@ -19,13 +19,13 @@ contract SponsorshipProgram {
         _;
     }
 
-    constructor(uint256 _sponsorshipCost) {
+    constructor(uint256 _estimatedCost) {
         owner = msg.sender;
-        sponsorshipCost = _sponsorshipCost;
+        estimatedCost = _estimatedCost;
     }
 
-    function updateSponsorshipCost(uint256 amount) public onlyOwner {
-        sponsorshipCost = amount;
-        emit SponsorshipCostUpdated(amount);
+    function updateEstimatedCost(uint256 amount) public onlyOwner {
+        estimatedCost = amount;
+        emit EstimatedCostUpdated(amount);
     }
 }
