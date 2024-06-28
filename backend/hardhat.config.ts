@@ -19,7 +19,7 @@ const config: HardhatUserConfig = {
     },
     base_mainnet: { // Chain ID 8453
       url: "https://mainnet.base.org",
-      accounts: [process.env.WALLET_KEY as string]
+      accounts: [WALLET_KEY]
     }
   },
   etherscan: {
