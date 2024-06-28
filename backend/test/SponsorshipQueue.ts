@@ -72,5 +72,19 @@ describe("SponsorshipQueue", function () {
       console.log("contractBalance:", contractBalance);
       expect(contractBalance).to.equal(hre.ethers.parseUnits("0.02"));
     });
+
+    it("Should increase queue count on addSponsorship", async function () {
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
+
+      const queueCountBefore = await sponsorshipQueue.getQueueCount();
+      console.log("queueCountBefore:", queueCountBefore);
+      expect(queueCountBefore).to.equal(0);
+
+      await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
+      
+      const queueCountAfter = await sponsorshipQueue.getQueueCount();
+      console.log("queueCountAfter:", queueCountAfter);
+      expect(queueCountAfter).to.equal(1);
+    });
   });
 });
