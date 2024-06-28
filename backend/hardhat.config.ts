@@ -3,6 +3,8 @@ import "@nomicfoundation/hardhat-toolbox";
 
 require("dotenv").config();
 
+const WALLET_KEY = process.env.WALLET_KEY || "";
+
 const config: HardhatUserConfig = {
   solidity: {
     version: "0.8.24"
