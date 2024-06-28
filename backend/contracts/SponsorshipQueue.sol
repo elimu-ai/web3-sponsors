@@ -10,7 +10,7 @@ struct Sponsorship {
 contract SponsorshipQueue {
     address public owner;
     uint256 public estimatedCost;
-    Sponsorship[] public sponsorships;
+    Sponsorship[] public queue;
 
     event OwnerUpdated(address owner);
     event EstimatedCostUpdated(uint256 estimatedCost);
@@ -47,11 +47,11 @@ contract SponsorshipQueue {
             block.timestamp,
             msg.sender
         );
-        sponsorships.push(sponsorship);
+        queue.push(sponsorship);
         emit SponsorshipAdded(sponsorship);
     }
 
     function getQueueCount() public view returns (uint256) {
-        return sponsorships.length;
+        return queue.length;
     }
 }

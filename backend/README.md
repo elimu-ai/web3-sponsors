@@ -11,3 +11,10 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat ignition deploy ./ignition/modules/Lock.ts
 ```
+
+Deployment:
+
+```shell
+rm .\ignition\deployments\
+npx hardhat ignition deploy .\ignition\modules\SponsorshipQueue.ts --network base_sepolia --verify
+```
