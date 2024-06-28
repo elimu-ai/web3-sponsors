@@ -15,7 +15,7 @@ const config: HardhatUserConfig = {
   networks: {
     base_sepolia: { // Chain ID 84532
       url: "https://sepolia.base.org",
-      accounts: [process.env.WALLET_KEY as string]
+      accounts: [WALLET_KEY]
     },
     base_mainnet: { // Chain ID 8453
       url: "https://mainnet.base.org",
