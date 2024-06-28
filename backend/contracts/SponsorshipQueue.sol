@@ -50,4 +50,8 @@ contract SponsorshipQueue {
         sponsorships.push(sponsorship);
         emit SponsorshipAdded(sponsorship);
     }
+
+    function getQueueCount() public view returns (uint256) {
+        return sponsorships.length;
+    }
 }
