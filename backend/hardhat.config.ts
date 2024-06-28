@@ -3,7 +3,7 @@ import "@nomicfoundation/hardhat-toolbox";
 
 require("dotenv").config();
 
-const WALLET_KEY = process.env.WALLET_KEY || "";
+const privateKeys = process.env.WALLET_KEY ? [process.env.WALLET_KEY] : []
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -15,11 +15,11 @@ const config: HardhatUserConfig = {
   networks: {
     base_sepolia: { // Chain ID 84532
       url: "https://sepolia.base.org",
-      accounts: [WALLET_KEY]
+      accounts: privateKeys
     },
     base_mainnet: { // Chain ID 8453
       url: "https://mainnet.base.org",
-      accounts: [WALLET_KEY]
+      accounts: privateKeys
     }
   },
   etherscan: {
