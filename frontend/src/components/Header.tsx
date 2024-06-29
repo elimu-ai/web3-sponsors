@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
-    console.log("Header");
+    console.debug("Header");
     return (
         <header className="p-8 text-4xl flex justify-center w-full border-purple-950 border-b-2">
             <Link href="/">
