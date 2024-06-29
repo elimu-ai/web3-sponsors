@@ -23,9 +23,10 @@ export default function SponsorshipSummary({ queueIndex }: any) {
     if (isLoading) {
         return <LoadingIndicator />
     } else {
-        const estimatedCost = Number(data[0]);
-        const timestamp = Number(data[1]);
-        const sponsor = data[2];
+        const sponsorship: any = data;
+        const estimatedCost = BigInt(sponsorship[0]);
+        const timestamp = Number(sponsorship[1]);
+        const sponsor = sponsorship[2];
         return (
             <>
                 Queue number: #{queueIndex}<br />
