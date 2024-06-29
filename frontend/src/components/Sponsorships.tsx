@@ -3,19 +3,18 @@ import { abi } from "../../../backend/ignition/deployments/chain-84532/artifacts
 import deployed_addresses from "../../../backend/ignition/deployments/chain-84532/deployed_addresses.json";
 import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
+import SponsorshipSummary from "./SponsorshipSummary";
+import Link from "next/link";
 
-export default function SponsorshipSummary({ queueIndex }: any) {
-    console.debug("SponsorshipSummary");
-
-    console.debug("queueIndex:", queueIndex);
+export default function Sponsorships() {
+    console.debug("Sponsorships");
 
     const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
     console.debug("deploymentAddress:", deploymentAddress);
     const { isLoading, data } = useReadContract({
         abi,
         address: deploymentAddress,
-        functionName: "queue",
-        args: [queueIndex]
+        functionName: "getQueueCount"
     });
     console.debug("isLoading:", isLoading);
     console.debug("data:", data);
@@ -23,17 +22,22 @@ export default function SponsorshipSummary({ queueIndex }: any) {
     if (isLoading) {
         return <LoadingIndicator />
     }
-    
-    const sponsorship: any = data;
-    const estimatedCost = BigInt(sponsorship[0]);
-    const timestamp = Number(sponsorship[1]);
-    const sponsor = sponsorship[2];
+
+    const queueCount = Number(data);
+    console.debug("queueCount:", queueCount);
+    if (queueCount == 0) {
+        return <div>None yet</div>;
+    }
+
     return (
         <>
-            Queue number: #{queueIndex}<br />
-            Date: {new Date(timestamp * 1_000).toISOString().substring(0,16)}<br />
-            Amount: {formatEther(estimatedCost)} ETH<br />
-            Sponsor: <code>{sponsor.substring(0,5)}...{sponsor.substring(38,42)}</code>
+            {Array(queueCount).fill(1).map((el, i) =>
+                <Link href={`/sponsorships/${i}`}>
+                    <div className="p-4 text-2xl bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:bg-purple-900 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+                        <SponsorshipSummary key={i} queueIndex={i} />
+                    </div>
+                </Link>
+            )}
         </>
     )
 }

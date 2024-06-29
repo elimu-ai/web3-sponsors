@@ -1,4 +1,5 @@
 import SponsorshipSummary from "@/components/SponsorshipSummary";
+import Sponsorships from "@/components/Sponsorships";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -47,29 +48,7 @@ export default function Home() {
         </h2>
 
         <div className="mt-16 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-          <Link href="/sponsorships/0">
-            <div className="p-4 text-2xl bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:bg-purple-900 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
-              <SponsorshipSummary queueIndex={0} />
-            </div>
-          </Link>
-
-          <Link href="/sponsorships/1">
-            <div className="p-4 text-2xl bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:bg-purple-900 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
-              <SponsorshipSummary queueIndex={1} />
-            </div>
-          </Link>
-
-          <Link href="/sponsorships/2">
-            <div className="p-4 text-2xl bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:bg-purple-900 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
-              <SponsorshipSummary queueIndex={2} />
-            </div>
-          </Link>
-
-          <Link href="/sponsorships/3">
-            <div className="p-4 text-2xl bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:bg-purple-900 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
-              <SponsorshipSummary queueIndex={3} />
-            </div>
-          </Link>
+          <Sponsorships />
         </div>
       </main>
     </>
