@@ -6,7 +6,9 @@ export default function SponsorshipDetails() {
   console.debug("SponsorshipDetails");
 
   const router = useRouter();
-  const queueIndex = router.query.queueIndex;
+  const queueNumber = Number(router.query.queueNumber);
+  console.debug("queueNumber:", queueNumber);
+  const queueIndex = queueNumber - 1;
   console.debug("queueIndex:", queueIndex);
 
   return (

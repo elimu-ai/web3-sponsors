@@ -3,6 +3,7 @@ import { abi } from "../../../backend/ignition/deployments/chain-84532/artifacts
 import deployed_addresses from "../../../backend/ignition/deployments/chain-84532/deployed_addresses.json";
 import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
+import { Avatar, Name } from "@coinbase/onchainkit/identity";
 
 export default function SponsorshipSummary({ queueIndex }: any) {
     console.debug("SponsorshipSummary");
@@ -30,10 +31,10 @@ export default function SponsorshipSummary({ queueIndex }: any) {
     const sponsor = sponsorship[2];
     return (
         <>
-            Queue number: #{queueIndex}<br />
+            Queue number: #{queueIndex + 1}<br />
             Date: {new Date(timestamp * 1_000).toISOString().substring(0,16)}<br />
             Amount: {formatEther(estimatedCost)} ETH<br />
-            Sponsor: <code>{sponsor.substring(0,5)}...{sponsor.substring(38,42)}</code>
+            Sponsor: <code><Avatar address={sponsor} /> <Name address={sponsor} className="p-8 rounded-lg bg-purple-100 dark:bg-purple-900" /></code>
         </>
     )
 }
