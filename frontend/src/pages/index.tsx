@@ -25,7 +25,7 @@ export default function Home() {
           Sponsor the education of one individual child
         </div>
 
-        <div id="steps" className="mt-16 p-8 flex flex-col space-y-8 border-4 border-purple-950 rounded-lg">
+        <div id="steps" className="mt-16 p-8 flex flex-col space-y-8 border-4 border-purple-50 dark:border-purple-950 rounded-lg">
           <div className="flex flex-col items-center text-center">
             <h2 className="text-2xl">Step 1 - Sponsor sends 0.02 ETH</h2>
             <Image src="/step1.avif" alt="Step 1" className="rounded-lg mt-4" width={160} height={0} />

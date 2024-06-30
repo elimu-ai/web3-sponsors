@@ -5,7 +5,7 @@ export default function Header() {
     console.debug("Header");
     return (
         <>
-            <header className="p-8 text-4xl flex justify-center w-full border-purple-950 border-b-2">
+            <header className="p-8 text-4xl flex justify-center w-full border-purple-50 dark:border-purple-950 border-b-2">
                 <Link href="/">
                     <Image className='mx-auto' src="/logo.svg" alt="Logo" width={160} height={160} />
                 </Link>

@@ -24,7 +24,7 @@ export default function SponsorshipDetails() {
           Sponsorship Details
         </h1>
 
-        <div className="mt-8 p-4 text-2xl bg-zinc-900 rounded-lg">
+        <div className="mt-8 p-4 text-2xl bg-zinc-50 dark:bg-zinc-900 rounded-lg">
           <SponsorshipSummary queueIndex={queueIndex} />
         </div>
       </main>
