@@ -1,3 +1,5 @@
+import MainFooter from "@/components/MainFooter";
+import MainHeader from "@/components/MainHeader";
 import SponsorshipSummary from "@/components/SponsorshipSummary";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -19,8 +21,9 @@ export default function SponsorshipDetails() {
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap" rel="stylesheet" />
       </Head>
+      <MainHeader />
       <main
-        className={`flex flex-col items-center p-24`}
+        className={`flex flex-col items-center px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64`}
         >
         <h1 className="relative flex place-items-center text-4xl">
           Sponsorship Details
@@ -30,6 +33,7 @@ export default function SponsorshipDetails() {
           <SponsorshipSummary queueIndex={queueIndex} />
         </div>
       </main>
+      <MainFooter />
     </>
   );
 }
