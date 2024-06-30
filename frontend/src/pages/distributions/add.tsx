@@ -3,13 +3,13 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useAccount, useSimulateContract, useWriteContract } from "wagmi";
-import { abi } from "../../../../backend/ignition/deployments/chain-84532/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import { abi } from "../../../../backend/ignition/deployments/chain-84532/artifacts/DistributionQueueModule#DistributionQueue.json";
 import deployed_addresses from "../../../../backend/ignition/deployments/chain-84532/deployed_addresses.json";
 import { Address, parseEther } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
 
-export default function AddSponsorship() {
-  console.debug("AddSponsorship");
+export default function AddDistribution() {
+  console.debug("AddDistribution");
 
   const { address, isConnecting, isReconnecting } = useAccount();
   console.debug("address:", address);
@@ -33,12 +33,12 @@ export default function AddSponsorship() {
         className={`flex flex-col items-center px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64`}
         >
         <h1 className="relative flex place-items-center text-4xl">
-          Become a Sponsor <span className="animate-pulse">💜</span>
+          Become a Distributor <span>🛵💨</span>
         </h1>
 
         <div className="mt-8">
-          Your sponsorship will cover the estimated cost for<br />
-          delivering education to one out-of-school child.
+          Help create real-world impact by delivering<br />
+          education to out-of-school children.
         </div>
 
         <div className="mt-8">
@@ -60,14 +60,13 @@ export default function AddSponsorship() {
 export function SimulateContractButton() {
   console.debug("SimulateContractButton");
 
-  const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
+  const deploymentAddress: Address = deployed_addresses["DistributionQueueModule#DistributionQueue"] as `0x${string}`;
   console.debug("deploymentAddress:", deploymentAddress);
 
   const { isPending, isError, error, isSuccess } = useSimulateContract({
     abi,
     address: deploymentAddress,
-    functionName: "addSponsorship",
-    value: parseEther("0.002")
+    functionName: "addDistribution"
   })
   console.debug("isPending:", isPending);
   console.debug("isError:", isError);
@@ -75,7 +74,7 @@ export function SimulateContractButton() {
   console.debug("isSuccess:", isSuccess);
 
   if (isPending) {
-    return <button disabled={true} className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+    return <button disabled={true} className="p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
       <LoadingIndicator /> &nbsp; Simulating...
     </button>
   }
@@ -90,23 +89,22 @@ export function SimulateContractButton() {
 export function WriteContractButton() {
   console.debug("WriteContractButton");
 
-  const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
+  const deploymentAddress: Address = deployed_addresses["DistributionQueueModule#DistributionQueue"] as `0x${string}`;
   console.debug("deploymentAddress:", deploymentAddress);
 
   const { writeContract } = useWriteContract();
   return (
     <button 
-      className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
+      className="p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
       onClick={() =>
         writeContract({
           abi,
           address: deploymentAddress,
-          functionName: "addSponsorship",
-          value: parseEther("0.002")
+          functionName: "addDistribution"
         })
       }
     >
-      Send 0.02 ETH ⟠
+      Add Distribution 📦
     </button>
   )
 }
