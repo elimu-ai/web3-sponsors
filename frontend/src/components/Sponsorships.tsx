@@ -5,7 +5,7 @@ import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
 import SponsorshipSummary from "./SponsorshipSummary";
 import Link from "next/link";
-import ErrorIndicator from "./LoadingIndicator copy";
+import ErrorIndicator from "./ErrorIndicator";
 
 export default function Sponsorships() {
     console.debug("Sponsorships");
