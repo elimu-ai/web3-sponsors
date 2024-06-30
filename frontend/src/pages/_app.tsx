@@ -27,6 +27,7 @@ export const wagmiConfig = createConfig({
   connectors: connectors,
   chains: [
     baseSepolia,
+    base
   ],
   transports: {
     [baseSepolia.id]: http(),
