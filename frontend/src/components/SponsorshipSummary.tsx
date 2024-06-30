@@ -4,6 +4,7 @@ import deployed_addresses from "../../../backend/ignition/deployments/chain-8453
 import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
 import { Avatar, Name } from "@coinbase/onchainkit/identity";
+import ErrorIndicator from "./ErrorIndicator";
 
 export default function SponsorshipSummary({ queueIndex }: any) {
     console.debug("SponsorshipSummary");
@@ -12,17 +13,23 @@ export default function SponsorshipSummary({ queueIndex }: any) {
 
     const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
     console.debug("deploymentAddress:", deploymentAddress);
-    const { isLoading, data } = useReadContract({
+    const { isLoading, isError, error, data } = useReadContract({
         abi,
         address: deploymentAddress,
         functionName: "queue",
         args: [queueIndex]
     });
     console.debug("isLoading:", isLoading);
+    console.debug("isError:", isError);
+    console.debug("error:", error);
     console.debug("data:", data);
 
     if (isLoading) {
         return <LoadingIndicator />
+    }
+
+    if (isError) {
+        return <ErrorIndicator description={error.name} />
     }
     
     const sponsorship: any = data;

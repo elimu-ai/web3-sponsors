@@ -28,6 +28,12 @@ export default function Home() {
           Sponsor the education of one individual child
         </div>
 
+        <Link href="/sponsorships/add" className="mt-8 shadow-lg shadow-purple-500/100">
+          <button className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+            Become a Sponsor <span className="animate-pulse">💜</span>
+          </button>
+        </Link>
+
         <div id="steps" className="mt-16 p-8 flex flex-col space-y-8 border-4 border-purple-50 dark:border-purple-950 rounded-lg">
           <div className="flex flex-col items-center text-center">
             <h2 className="text-2xl">Step 1 - Sponsor sends 0.02 ETH</h2>
