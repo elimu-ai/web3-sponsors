@@ -20,14 +20,6 @@ const connectors = connectorsForWallets(
     projectId: "YOUR_PROJECT_ID",
   }
 );
-// const rainbowKitConfig = getDefaultConfig({
-//   appName: "Sponsors 🫶🏽",
-//   projectId: "YOUR_PROJECT_ID",
-//   chains: [
-//     baseSepolia
-//   ],
-//   ssr: true
-// });
 
 // wagmi
 const queryClient = new QueryClient();
@@ -43,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider theme={darkTheme()}>
+        <RainbowKitProvider initialChain={baseSepolia} theme={darkTheme()}>
           <Component {...pageProps} />
         </RainbowKitProvider>
       </QueryClientProvider>
