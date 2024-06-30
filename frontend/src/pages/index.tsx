@@ -18,7 +18,7 @@ export default function Home() {
       </Head>
       <MainHeader />
       <main
-        className={`flex flex-col items-center justify-between p-24`}
+        className={`flex flex-col items-center px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64`}
         >
         <h1 className="relative flex place-items-center text-8xl">
           Sponsors 🫶🏽

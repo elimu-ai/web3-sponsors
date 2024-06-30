@@ -39,7 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider initialChain={baseSepolia} theme={darkTheme()}>
+        <RainbowKitProvider initialChain={baseSepolia} theme={darkTheme({...darkTheme.accentColors.purple})}>
           <Component {...pageProps} />
         </RainbowKitProvider>
       </QueryClientProvider>
