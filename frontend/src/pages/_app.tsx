@@ -26,12 +26,12 @@ const queryClient = new QueryClient();
 export const wagmiConfig = createConfig({
   connectors: connectors,
   chains: [
-    base,
-    baseSepolia
+    baseSepolia,
+    base
   ],
   transports: {
-    [base.id]: http(),
-    [baseSepolia.id]: http()
+    [baseSepolia.id]: http(),
+    [base.id]: http()
   },
 });
 
