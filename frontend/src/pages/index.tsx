@@ -1,3 +1,4 @@
+import Distributions from "@/components/Distributions";
 import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import SponsorshipSummary from "@/components/SponsorshipSummary";
@@ -34,6 +35,12 @@ export default function Home() {
           </button>
         </Link>
 
+        <Link href="/distributions/add" className="mt-8 shadow-lg shadow-indigo-500/100">
+          <button className="p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+            Become a Distributor <span>🛵💨</span>
+          </button>
+        </Link>
+
         <div id="steps" className="mt-16 p-8 flex flex-col space-y-8 border-4 border-purple-50 dark:border-purple-950 rounded-lg">
           <div className="flex flex-col items-center text-center">
             <h2 className="text-2xl">Step 1 - Sponsor sends 0.02 ETH</h2>
@@ -58,6 +65,14 @@ export default function Home() {
 
         <div className="mt-16 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
           <Sponsorships />
+        </div>
+
+        <h2 className="mt-16 text-4xl">
+          Distribution Queue:
+        </h2>
+
+        <div className="mt-16 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+          <Distributions />
         </div>
       </main>
       <MainFooter />
