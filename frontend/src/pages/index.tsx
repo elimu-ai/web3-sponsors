@@ -1,3 +1,5 @@
+import MainFooter from "@/components/MainFooter";
+import MainHeader from "@/components/MainHeader";
 import SponsorshipSummary from "@/components/SponsorshipSummary";
 import Sponsorships from "@/components/Sponsorships";
 import Head from "next/head";
@@ -14,6 +16,7 @@ export default function Home() {
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap" rel="stylesheet" />
       </Head>
+      <MainHeader />
       <main
         className={`flex flex-col items-center justify-between p-24`}
         >
@@ -51,6 +54,7 @@ export default function Home() {
           <Sponsorships />
         </div>
       </main>
+      <MainFooter />
     </>
   );
 }

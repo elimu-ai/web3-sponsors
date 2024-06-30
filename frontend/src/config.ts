@@ -1,7 +1,7 @@
 import { http, createConfig } from 'wagmi'
 import { baseSepolia } from 'wagmi/chains'
 
-export const config = createConfig({
+export const wagmiConfig = createConfig({
   chains: [baseSepolia],
   transports: {
     [baseSepolia.id]: http(),

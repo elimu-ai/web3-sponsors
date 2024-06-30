@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import '@rainbow-me/rainbowkit/styles.css';
 
-export default function Header() {
-    console.debug("Header");
+export default function MainHeader() {
+    console.debug("MainHeader");
     return (
         <>
             <header className="p-8 text-4xl flex justify-center w-full border-purple-50 dark:border-purple-950 border-b-2">
@@ -14,6 +16,10 @@ export default function Header() {
                         <Link href="/">&nbsp;⌐◨-◨</Link>
                     </div>
                 </span>
+
+                <div className="ml-24 mt-12">
+                    <ConnectButton />
+                </div>
             </header>
         </>
     )
