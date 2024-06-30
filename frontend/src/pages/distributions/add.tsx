@@ -104,7 +104,7 @@ export function WriteContractButton() {
         })
       }
     >
-      Add Distribution
+      Add Distribution 📦
     </button>
   )
 }

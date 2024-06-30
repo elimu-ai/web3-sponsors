@@ -106,7 +106,7 @@ export function WriteContractButton() {
         })
       }
     >
-      Send 0.02 ETH
+      Send 0.02 ETH ⟠
     </button>
   )
 }

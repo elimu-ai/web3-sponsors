@@ -45,6 +45,28 @@ export default function DistributionSummary({ queueIndex }: any) {
             <div className="mt-2">
                 Distributor: <code><Name address={distributor} className="p-8 rounded-lg bg-indigo-100 dark:bg-indigo-900" /></code>
             </div>
+            <div className="mt-2">
+                {(status == 0) && (
+                    <span className="px-3 py-1 text-sm text-stone-400 border-stone-400 bg-stone-800 border-2 rounded-2xl">
+                        Delivered📦
+                    </span>
+                )}
+                {(status == 1) && (
+                    <span className="px-3 py-1 text-sm text-emerald-400 border-emerald-400 bg-emerald-800 border-2 rounded-2xl">
+                        Approved✅
+                    </span>
+                )}
+                {(status == 2) && (
+                    <span className="px-3 py-1 text-sm text-orange-400 border-orange-400 bg-orange-800 border-2 rounded-2xl">
+                        Rejected<span className="animate-pulse">🔶</span>
+                    </span>
+                )}
+                {(status == 3) && (
+                    <span className="px-3 py-1 text-sm text-purple-400 border-purple-400 bg-purple-800 border-2 rounded-2xl">
+                        Paid💷
+                    </span>
+                )}
+            </div>
         </>
     )
 }
