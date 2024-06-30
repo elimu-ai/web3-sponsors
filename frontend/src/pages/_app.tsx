@@ -25,9 +25,13 @@ const connectors = connectorsForWallets(
 const queryClient = new QueryClient();
 export const wagmiConfig = createConfig({
   connectors: connectors,
-  chains: [base, baseSepolia],
+  chains: [
+    base,
+    baseSepolia
+  ],
   transports: {
-    [baseSepolia.id]: http(),
+    [base.id]: http(),
+    [baseSepolia.id]: http()
   },
 });
 
