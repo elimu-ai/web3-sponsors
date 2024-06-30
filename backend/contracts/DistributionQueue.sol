@@ -35,7 +35,7 @@ contract DistributionQueue {
     }
 
     modifier onlyAttestationHandler() {
-        if (msg.sender != owner) {
+        if (msg.sender != attestationHandler) {
             revert OnlyAttestationHandler();
         }
         _;
@@ -51,7 +51,7 @@ contract DistributionQueue {
         emit OwnerUpdated(_owner);
     }
 
-    function updateAttestationHandler(address _attestationHandler) public onlyAttestationHandler() {
+    function updateAttestationHandler(address _attestationHandler) public onlyOwner() {
         attestationHandler = _attestationHandler;
         emit AttestationHandlerUpdated(_attestationHandler);
     }
