@@ -31,10 +31,14 @@ export default function SponsorshipSummary({ queueIndex }: any) {
     const sponsor = sponsorship[2];
     return (
         <>
-            Queue number: #{queueIndex + 1}<br />
-            Date: {new Date(timestamp * 1_000).toISOString().substring(0,16)}<br />
-            Amount: {formatEther(estimatedCost)} ETH<br />
-            Sponsor: <code><Avatar address={sponsor} /> <Name address={sponsor} className="p-8 rounded-lg bg-purple-100 dark:bg-purple-900" /></code>
+            Queue number: #{queueIndex + 1}
+            <div className="mt-2">
+                {new Date(timestamp * 1_000).toISOString().substring(0,10)} {new Date(timestamp * 1_000).toISOString().substring(11,16)}
+            </div>
+            Amount: {formatEther(estimatedCost)} ETH
+            <div className="mt-2">
+                Sponsor: <code><Name address={sponsor} className="p-8 rounded-lg bg-purple-100 dark:bg-purple-900" /></code>
+            </div>
         </>
     )
 }
