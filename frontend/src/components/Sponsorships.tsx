@@ -27,7 +27,7 @@ export default function Sponsorships() {
     }
 
     if (isError) {
-        return <ErrorIndicator />
+        return <ErrorIndicator description={error.name} />
     }
 
     const queueCount = Number(data);

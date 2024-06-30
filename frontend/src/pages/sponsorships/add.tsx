@@ -2,7 +2,11 @@ import LoadingIndicator from "@/components/LoadingIndicator";
 import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
-import { useAccount } from "wagmi";
+import { useAccount, useSimulateContract, useWriteContract } from "wagmi";
+import { abi } from "../../../../backend/ignition/deployments/chain-84532/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import deployed_addresses from "../../../../backend/ignition/deployments/chain-84532/deployed_addresses.json";
+import { Address, parseEther } from "viem";
+import ErrorIndicator from "@/components/ErrorIndicator";
 
 export default function AddSponsorship() {
   console.debug("AddSponsorship");
@@ -44,13 +48,65 @@ export default function AddSponsorship() {
               Connect wallet first
             </button>
           ) : (
-            <button className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
-              Send 0.02 ETH
-            </button>
+            <SimulateContractButton />
           )}
         </div>
       </main>
       <MainFooter />
     </>
   );
+}
+
+export function SimulateContractButton() {
+  console.debug("SimulateContractButton");
+
+  const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
+  console.debug("deploymentAddress:", deploymentAddress);
+
+  const { isPending, isError, error, isSuccess } = useSimulateContract({
+    abi,
+    address: deploymentAddress,
+    functionName: "addSponsorship",
+    value: parseEther("0.002")
+  })
+  console.debug("isPending:", isPending);
+  console.debug("isError:", isError);
+  console.debug("error:", error);
+  console.debug("isSuccess:", isSuccess);
+
+  if (isPending) {
+    return <button disabled={true} className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+      <LoadingIndicator /> &nbsp; Simulating...
+    </button>
+  }
+
+  if (isError) {
+    return <ErrorIndicator description={error.name} />
+  }
+
+  return <WriteContractButton />
+}
+
+export function WriteContractButton() {
+  console.debug("WriteContractButton");
+
+  const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
+  console.debug("deploymentAddress:", deploymentAddress);
+
+  const { writeContract } = useWriteContract();
+  return (
+    <button 
+      className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1"
+      onClick={() =>
+        writeContract({
+          abi,
+          address: deploymentAddress,
+          functionName: "addSponsorship",
+          value: parseEther("0.002")
+        })
+      }
+    >
+      Send 0.02 ETH
+    </button>
+  )
 }
