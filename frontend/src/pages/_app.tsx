@@ -2,9 +2,8 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { WagmiProvider, createConfig, http } from "wagmi";
 import { base, baseSepolia } from 'wagmi/chains'
-// import { wagmiConfig } from "@/config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { RainbowKitProvider, getDefaultConfig, darkTheme, connectorsForWallets } from "@rainbow-me/rainbowkit";
+import { RainbowKitProvider, darkTheme, connectorsForWallets } from "@rainbow-me/rainbowkit";
 import { metaMaskWallet, coinbaseWallet } from "@rainbow-me/rainbowkit/wallets";
 
 // Rainbowkit 🌈
