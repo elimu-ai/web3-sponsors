@@ -4,6 +4,8 @@
 
 URL: https://sponsors.elimu.ai
 
+<kbd>![](https://github.com/user-attachments/assets/0e89439b-f177-4de3-b952-5395a6c328cf)</kbd>
+
 ---
 
 <p align="center">
