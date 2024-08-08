@@ -4,7 +4,7 @@
 
 URL: https://sponsors.elimu.ai
 
-![](https://github.com/user-attachments/assets/0e89439b-f177-4de3-b952-5395a6c328cf)
+[![](https://github.com/user-attachments/assets/0e89439b-f177-4de3-b952-5395a6c328cf)](https://sponsors.elimu.ai)
 
 ---
 
