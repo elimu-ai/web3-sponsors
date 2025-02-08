@@ -12,11 +12,6 @@ export default function MainHeader() {
                     <Link href="/">
                         <Image className='mx-auto' src="/logo.svg" alt="Logo" width={160} height={160} />
                     </Link>
-                    <span className="mt-10 -ml-32 -rotate-45 drop-shadow-md">
-                        <div className="animate-bounce">
-                            <Link href="/">&nbsp;⌐◨-◨</Link>
-                        </div>
-                    </span>
                 </div>
 
                 <div className="flex flex-row-reverse items-center w-full text-4xl">
