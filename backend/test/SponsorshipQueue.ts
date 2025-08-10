@@ -14,8 +14,12 @@ describe("SponsorshipQueue", function () {
 
     const estimatedCost = hre.ethers.parseUnits("0.02");
 
+    // const Languages = await hre.ethers.getContractFactory("Languages");
+    // const languages = await Languages.deploy()
+
     const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
-    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost);
+    // const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost, languages.address);
+    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost, hre.ethers.ZeroAddress);
 
     return { sponsorshipQueue, firstAccount, otherAccount };
   }
@@ -55,7 +59,7 @@ describe("SponsorshipQueue", function () {
       const firstAccountBalance = await hre.ethers.provider.getBalance(firstAccount.address);
       console.log("firstAccountBalance:", firstAccountBalance);
 
-      await expect(sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") }))
+      await expect(sponsorshipQueue.addSponsorship("ENG", { value: hre.ethers.parseUnits("0.02") }))
         .to.emit(sponsorshipQueue, "SponsorshipAdded");
     });
 
@@ -67,7 +71,7 @@ describe("SponsorshipQueue", function () {
 
       console.log("sponsorshipQueue.target:", sponsorshipQueue.target);
 
-      await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
+      await sponsorshipQueue.addSponsorship("ENG", { value: hre.ethers.parseUnits("0.02") });
       const contractBalance = await hre.ethers.provider.getBalance(sponsorshipQueue.target);
       console.log("contractBalance:", contractBalance);
       expect(contractBalance).to.equal(hre.ethers.parseUnits("0.02"));
@@ -80,7 +84,7 @@ describe("SponsorshipQueue", function () {
       console.log("queueCountBefore:", queueCountBefore);
       expect(queueCountBefore).to.equal(0);
 
-      await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
+      await sponsorshipQueue.addSponsorship("ENG", { value: hre.ethers.parseUnits("0.02") });
       
       const queueCountAfter = await sponsorshipQueue.getQueueCount();
       console.log("queueCountAfter:", queueCountAfter);
