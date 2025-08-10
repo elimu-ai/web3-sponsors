@@ -3,7 +3,7 @@ import "@nomicfoundation/hardhat-toolbox";
 
 require("dotenv").config();
 
-const privateKeys = process.env.WALLET_KEY ? [process.env.WALLET_KEY] : []
+const privateKeys = process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : []
 
 const config: HardhatUserConfig = {
   solidity: {
