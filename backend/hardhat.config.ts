@@ -3,14 +3,20 @@ import "@nomicfoundation/hardhat-toolbox";
 
 require("dotenv").config();
 
-const privateKeys = process.env.WALLET_KEY ? [process.env.WALLET_KEY] : []
+const privateKeys = process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : []
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.24"
+    version: "0.8.28",
+    settings: {
+      optimizer: {
+        enabled: true
+      }
+    }
   },
   gasReporter: {
-    enabled: true
+    enabled: true,
+    outputFile: "hardhat-gas-report.md"
   },
   networks: {
     base_sepolia: { // Chain ID 84532
