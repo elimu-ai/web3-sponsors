@@ -10,7 +10,8 @@ const config: HardhatUserConfig = {
     version: "0.8.24"
   },
   gasReporter: {
-    enabled: true
+    enabled: true,
+    outputFile: "hardhat-gas-report.md"
   },
   networks: {
     base_sepolia: { // Chain ID 84532
