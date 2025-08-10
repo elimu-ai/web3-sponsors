@@ -7,7 +7,12 @@ const privateKeys = process.env.WALLET_KEY ? [process.env.WALLET_KEY] : []
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.24"
+    version: "0.8.24",
+    settings: {
+      optimizer: {
+        enabled: true
+      }
+    }
   },
   gasReporter: {
     enabled: true,
