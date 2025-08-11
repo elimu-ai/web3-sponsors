@@ -14,14 +14,14 @@ describe("SponsorshipQueue", function () {
 
     const estimatedCost = hre.ethers.parseUnits("0.02");
 
-    // const Languages = await hre.ethers.getContractFactory("Languages");
-    // const languages = await Languages.deploy()
+    const Languages = await hre.ethers.getContractFactory("DummyLanguages");
+    const languages = await Languages.deploy();
+    await languages.addSupportedLanguage("ENG");
 
     const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
-    // const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost, languages.address);
-    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost, hre.ethers.ZeroAddress);
+    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost, await languages.getAddress());
 
-    return { sponsorshipQueue, firstAccount, otherAccount };
+    return { sponsorshipQueue, languages, firstAccount, otherAccount };
   }
 
   describe("Deployment", function () {
@@ -53,6 +53,13 @@ describe("SponsorshipQueue", function () {
   });
 
   describe("Sponsorships", function () {
+    it ("Should revert with an error if invalid language code", async function () {
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
+
+      await expect(sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") }))
+        .to.be.revertedWithCustomError(sponsorshipQueue, "InvalidLanguageCode");
+    });
+
     it("Should emit an event on addSponsorship", async function () {
       const { sponsorshipQueue, firstAccount } = await loadFixture(deployFixture);
 

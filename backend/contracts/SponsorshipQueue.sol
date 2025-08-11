@@ -53,9 +53,9 @@ contract SponsorshipQueue {
     }
 
     function addSponsorship(string calldata languageCode) public payable {
-        // if (!languages.isSupportedLanguage(languageCode)) {
-        //     revert InvalidLanguageCode();
-        // }
+        if (!languages.isSupportedLanguage(languageCode)) {
+            revert InvalidLanguageCode();
+        }
         payable(address(this)).send(msg.value);
         Sponsorship memory sponsorship = Sponsorship(
             msg.value,
