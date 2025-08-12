@@ -3,8 +3,8 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useAccount, useSimulateContract, useWriteContract } from "wagmi";
-import { abi } from "../../../../backend/ignition/deployments/chain-84532/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
-import deployed_addresses from "../../../../backend/ignition/deployments/chain-84532/deployed_addresses.json";
+import { abi } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address, parseEther } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
 
