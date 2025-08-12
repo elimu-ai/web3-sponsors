@@ -3,7 +3,6 @@ import { abi } from "../../../backend/ignition/deployments/chain-11155111/artifa
 import deployed_addresses from "../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
-import { Avatar, Name } from "@coinbase/onchainkit/identity";
 import ErrorIndicator from "./ErrorIndicator";
 
 export default function SponsorshipSummary({ queueIndex }: any) {
@@ -44,7 +43,7 @@ export default function SponsorshipSummary({ queueIndex }: any) {
             </div>
             Amount: {formatEther(estimatedCost)} ETH
             <div className="mt-2">
-                Sponsor: <code><Name address={sponsor} className="p-8 rounded-lg bg-purple-100 dark:bg-purple-900" /></code>
+                Sponsor: <code>{sponsor}</code>
             </div>
         </>
     )
