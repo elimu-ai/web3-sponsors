@@ -1,8 +1,8 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 
 const DistributionQueueModule = buildModule("DistributionQueueModule", (m) => {
-  console.log("hre.network.name:", hre.network.name);
+  console.log("network.name:", network.name);
   
   const attestationHandler = m.getParameter("attestationHandler", ethers.ZeroAddress);
 
