@@ -14,10 +14,14 @@ describe("SponsorshipQueue", function () {
 
     const estimatedCost = hre.ethers.parseUnits("0.02");
 
-    const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
-    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost);
+    const Languages = await hre.ethers.getContractFactory("DummyLanguages");
+    const languages = await Languages.deploy();
+    await languages.addSupportedLanguage("ENG");
 
-    return { sponsorshipQueue, firstAccount, otherAccount };
+    const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
+    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost, await languages.getAddress());
+
+    return { sponsorshipQueue, languages, firstAccount, otherAccount };
   }
 
   describe("Deployment", function () {
@@ -49,13 +53,20 @@ describe("SponsorshipQueue", function () {
   });
 
   describe("Sponsorships", function () {
+    it ("Should revert with an error if invalid language code", async function () {
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
+
+      await expect(sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") }))
+        .to.be.revertedWithCustomError(sponsorshipQueue, "InvalidLanguageCode");
+    });
+
     it("Should emit an event on addSponsorship", async function () {
       const { sponsorshipQueue, firstAccount } = await loadFixture(deployFixture);
 
       const firstAccountBalance = await hre.ethers.provider.getBalance(firstAccount.address);
       console.log("firstAccountBalance:", firstAccountBalance);
 
-      await expect(sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") }))
+      await expect(sponsorshipQueue.addSponsorship("ENG", { value: hre.ethers.parseUnits("0.02") }))
         .to.emit(sponsorshipQueue, "SponsorshipAdded");
     });
 
@@ -67,7 +78,7 @@ describe("SponsorshipQueue", function () {
 
       console.log("sponsorshipQueue.target:", sponsorshipQueue.target);
 
-      await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
+      await sponsorshipQueue.addSponsorship("ENG", { value: hre.ethers.parseUnits("0.02") });
       const contractBalance = await hre.ethers.provider.getBalance(sponsorshipQueue.target);
       console.log("contractBalance:", contractBalance);
       expect(contractBalance).to.equal(hre.ethers.parseUnits("0.02"));
@@ -80,7 +91,7 @@ describe("SponsorshipQueue", function () {
       console.log("queueCountBefore:", queueCountBefore);
       expect(queueCountBefore).to.equal(0);
 
-      await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
+      await sponsorshipQueue.addSponsorship("ENG", { value: hre.ethers.parseUnits("0.02") });
       
       const queueCountAfter = await sponsorshipQueue.getQueueCount();
       console.log("queueCountAfter:", queueCountAfter);
