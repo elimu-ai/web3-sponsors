@@ -16,10 +16,10 @@ node_modules
 # Hardhat Ignition default folder for deployments against a local node
 ignition/deployments/chain-31337
 
-# Base Sepolia
-#ignition/deployments/chain-84532/artifacts
-ignition/deployments/chain-84532/build-info
+# Ethereum Sepolia
+ignition/deployments/chain-11155111/artifacts/*.dbg.json
+ignition/deployments/chain-11155111/build-info
 
-# Base Mainnet
-#ignition/deployments/chain-8453/artifacts
-ignition/deployments/chain-8453/build-info
+# Ethereum Mainnet
+ignition/deployments/chain-1/artifacts/*.dbg.json
+ignition/deployments/chain-1/build-info

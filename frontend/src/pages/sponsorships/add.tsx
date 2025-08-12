@@ -3,8 +3,8 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useAccount, useSimulateContract, useWriteContract } from "wagmi";
-import { abi } from "../../../../backend/ignition/deployments/chain-84532/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
-import deployed_addresses from "../../../../backend/ignition/deployments/chain-84532/deployed_addresses.json";
+import { abi } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address, parseEther } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
 
@@ -67,7 +67,8 @@ export function SimulateContractButton() {
     abi,
     address: deploymentAddress,
     functionName: "addSponsorship",
-    value: parseEther("0.002")
+    args: ["ENG"],
+    value: parseEther("0.0001")
   })
   console.debug("isPending:", isPending);
   console.debug("isError:", isError);
@@ -102,11 +103,12 @@ export function WriteContractButton() {
           abi,
           address: deploymentAddress,
           functionName: "addSponsorship",
-          value: parseEther("0.002")
+          args: ["ENG"],
+          value: parseEther("0.0001")
         })
       }
     >
-      Send 0.02 ETH ⟠
+      Send 0.0001 ETH ⟠
     </button>
   )
 }

@@ -18,7 +18,22 @@ npx istanbul check-coverage --lines 80
 
 Deployment:
 
+Hardhat (`localhost`)
 ```shell
-rm .\ignition\deployments\
-npx hardhat ignition deploy .\ignition\modules\SponsorshipQueue.ts --network base_sepolia --verify
+npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network hardhat
+npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network hardhat
 ```
+
+Ethereum Sepolia (`Chain ID 11155111`)
+```shell
+npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network sepolia --reset --verify
+npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network sepolia --verify
+```
+[`./ignition/deployments/chain-11155111/deployed_addresses.json`](./ignition/deployments/chain-11155111/deployed_addresses.json)
+
+Ethereum Mainnet (`Chain ID 1`)
+```shell
+npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network mainnet --reset --verify
+npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network mainnet --verify
+```
+[`./ignition/deployments/chain-1/deployed_addresses.json`](./ignition/deployments/chain-1/deployed_addresses.json)
