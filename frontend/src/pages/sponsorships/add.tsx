@@ -68,7 +68,7 @@ export function SimulateContractButton() {
     address: deploymentAddress,
     functionName: "addSponsorship",
     args: ["ENG"],
-    value: parseEther("0.002")
+    value: parseEther("0.0001")
   })
   console.debug("isPending:", isPending);
   console.debug("isError:", isError);
@@ -104,11 +104,11 @@ export function WriteContractButton() {
           address: deploymentAddress,
           functionName: "addSponsorship",
           args: ["ENG"],
-          value: parseEther("0.002")
+          value: parseEther("0.0001")
         })
       }
     >
-      Send 0.02 ETH ⟠
+      Send 0.0001 ETH ⟠
     </button>
   )
 }

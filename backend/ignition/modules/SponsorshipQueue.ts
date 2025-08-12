@@ -4,7 +4,7 @@ import { ethers } from "hardhat";
 const SponsorshipQueueModule = buildModule("SponsorshipQueueModule", (m) => {
   console.log("hre.network.name:", hre.network.name);
 
-  const estimatedCost = m.getParameter("estimatedCost", ethers.parseUnits("0.02"));
+  const estimatedCost = m.getParameter("estimatedCost", ethers.parseUnits("0.0001"));
 
   let languagesAddress = m.getParameter("languagesAddress", ethers.ZeroAddress);
   if (hre.network.name == "sepolia") {
