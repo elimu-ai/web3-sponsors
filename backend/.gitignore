@@ -17,9 +17,9 @@ node_modules
 ignition/deployments/chain-31337
 
 # Base Sepolia
-#ignition/deployments/chain-84532/artifacts
+ignition/deployments/chain-84532/artifacts/*.dbg.json
 ignition/deployments/chain-84532/build-info
 
 # Base Mainnet
-#ignition/deployments/chain-8453/artifacts
+ignition/deployments/chain-8453/artifacts/*.dbg.json
 ignition/deployments/chain-8453/build-info
