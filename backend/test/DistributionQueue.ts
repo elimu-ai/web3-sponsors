@@ -12,10 +12,8 @@ describe("DistributionQueue", function () {
     // Contracts are deployed using the first signer/account by default
     const [firstAccount, otherAccount] = await hre.ethers.getSigners();
 
-    const attestationHandler = hre.ethers.ZeroAddress;
-
     const DistributionQueue = await hre.ethers.getContractFactory("DistributionQueue");
-    const distributionQueue = await DistributionQueue.deploy(attestationHandler);
+    const distributionQueue = await DistributionQueue.deploy();
 
     return { distributionQueue, firstAccount, otherAccount };
   }
@@ -26,23 +24,6 @@ describe("DistributionQueue", function () {
 
       expect(await distributionQueue.owner()).to.equal(firstAccount.address);
     });
-
-    it("Should set the right attestation handler", async function () {
-      const { distributionQueue } = await loadFixture(deployFixture);
-
-      expect(await distributionQueue.attestationHandler()).to.equal(hre.ethers.ZeroAddress);
-    });
-  });
-
-  describe("AttestationHandler", function () {
-    it("Should emit an event on update attestation handler", async function () {
-      const { distributionQueue, otherAccount } = await loadFixture(deployFixture);
-
-      const attestationHandler = otherAccount.address;
-      console.log("attestationHandler:", attestationHandler);
-      await expect(distributionQueue.updateAttestationHandler(attestationHandler))
-        .to.emit(distributionQueue, "AttestationHandlerUpdated");
-    });
   });
 
   describe("Distributions", function () {
@@ -88,19 +69,6 @@ describe("DistributionQueue", function () {
       const queueCountAfter = await distributionQueue.getQueueCount();
       console.log("queueCountAfter:", queueCountAfter);
       expect(queueCountAfter).to.equal(1);
-    });
-  });
-
-  describe("DistributionStatus", function () {
-    it("Should emit an event on updateDistributionStatus", async function () {
-      const { distributionQueue, otherAccount } = await loadFixture(deployFixture);
-
-      await distributionQueue.addDistribution();
-
-      await distributionQueue.updateAttestationHandler(otherAccount.address);
-
-      await expect(distributionQueue.connect(otherAccount).updateDistributionStatus(0, 1))
-        .to.emit(distributionQueue, "DistributionStatusUpdated");
     });
   });
 });

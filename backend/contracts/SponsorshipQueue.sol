@@ -10,6 +10,7 @@ struct Sponsorship {
     address sponsor;
 }
 
+/// @notice A queue of sponsorships for the Ξlimu DAO's education program (see https://sponsors.elimu.ai)
 contract SponsorshipQueue {
     address public owner;
     uint256 public estimatedCost;

@@ -1,31 +1,24 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-enum DistributionStatus {
-    DeviceDelivered,
-    Approved,
-    Rejected,
-    Paid
-}
-
 struct Distribution {
     uint256 timestamp;
     address distributor;
-    DistributionStatus status;
 }
 
+/// @notice A queue of distributions for the Ξlimu DAO's education program (see https://sponsors.elimu.ai)
 contract DistributionQueue {
-    address public owner;
-    address public attestationHandler;
-    Distribution[] public queue;
+    address owner;
+    Distribution[] queue;
 
     event OwnerUpdated(address owner);
-    event AttestationHandlerUpdated(address attestationHandler);
     event DistributionAdded(Distribution distribution);
-    event DistributionStatusUpdated(Distribution distribution);
 
     error OnlyOwner();
-    error OnlyAttestationHandler();
+
+    constructor() {
+        owner = msg.sender;
+    }
 
     modifier onlyOwner() {
         if (msg.sender != owner) {
@@ -34,42 +27,18 @@ contract DistributionQueue {
         _;
     }
 
-    modifier onlyAttestationHandler() {
-        if (msg.sender != attestationHandler) {
-            revert OnlyAttestationHandler();
-        }
-        _;
-    }
-
-    constructor(address _attestationHandler) {
-        owner = msg.sender;
-        attestationHandler = _attestationHandler;
-    }
-
     function updateOwner(address _owner) public onlyOwner() {
         owner = _owner;
         emit OwnerUpdated(_owner);
     }
 
-    function updateAttestationHandler(address _attestationHandler) public onlyOwner() {
-        attestationHandler = _attestationHandler;
-        emit AttestationHandlerUpdated(_attestationHandler);
-    }
-
     function addDistribution() public {
         Distribution memory distribution = Distribution(
             block.timestamp,
-            msg.sender,
-            DistributionStatus.DeviceDelivered
+            msg.sender
         );
         queue.push(distribution);
         emit DistributionAdded(distribution);
-    }
-
-    function updateDistributionStatus(uint256 queueIndex, DistributionStatus _distributionStatus) public onlyAttestationHandler() {
-        Distribution memory distribution = queue[queueIndex];
-        distribution.status = _distributionStatus;
-        emit DistributionStatusUpdated(distribution);
     }
 
     function getQueueCount() public view returns (uint256) {
