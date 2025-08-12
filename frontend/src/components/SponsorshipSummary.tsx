@@ -33,8 +33,9 @@ export default function SponsorshipSummary({ queueIndex }: any) {
     
     const sponsorship: any = data;
     const estimatedCost = BigInt(sponsorship[0]);
-    const timestamp = Number(sponsorship[1]);
-    const sponsor = sponsorship[2];
+    const languageCode = String(sponsorship[1]);
+    const timestamp = Number(sponsorship[2]);
+    const sponsor = sponsorship[3];
     return (
         <>
             Queue number: #{queueIndex + 1}
@@ -42,6 +43,9 @@ export default function SponsorshipSummary({ queueIndex }: any) {
                 {new Date(timestamp * 1_000).toISOString().substring(0,10)} {new Date(timestamp * 1_000).toISOString().substring(11,16)}
             </div>
             Amount: {formatEther(estimatedCost)} ETH
+            <div className="mt-2">
+                Language: <code>{languageCode}</code>
+            </div>
             <div className="mt-2">
                 Sponsor: <code>{sponsor}</code>
             </div>
