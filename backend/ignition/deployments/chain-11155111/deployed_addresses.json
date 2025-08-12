@@ -1,3 +1,4 @@
 {
-  "SponsorshipQueueModule#SponsorshipQueue": "0x9a58bDdF8652514c2fe73719971f887Bd213e3cd"
+  "SponsorshipQueueModule#SponsorshipQueue": "0x9a58bDdF8652514c2fe73719971f887Bd213e3cd",
+  "DistributionQueueModule#DistributionQueue": "0x42dce9df3219f5a0Ee4B8E3e7eaff51373172926"
 }
