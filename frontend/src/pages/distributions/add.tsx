@@ -66,7 +66,8 @@ export function SimulateContractButton() {
   const { isPending, isError, error, isSuccess } = useSimulateContract({
     abi,
     address: deploymentAddress,
-    functionName: "addDistribution"
+    functionName: "addDistribution",
+    args: ["ENG", "fbc880caac090c43"]
   })
   console.debug("isPending:", isPending);
   console.debug("isError:", isError);
@@ -100,7 +101,8 @@ export function WriteContractButton() {
         writeContract({
           abi,
           address: deploymentAddress,
-          functionName: "addDistribution"
+          functionName: "addDistribution",
+          args: ["ENG", "fbc880caac090c43"]
         })
       }
     >
