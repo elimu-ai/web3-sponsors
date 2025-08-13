@@ -67,7 +67,7 @@ export function SimulateContractButton() {
     abi,
     address: deploymentAddress,
     functionName: "addSponsorship",
-    args: ["ENG"],
+    args: ["HIN"],
     value: parseEther("0.0001")
   })
   console.debug("isPending:", isPending);
@@ -103,7 +103,7 @@ export function WriteContractButton() {
           abi,
           address: deploymentAddress,
           functionName: "addSponsorship",
-          args: ["ENG"],
+          args: ["HIN"],
           value: parseEther("0.0001")
         })
       }

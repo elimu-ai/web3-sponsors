@@ -12,8 +12,12 @@ describe("DistributionQueue", function () {
     // Contracts are deployed using the first signer/account by default
     const [firstAccount, otherAccount] = await hre.ethers.getSigners();
 
+    const Languages = await hre.ethers.getContractFactory("DummyLanguages");
+    const languages = await Languages.deploy();
+    await languages.addSupportedLanguage("HIN");
+
     const DistributionQueue = await hre.ethers.getContractFactory("DistributionQueue");
-    const distributionQueue = await DistributionQueue.deploy();
+    const distributionQueue = await DistributionQueue.deploy(await languages.getAddress());
 
     return { distributionQueue, firstAccount, otherAccount };
   }
@@ -27,10 +31,17 @@ describe("DistributionQueue", function () {
   });
 
   describe("Distributions", function () {
+    it ("Should revert with an error if invalid language code", async function () {
+      const { distributionQueue } = await loadFixture(deployFixture);
+
+      await expect(distributionQueue.addDistribution("SWA", "fbc880caac090c43"))
+        .to.be.revertedWithCustomError(distributionQueue, "InvalidLanguageCode");
+    });
+
     it("Should emit an event on addDistribution", async function () {
       const { distributionQueue } = await loadFixture(deployFixture);
 
-      await expect(distributionQueue.addDistribution("5b7c682a12ecbe2e", "ENG"))
+      await expect(distributionQueue.addDistribution("HIN", "fbc880caac090c43"))
         .to.emit(distributionQueue, "DistributionAdded");
     });
 
@@ -41,7 +52,7 @@ describe("DistributionQueue", function () {
       console.log("queueCountBefore:", queueCountBefore);
       expect(queueCountBefore).to.equal(0);
 
-      await distributionQueue.addDistribution("5b7c682a12ecbe2e", "ENG");
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
       
       const queueCountAfter = await distributionQueue.getQueueCount();
       console.log("queueCountAfter:", queueCountAfter);
@@ -53,7 +64,7 @@ describe("DistributionQueue", function () {
     it("Should emit an event on addDistribution", async function () {
       const { distributionQueue } = await loadFixture(deployFixture);
 
-      await expect(distributionQueue.addDistribution("5b7c682a12ecbe2e", "ENG"))
+      await expect(distributionQueue.addDistribution("HIN", "fbc880caac090c43"))
         .to.emit(distributionQueue, "DistributionAdded");
     });
 
@@ -64,7 +75,7 @@ describe("DistributionQueue", function () {
       console.log("queueCountBefore:", queueCountBefore);
       expect(queueCountBefore).to.equal(0);
 
-      await distributionQueue.addDistribution("5b7c682a12ecbe2e", "ENG");
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
       
       const queueCountAfter = await distributionQueue.getQueueCount();
       console.log("queueCountAfter:", queueCountAfter);

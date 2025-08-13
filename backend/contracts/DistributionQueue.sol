@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
+import { ILanguages } from "@elimu-ai/dao-contracts/ILanguages.sol";
+
 struct Distribution {
-    string androidId;
     string languageCode;
+    string androidId;
     uint256 timestamp;
     address distributor;
 }
@@ -11,15 +13,18 @@ struct Distribution {
 /// @notice A queue of distributions for the Ξlimu DAO's education program (see https://sponsors.elimu.ai)
 contract DistributionQueue {
     address public owner;
+    ILanguages public languages;
     Distribution[] queue;
 
     event OwnerUpdated(address owner);
     event DistributionAdded(Distribution distribution);
 
     error OnlyOwner();
+    error InvalidLanguageCode();
 
-    constructor() {
+    constructor(address _languages) {
         owner = msg.sender;
+        languages = ILanguages(_languages);
     }
 
     modifier onlyOwner() {
@@ -34,10 +39,13 @@ contract DistributionQueue {
         emit OwnerUpdated(_owner);
     }
 
-    function addDistribution(string calldata androidId, string calldata languageCode) public {
+    function addDistribution(string calldata languageCode, string calldata androidId) public {
+        if (!languages.isSupportedLanguage(languageCode)) {
+            revert InvalidLanguageCode();
+        }
         Distribution memory distribution = Distribution(
-            androidId,
             languageCode,
+            androidId,
             block.timestamp,
             msg.sender
         );
