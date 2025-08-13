@@ -123,7 +123,7 @@ export function SimulateContractButton({ languageCode }: any) {
   return <WriteContractButton />
 }
 
-export function WriteContractButton() {
+export function WriteContractButton({ languageCode }: any) {
   console.debug("WriteContractButton");
 
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
@@ -138,7 +138,7 @@ export function WriteContractButton() {
           abi,
           address: deploymentAddress,
           functionName: "addSponsorship",
-          args: ["HIN"],
+          args: [languageCode],
           value: parseEther("0.0001")
         })
       }
