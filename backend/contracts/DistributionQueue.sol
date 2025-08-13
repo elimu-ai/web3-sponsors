@@ -3,6 +3,7 @@ pragma solidity ^0.8.28;
 
 struct Distribution {
     string androidId;
+    string languageCode;
     uint256 timestamp;
     address distributor;
 }
@@ -33,9 +34,10 @@ contract DistributionQueue {
         emit OwnerUpdated(_owner);
     }
 
-    function addDistribution(string calldata androidId) public {
+    function addDistribution(string calldata androidId, string calldata languageCode) public {
         Distribution memory distribution = Distribution(
             androidId,
+            languageCode,
             block.timestamp,
             msg.sender
         );
