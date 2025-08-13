@@ -59,27 +59,4 @@ describe("DistributionQueue", function () {
       expect(queueCountAfter).to.equal(1);
     });
   });
-
-  describe("Distributions", function () {
-    it("Should emit an event on addDistribution", async function () {
-      const { distributionQueue } = await loadFixture(deployFixture);
-
-      await expect(distributionQueue.addDistribution("HIN", "fbc880caac090c43"))
-        .to.emit(distributionQueue, "DistributionAdded");
-    });
-
-    it("Should increase queue count on addDistribution", async function () {
-      const { distributionQueue } = await loadFixture(deployFixture);
-
-      const queueCountBefore = await distributionQueue.getQueueCount();
-      console.log("queueCountBefore:", queueCountBefore);
-      expect(queueCountBefore).to.equal(0);
-
-      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
-      
-      const queueCountAfter = await distributionQueue.getQueueCount();
-      console.log("queueCountAfter:", queueCountAfter);
-      expect(queueCountAfter).to.equal(1);
-    });
-  });
 });
