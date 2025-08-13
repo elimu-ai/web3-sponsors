@@ -2,13 +2,14 @@
 pragma solidity ^0.8.28;
 
 struct Distribution {
+    string androidId;
     uint256 timestamp;
     address distributor;
 }
 
 /// @notice A queue of distributions for the Ξlimu DAO's education program (see https://sponsors.elimu.ai)
 contract DistributionQueue {
-    address owner;
+    address public owner;
     Distribution[] queue;
 
     event OwnerUpdated(address owner);
@@ -32,8 +33,9 @@ contract DistributionQueue {
         emit OwnerUpdated(_owner);
     }
 
-    function addDistribution() public {
+    function addDistribution(string calldata androidId) public {
         Distribution memory distribution = Distribution(
+            androidId,
             block.timestamp,
             msg.sender
         );

@@ -30,7 +30,7 @@ describe("DistributionQueue", function () {
     it("Should emit an event on addDistribution", async function () {
       const { distributionQueue } = await loadFixture(deployFixture);
 
-      await expect(distributionQueue.addDistribution())
+      await expect(distributionQueue.addDistribution("5b7c682a12ecbe2e"))
         .to.emit(distributionQueue, "DistributionAdded");
     });
 
@@ -41,7 +41,7 @@ describe("DistributionQueue", function () {
       console.log("queueCountBefore:", queueCountBefore);
       expect(queueCountBefore).to.equal(0);
 
-      await distributionQueue.addDistribution();
+      await distributionQueue.addDistribution("5b7c682a12ecbe2e");
       
       const queueCountAfter = await distributionQueue.getQueueCount();
       console.log("queueCountAfter:", queueCountAfter);
@@ -53,7 +53,7 @@ describe("DistributionQueue", function () {
     it("Should emit an event on addDistribution", async function () {
       const { distributionQueue } = await loadFixture(deployFixture);
 
-      await expect(distributionQueue.addDistribution())
+      await expect(distributionQueue.addDistribution("5b7c682a12ecbe2e"))
         .to.emit(distributionQueue, "DistributionAdded");
     });
 
@@ -64,7 +64,7 @@ describe("DistributionQueue", function () {
       console.log("queueCountBefore:", queueCountBefore);
       expect(queueCountBefore).to.equal(0);
 
-      await distributionQueue.addDistribution();
+      await distributionQueue.addDistribution("5b7c682a12ecbe2e");
       
       const queueCountAfter = await distributionQueue.getQueueCount();
       console.log("queueCountAfter:", queueCountAfter);
