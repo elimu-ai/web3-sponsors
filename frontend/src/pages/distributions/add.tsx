@@ -5,8 +5,9 @@ import Head from "next/head";
 import { useAccount, useSimulateContract, useWriteContract } from "wagmi";
 import { abi } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionQueueModule#DistributionQueue.json";
 import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
-import { Address, parseEther } from "viem";
+import { Address } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
+import { useState } from "react";
 
 export default function AddDistribution() {
   console.debug("AddDistribution");
@@ -48,7 +49,7 @@ export default function AddDistribution() {
               Connect wallet first
             </button>
           ) : (
-            <SimulateContractButton />
+            <InputAndroidId />
           )}
         </div>
       </main>
@@ -57,7 +58,55 @@ export default function AddDistribution() {
   );
 }
 
-export function SimulateContractButton() {
+export function InputAndroidId() {
+  console.debug("InputAndroidId");
+
+  const [languageCode, setLanguageCode] = useState("");
+  const handleLanguageCodeChange = (event: any) => {
+    console.debug('handleLanguageCodeChange');
+    setLanguageCode(event.target.value);
+  }
+  console.debug('languageCode:', languageCode);
+
+  const [androidId, setAndroidId] = useState("");
+  const handleAndroidIdChange = (event: any) => {
+    console.debug('handleAndroidIdChange');
+    setAndroidId(event.target.value);
+  }
+  console.debug('androidId:', androidId);
+
+  return (
+    <>
+      <select
+          onChange={handleLanguageCodeChange}
+          className="p-4 text-2xl text-indigo-200 bg-indigo-800 rounded-lg">
+        <option value="">-- Select language --</option>
+        <option value="ENG">ENG</option>
+        <option value="HIN">HIN</option>
+        <option value="TGL">TGL</option>
+        <option value="THA">THA</option>
+        <option value="VIE">VIE</option>
+      </select><br />
+
+      <input
+        onChange={handleAndroidIdChange}
+        type="text"
+        placeholder="Android ID"
+        className="mt-4 p-4 text-2xl text-indigo-200 bg-indigo-800 rounded-lg"
+      /><br />
+      
+      {((languageCode.length != 3) || (androidId.length != 16)) ? (
+        <button disabled={true} className="mt-4 p-8 text-2xl text-zinc-400 bg-zinc-300 rounded-lg">
+          Add Distribution 📦
+        </button>
+      ) : (
+        <SimulateContractButton languageCode={languageCode} androidId={androidId} />
+      )}
+    </>
+  )
+}
+
+export function SimulateContractButton({ languageCode, androidId}: any) {
   console.debug("SimulateContractButton");
 
   const deploymentAddress: Address = deployed_addresses["DistributionQueueModule#DistributionQueue"] as `0x${string}`;
@@ -67,7 +116,7 @@ export function SimulateContractButton() {
     abi,
     address: deploymentAddress,
     functionName: "addDistribution",
-    args: ["ENG", "fbc880caac090c43"]
+    args: [languageCode, androidId]
   })
   console.debug("isPending:", isPending);
   console.debug("isError:", isError);
@@ -75,9 +124,13 @@ export function SimulateContractButton() {
   console.debug("isSuccess:", isSuccess);
 
   if (isPending) {
-    return <button disabled={true} className="p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
-      <LoadingIndicator /> &nbsp; Simulating...
-    </button>
+    return (
+      <>
+        <button disabled={true} className="mt-4 p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+          <LoadingIndicator /> &nbsp; Simulating...
+        </button>
+      </>
+    )
   }
 
   if (isError) {
@@ -87,7 +140,7 @@ export function SimulateContractButton() {
   return <WriteContractButton />
 }
 
-export function WriteContractButton() {
+export function WriteContractButton({ languageCode, androidId}: any) {
   console.debug("WriteContractButton");
 
   const deploymentAddress: Address = deployed_addresses["DistributionQueueModule#DistributionQueue"] as `0x${string}`;
@@ -96,13 +149,13 @@ export function WriteContractButton() {
   const { writeContract } = useWriteContract();
   return (
     <button 
-      className="p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
+      className="mt-4 p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
       onClick={() =>
         writeContract({
           abi,
           address: deploymentAddress,
           functionName: "addDistribution",
-          args: ["ENG", "fbc880caac090c43"]
+          args: [languageCode, androidId]
         })
       }
     >
