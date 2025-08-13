@@ -7,6 +7,7 @@ import { abi } from "../../../../backend/ignition/deployments/chain-11155111/art
 import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address, parseEther } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
+import { useState } from "react";
 
 export default function AddSponsorship() {
   console.debug("AddSponsorship");
@@ -48,7 +49,7 @@ export default function AddSponsorship() {
               Connect wallet first
             </button>
           ) : (
-            <SimulateContractButton />
+            <SelectLanguage />
           )}
         </div>
       </main>
@@ -57,7 +58,41 @@ export default function AddSponsorship() {
   );
 }
 
-export function SimulateContractButton() {
+export function SelectLanguage() {
+  console.debug("SelectLanguage")
+
+  const [languageCode, setLanguageCode] = useState("");
+  const handleLanguageCodeChange = (event: any) => {
+    console.debug('handleLanguageCodeChange');
+    setLanguageCode(event.target.value);
+  }
+  console.debug('languageCode:', languageCode);
+
+  return (
+    <>
+      <select
+          onChange={handleLanguageCodeChange}
+          className="p-4 text-2xl text-indigo-200 bg-indigo-800 rounded-lg">
+        <option value="">-- Select language --</option>
+        <option value="ENG">ENG</option>
+        <option value="HIN">HIN</option>
+        <option value="TGL">TGL</option>
+        <option value="THA">THA</option>
+        <option value="VIE">VIE</option>
+      </select><br />
+
+      {(languageCode.length != 3) ? (
+        <button disabled={true} className="mt-4 p-8 text-2xl text-zinc-400 bg-zinc-300 rounded-lg">
+          Send 0.0001 ETH ⟠
+        </button>
+      ) : (
+        <SimulateContractButton languageCode={languageCode} />
+      )}
+    </>
+  )
+}
+
+export function SimulateContractButton({ languageCode }: any) {
   console.debug("SimulateContractButton");
 
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
@@ -67,7 +102,7 @@ export function SimulateContractButton() {
     abi,
     address: deploymentAddress,
     functionName: "addSponsorship",
-    args: ["ENG"],
+    args: [languageCode],
     value: parseEther("0.0001")
   })
   console.debug("isPending:", isPending);
@@ -76,7 +111,7 @@ export function SimulateContractButton() {
   console.debug("isSuccess:", isSuccess);
 
   if (isPending) {
-    return <button disabled={true} className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+    return <button disabled={true} className="mt-4 p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
       <LoadingIndicator /> &nbsp; Simulating...
     </button>
   }
@@ -88,7 +123,7 @@ export function SimulateContractButton() {
   return <WriteContractButton />
 }
 
-export function WriteContractButton() {
+export function WriteContractButton({ languageCode }: any) {
   console.debug("WriteContractButton");
 
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
@@ -97,13 +132,13 @@ export function WriteContractButton() {
   const { writeContract } = useWriteContract();
   return (
     <button 
-      className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
+      className="mt-4 p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
       onClick={() =>
         writeContract({
           abi,
           address: deploymentAddress,
           functionName: "addSponsorship",
-          args: ["ENG"],
+          args: [languageCode],
           value: parseEther("0.0001")
         })
       }

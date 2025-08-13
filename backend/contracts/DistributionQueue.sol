@@ -1,31 +1,31 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-enum DistributionStatus {
-    DeviceDelivered,
-    Approved,
-    Rejected,
-    Paid
-}
+import { ILanguages } from "@elimu-ai/dao-contracts/ILanguages.sol";
 
 struct Distribution {
+    string languageCode;
+    string androidId;
     uint256 timestamp;
     address distributor;
-    DistributionStatus status;
 }
 
+/// @notice A queue of distributions for the Ξlimu DAO's education program (see https://sponsors.elimu.ai)
 contract DistributionQueue {
     address public owner;
-    address public attestationHandler;
-    Distribution[] public queue;
+    ILanguages public languages;
+    Distribution[] queue;
 
     event OwnerUpdated(address owner);
-    event AttestationHandlerUpdated(address attestationHandler);
     event DistributionAdded(Distribution distribution);
-    event DistributionStatusUpdated(Distribution distribution);
 
     error OnlyOwner();
-    error OnlyAttestationHandler();
+    error InvalidLanguageCode();
+
+    constructor(address _languages) {
+        owner = msg.sender;
+        languages = ILanguages(_languages);
+    }
 
     modifier onlyOwner() {
         if (msg.sender != owner) {
@@ -34,42 +34,23 @@ contract DistributionQueue {
         _;
     }
 
-    modifier onlyAttestationHandler() {
-        if (msg.sender != attestationHandler) {
-            revert OnlyAttestationHandler();
-        }
-        _;
-    }
-
-    constructor(address _attestationHandler) {
-        owner = msg.sender;
-        attestationHandler = _attestationHandler;
-    }
-
     function updateOwner(address _owner) public onlyOwner() {
         owner = _owner;
         emit OwnerUpdated(_owner);
     }
 
-    function updateAttestationHandler(address _attestationHandler) public onlyOwner() {
-        attestationHandler = _attestationHandler;
-        emit AttestationHandlerUpdated(_attestationHandler);
-    }
-
-    function addDistribution() public {
+    function addDistribution(string calldata languageCode, string calldata androidId) public {
+        if (!languages.isSupportedLanguage(languageCode)) {
+            revert InvalidLanguageCode();
+        }
         Distribution memory distribution = Distribution(
+            languageCode,
+            androidId,
             block.timestamp,
-            msg.sender,
-            DistributionStatus.DeviceDelivered
+            msg.sender
         );
         queue.push(distribution);
         emit DistributionAdded(distribution);
-    }
-
-    function updateDistributionStatus(uint256 queueIndex, DistributionStatus _distributionStatus) public onlyAttestationHandler() {
-        Distribution memory distribution = queue[queueIndex];
-        distribution.status = _distributionStatus;
-        emit DistributionStatusUpdated(distribution);
     }
 
     function getQueueCount() public view returns (uint256) {
