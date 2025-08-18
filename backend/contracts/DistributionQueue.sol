@@ -19,24 +19,17 @@ contract DistributionQueue {
     event OwnerUpdated(address owner);
     event DistributionAdded(Distribution distribution);
 
-    error OnlyOwner();
     error InvalidLanguageCode();
 
-    constructor(address _languages) {
+    constructor(address languages_) {
         owner = msg.sender;
-        languages = ILanguages(_languages);
+        languages = ILanguages(languages_);
     }
 
-    modifier onlyOwner() {
-        if (msg.sender != owner) {
-            revert OnlyOwner();
-        }
-        _;
-    }
-
-    function updateOwner(address _owner) public onlyOwner() {
-        owner = _owner;
-        emit OwnerUpdated(_owner);
+    function updateOwner(address owner_) public {
+        require(msg.sender == owner, "Only the current owner can set a new owner");
+        owner = owner_;
+        emit OwnerUpdated(owner_);
     }
 
     function addDistribution(string calldata languageCode, string calldata androidId) public {
