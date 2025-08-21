@@ -6,7 +6,7 @@ import { IRoles } from "@elimu-ai/dao-contracts/IRoles.sol";
 /// @notice Handles approval/rejection of distributions added to `DistributionQueue.sol`
 contract DistributionVerifier {
     address public owner;
-    IRoles roles;
+    IRoles public roles;
     mapping(uint24 => uint8) approvalCount;
     mapping(uint24 => uint8) rejectionCount;
 
