@@ -44,7 +44,7 @@ describe("DistributionQueue", function () {
     it("Should change the queue handler", async function () {
       const { distributionQueue, account1, account2 } = await loadFixture(deployFixture);
 
-      expect(await distributionQueue.queueHandler()).to.equal(account1.address);
+      expect(await distributionQueue.queueHandler()).to.equal(ethers.ZeroAddress);
       await distributionQueue.updateQueueHandler(account2.address);
       expect(await distributionQueue.queueHandler()).to.equal(account2.address);
     });
