@@ -48,15 +48,15 @@ describe("DistributionQueue", function () {
     it("Should increase queue count on addDistribution", async function () {
       const { distributionQueue } = await loadFixture(deployFixture);
 
-      const queueCountBefore = await distributionQueue.getQueueCount();
-      console.log("queueCountBefore:", queueCountBefore);
-      expect(queueCountBefore).to.equal(0);
+      const queueLengthBefore = await distributionQueue.getLength();
+      console.log("queueLengthBefore:", queueLengthBefore);
+      expect(queueLengthBefore).to.equal(0);
 
       await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
       
-      const queueCountAfter = await distributionQueue.getQueueCount();
-      console.log("queueCountAfter:", queueCountAfter);
-      expect(queueCountAfter).to.equal(1);
+      const queueLengthAfter = await distributionQueue.getLength();
+      console.log("queueLengthAfter:", queueLengthAfter);
+      expect(queueLengthAfter).to.equal(1);
     });
   });
 });

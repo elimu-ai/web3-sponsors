@@ -15,11 +15,14 @@ contract SponsorshipQueue {
     address public owner;
     uint256 public estimatedCost;
     ILanguages public languages;
-    Sponsorship[] public queue;
+    address public queueHandler;
+    mapping(uint24 => Sponsorship) public queue;
+    uint24 public queueNumberFirst = 0;
+    uint24 public queueNumberLast = 0;
 
     event OwnerUpdated(address owner);
     event EstimatedCostUpdated(uint256 estimatedCost);
-    event LanguagesUpdated(address _languages);
+    event LanguagesUpdated(address languages);
     event SponsorshipAdded(Sponsorship sponsorship);
 
     error OnlyOwner();
@@ -32,25 +35,25 @@ contract SponsorshipQueue {
         _;
     }
 
-    constructor(uint256 _estimatedCost, address _languages) {
+    constructor(uint256 estimatedCost_, address languages_) {
         owner = msg.sender;
-        estimatedCost = _estimatedCost;
-        languages = ILanguages(_languages);
+        estimatedCost = estimatedCost_;
+        languages = ILanguages(languages_);
     }
 
-    function updateOwner(address _owner) public onlyOwner() {
-        owner = _owner;
-        emit OwnerUpdated(_owner);
+    function updateOwner(address owner_) public onlyOwner() {
+        owner = owner_;
+        emit OwnerUpdated(owner_);
     }
 
-    function updateEstimatedCost(uint256 _estimatedCost) public onlyOwner {
-        estimatedCost = _estimatedCost;
-        emit EstimatedCostUpdated(_estimatedCost);
+    function updateEstimatedCost(uint256 estimatedCost_) public onlyOwner {
+        estimatedCost = estimatedCost_;
+        emit EstimatedCostUpdated(estimatedCost_);
     }
 
-    function updateLanguages(address _languages) public onlyOwner {
-        languages = ILanguages(_languages);
-        emit LanguagesUpdated(_languages);
+    function updateLanguages(address languages_) public onlyOwner {
+        languages = ILanguages(languages_);
+        emit LanguagesUpdated(languages_);
     }
 
     function addSponsorship(string calldata languageCode) public payable {
@@ -64,11 +67,29 @@ contract SponsorshipQueue {
             block.timestamp,
             msg.sender
         );
-        queue.push(sponsorship);
+        enqueue(sponsorship);
         emit SponsorshipAdded(sponsorship);
     }
 
-    function getQueueCount() public view returns (uint256) {
-        return queue.length;
+    function enqueue(Sponsorship memory sponsorship) public {
+        queueNumberLast += 1;
+        queue[queueNumberLast] = sponsorship;
+    }
+
+    function dequeue() public returns (Sponsorship memory) {
+        require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
+        Sponsorship memory sponsorship = queue[queueNumberFirst];
+        delete queue[queueNumberFirst];
+        queueNumberFirst += 1;
+        return sponsorship;
+    }
+
+    function getLength() public view returns (uint256) {
+        return queueNumberLast - queueNumberFirst;
+    }
+
+    function payDistributor(address distributor, Sponsorship memory sponsorship) public payable {
+        require(msg.sender == queueHandler, "Only the queue handler can process payouts");
+        payable(distributor).transfer(sponsorship.estimatedCost);
     }
 }

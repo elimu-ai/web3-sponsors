@@ -14,7 +14,10 @@ struct Distribution {
 contract DistributionQueue {
     address public owner;
     ILanguages public languages;
-    Distribution[] queue;
+    address public queueHandler;
+    mapping(uint24 => Distribution) public queue;
+    uint24 public queueNumberFirst = 0;
+    uint24 public queueNumberLast = 0;
 
     event OwnerUpdated(address owner);
     event DistributionAdded(Distribution distribution);
@@ -42,11 +45,24 @@ contract DistributionQueue {
             block.timestamp,
             msg.sender
         );
-        queue.push(distribution);
+        enqueue(distribution);
         emit DistributionAdded(distribution);
     }
 
-    function getQueueCount() public view returns (uint256) {
-        return queue.length;
+    function enqueue(Distribution memory sponsorship) public {
+        queueNumberLast += 1;
+        queue[queueNumberLast] = sponsorship;
+    }
+
+    function dequeue() public returns (Distribution memory) {
+        require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
+        Distribution memory distribution = queue[queueNumberFirst];
+        delete queue[queueNumberFirst];
+        queueNumberFirst += 1;
+        return distribution;
+    }
+
+    function getLength() public view returns (uint256) {
+        return queueNumberLast - queueNumberFirst;
     }
 }

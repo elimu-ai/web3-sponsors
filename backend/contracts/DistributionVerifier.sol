@@ -12,8 +12,8 @@ contract DistributionVerifier {
 
     event OwnerUpdated(address owner);
     event RolesUpdated(address roles);
-    event DistributionApproved(uint24 queueIndex, address operator);
-    event DistributionRejected(uint24 queueIndex, address operator);
+    event DistributionApproved(uint24 queueNumber, address operator);
+    event DistributionRejected(uint24 queueNumber, address operator);
 
     constructor(address roles_) {
         owner = msg.sender;
@@ -32,18 +32,22 @@ contract DistributionVerifier {
         emit RolesUpdated(roles_);
     }
 
-    function verifyDistribution(uint24 queueIndex, bool approved) public {
+    function verifyDistribution(uint24 queueNumber, bool approved) public {
         require(roles.isDaoOperator(msg.sender), "Only DAO operators can approve/reject distributions");
         if (approved) {
-            approvalCount[queueIndex] += 1;
-            emit DistributionApproved(queueIndex, msg.sender);
+            approvalCount[queueNumber] += 1;
+            emit DistributionApproved(queueNumber, msg.sender);
         } else {
-            rejectionCount[queueIndex] += 1;
-            emit DistributionRejected(queueIndex, msg.sender);
+            rejectionCount[queueNumber] += 1;
+            emit DistributionRejected(queueNumber, msg.sender);
         }
     }
 
-    function isDistributionApproved(uint24 queueIndex) public view returns (bool) {
-        return approvalCount[queueIndex] > rejectionCount[queueIndex];
+    function isDistributionApproved(uint24 queueNumber) public view returns (bool) {
+        return approvalCount[queueNumber] > rejectionCount[queueNumber];
+    }
+
+    function isDistributionRejected(uint24 queueNumber) public view returns (bool) {
+        return rejectionCount[queueNumber] > approvalCount[queueNumber];
     }
 }
