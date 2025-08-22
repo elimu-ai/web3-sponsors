@@ -19,7 +19,7 @@ describe("DistributionQueue", function () {
     const DistributionQueue = await hre.ethers.getContractFactory("DistributionQueue");
     const distributionQueue = await DistributionQueue.deploy(await languages.getAddress());
 
-    return { distributionQueue, account1, account2 };
+    return { distributionQueue, languages, account1, account2 };
   }
 
   describe("Deployment", function () {
@@ -40,9 +40,19 @@ describe("DistributionQueue", function () {
     });
   });
 
+  describe("Update Languages address", function () {
+    it("Should change the Languages contract", async function () {
+      const { distributionQueue, languages, account2 } = await loadFixture(deployFixture);
+
+      expect(await distributionQueue.languages()).to.equal(await languages.getAddress());
+      await distributionQueue.updateLanguages(account2.address);
+      expect(await distributionQueue.languages()).to.equal(account2.address);
+    });
+  });
+
   describe("Update QueueHandler address", function () {
     it("Should change the queue handler", async function () {
-      const { distributionQueue, account1, account2 } = await loadFixture(deployFixture);
+      const { distributionQueue, account2 } = await loadFixture(deployFixture);
 
       expect(await distributionQueue.queueHandler()).to.equal(ethers.ZeroAddress);
       await distributionQueue.updateQueueHandler(account2.address);
