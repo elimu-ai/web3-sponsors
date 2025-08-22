@@ -74,8 +74,8 @@ contract SponsorshipQueue {
     }
 
     function enqueue(Sponsorship memory sponsorship) private {
-        queueNumberNext += 1;
         queue[queueNumberNext] = sponsorship;
+        queueNumberNext += 1;
     }
 
     function dequeue() public returns (Sponsorship memory) {

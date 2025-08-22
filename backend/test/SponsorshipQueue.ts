@@ -10,7 +10,7 @@ describe("SponsorshipQueue", function () {
   // and reset Hardhat Network to that snapshot in every test.
   async function deployFixture() {
     // Contracts are deployed using the first signer/account by default
-    const [firstAccount, otherAccount] = await hre.ethers.getSigners();
+    const [account1, account2] = await hre.ethers.getSigners();
 
     const estimatedCost = hre.ethers.parseUnits("0.02");
 
@@ -21,7 +21,7 @@ describe("SponsorshipQueue", function () {
     const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
     const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost, await languages.getAddress());
 
-    return { sponsorshipQueue, languages, firstAccount, otherAccount };
+    return { sponsorshipQueue, languages, account1, account2 };
   }
 
   describe("Deployment", function () {
@@ -34,9 +34,9 @@ describe("SponsorshipQueue", function () {
     });
 
     it("Should set the right owner", async function () {
-      const { sponsorshipQueue, firstAccount } = await loadFixture(deployFixture);
+      const { sponsorshipQueue, account1 } = await loadFixture(deployFixture);
 
-      expect(await sponsorshipQueue.owner()).to.equal(firstAccount.address);
+      expect(await sponsorshipQueue.owner()).to.equal(account1.address);
     });
   });
 
@@ -61,9 +61,9 @@ describe("SponsorshipQueue", function () {
     });
 
     it("Should emit an event on addSponsorship", async function () {
-      const { sponsorshipQueue, firstAccount } = await loadFixture(deployFixture);
+      const { sponsorshipQueue, account1 } = await loadFixture(deployFixture);
 
-      const firstAccountBalance = await hre.ethers.provider.getBalance(firstAccount.address);
+      const firstAccountBalance = await hre.ethers.provider.getBalance(account1.address);
       console.log("firstAccountBalance:", firstAccountBalance);
 
       await expect(sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") }))
@@ -71,9 +71,9 @@ describe("SponsorshipQueue", function () {
     });
 
     it("Should increase contract balance on addSponsorship", async function () {
-      const { sponsorshipQueue, firstAccount } = await loadFixture(deployFixture);
+      const { sponsorshipQueue, account1 } = await loadFixture(deployFixture);
 
-      const firstAccountBalance = await hre.ethers.provider.getBalance(firstAccount.address);
+      const firstAccountBalance = await hre.ethers.provider.getBalance(account1.address);
       console.log("firstAccountBalance:", firstAccountBalance);
 
       console.log("sponsorshipQueue.target:", sponsorshipQueue.target);
@@ -85,7 +85,7 @@ describe("SponsorshipQueue", function () {
     });
 
     it("Should increase queue length on addSponsorship", async function () {
-      const { sponsorshipQueue } = await loadFixture(deployFixture);
+      const { sponsorshipQueue, account1 } = await loadFixture(deployFixture);
 
       const queueLengthBefore = await sponsorshipQueue.getLength();
       console.log("queueLengthBefore:", queueLengthBefore);
@@ -96,6 +96,10 @@ describe("SponsorshipQueue", function () {
       const queueLengthAfter = await sponsorshipQueue.getLength();
       console.log("queueLengthAfter:", queueLengthAfter);
       expect(queueLengthAfter).to.equal(1);
+
+      const sponsorshipAtQueueNumber0After = await sponsorshipQueue.queue(0);
+      console.log("sponsorshipAtQueueNumber0After:", sponsorshipAtQueueNumber0After);
+      expect(sponsorshipAtQueueNumber0After.sponsor).to.equal(account1.address);
     });
   });
 });

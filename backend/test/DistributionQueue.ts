@@ -76,17 +76,41 @@ describe("DistributionQueue", function () {
     });
 
     it("Should increase queue count on addDistribution", async function () {
-      const { distributionQueue } = await loadFixture(deployFixture);
+      const { distributionQueue, account1 } = await loadFixture(deployFixture);
 
       const queueLengthBefore = await distributionQueue.getLength();
       console.log("queueLengthBefore:", queueLengthBefore);
       expect(queueLengthBefore).to.equal(0);
+
+      const distributionAtQueueNumber0Before = await distributionQueue.queue(0);
+      console.log("distributionAtQueueNumber0Before:", distributionAtQueueNumber0Before);
+      expect(distributionAtQueueNumber0Before.distributor).to.equal(ethers.ZeroAddress);
+
+      const queueNumberFrontBefore = await distributionQueue.queueNumberFront();
+      console.log("queueNumberFrontBefore:", queueNumberFrontBefore);
+      expect(queueNumberFrontBefore).to.equal(0);
+
+      const queueNumberNextBefore = await distributionQueue.queueNumberNext();
+      console.log("queueNumberNextBefore:", queueNumberNextBefore);
+      expect(queueNumberNextBefore).to.equal(0);
 
       await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
       
       const queueLengthAfter = await distributionQueue.getLength();
       console.log("queueLengthAfter:", queueLengthAfter);
       expect(queueLengthAfter).to.equal(1);
+
+      const distributionAtQueueNumber0After = await distributionQueue.queue(0);
+      console.log("distributionAtQueueNumber0After:", distributionAtQueueNumber0After);
+      expect(distributionAtQueueNumber0After.distributor).to.equal(account1.address);
+
+      const queueNumberFrontAfter = await distributionQueue.queueNumberFront();
+      console.log("queueNumberFrontAfter:", queueNumberFrontAfter);
+      expect(queueNumberFrontAfter).to.equal(0);
+
+      const queueNumberNextAfter = await distributionQueue.queueNumberNext();
+      console.log("queueNumberNextAfter:", queueNumberNextAfter);
+      expect(queueNumberNextAfter).to.equal(1);
     });
   });
 });

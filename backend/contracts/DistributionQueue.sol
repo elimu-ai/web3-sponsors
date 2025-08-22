@@ -64,8 +64,8 @@ contract DistributionQueue {
     }
 
     function enqueue(Distribution memory sponsorship) private {
-        queueNumberNext += 1;
         queue[queueNumberNext] = sponsorship;
+        queueNumberNext += 1;
     }
 
     function dequeue() public returns (Distribution memory) {
