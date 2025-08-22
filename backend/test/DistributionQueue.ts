@@ -10,7 +10,7 @@ describe("DistributionQueue", function () {
   // and reset Hardhat Network to that snapshot in every test.
   async function deployFixture() {
     // Contracts are deployed using the first signer/account by default
-    const [firstAccount, otherAccount] = await hre.ethers.getSigners();
+    const [account1, account2] = await hre.ethers.getSigners();
 
     const Languages = await hre.ethers.getContractFactory("DummyLanguages");
     const languages = await Languages.deploy();
@@ -19,14 +19,26 @@ describe("DistributionQueue", function () {
     const DistributionQueue = await hre.ethers.getContractFactory("DistributionQueue");
     const distributionQueue = await DistributionQueue.deploy(await languages.getAddress());
 
-    return { distributionQueue, firstAccount, otherAccount };
+    return { distributionQueue, account1, account2 };
   }
 
   describe("Deployment", function () {
     it("Should set the right owner", async function () {
-      const { distributionQueue, firstAccount } = await loadFixture(deployFixture);
+      const { distributionQueue, account1 } = await loadFixture(deployFixture);
 
-      expect(await distributionQueue.owner()).to.equal(firstAccount.address);
+      expect(await distributionQueue.owner()).to.equal(account1.address);
+    });
+  });
+
+  describe("Update QueueHandler address", function () {
+    it("Should change the queue handler", async function () {
+      const { distributionQueue, account1, account2 } = await loadFixture(deployFixture);
+
+      console.log("account2.address:", account2.address);
+
+      expect(await distributionQueue.queueHandler()).to.equal(account1.address);
+      await distributionQueue.updateQueueHandler(account2.address);
+      expect(await distributionQueue.queueHandler()).to.equal(account2.address);
     });
   });
 

@@ -26,15 +26,7 @@ contract SponsorshipQueue {
     event QueueHandlerUpdated(address);
     event SponsorshipAdded(Sponsorship);
 
-    error OnlyOwner();
     error InvalidLanguageCode();
-
-    modifier onlyOwner() {
-        if (msg.sender != owner) {
-            revert OnlyOwner();
-        }
-        _;
-    }
 
     constructor(uint256 estimatedCost_, address languages_) {
         owner = msg.sender;
@@ -42,22 +34,26 @@ contract SponsorshipQueue {
         languages = ILanguages(languages_);
     }
 
-    function updateOwner(address owner_) public onlyOwner() {
+    function updateOwner(address owner_) public {
+        require(msg.sender == owner, "Only the current owner can set a new owner");
         owner = owner_;
         emit OwnerUpdated(owner_);
     }
 
-    function updateEstimatedCost(uint256 estimatedCost_) public onlyOwner {
+    function updateEstimatedCost(uint256 estimatedCost_) public {
+        require(msg.sender == owner, "Only the owner can set the `estimatedCost`");
         estimatedCost = estimatedCost_;
         emit EstimatedCostUpdated(estimatedCost_);
     }
 
-    function updateLanguages(address languages_) public onlyOwner {
+    function updateLanguages(address languages_) public {
+        require(msg.sender == owner, "Only the owner can set the `languages` address");
         languages = ILanguages(languages_);
         emit LanguagesUpdated(languages_);
     }
 
-    function updateQueueHandler(address queueHandler_) public onlyOwner {
+    function updateQueueHandler(address queueHandler_) public {
+        require(msg.sender == owner, "Only the owner can set the `queueHandler` address");
         queueHandler = queueHandler_;
         emit QueueHandlerUpdated(queueHandler_);
     }
