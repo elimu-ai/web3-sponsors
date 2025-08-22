@@ -19,8 +19,10 @@ contract DistributionQueue {
     uint24 public queueNumberFront = 0;
     uint24 public queueNumberNext = 0;
 
-    event OwnerUpdated(address owner);
-    event DistributionAdded(Distribution distribution);
+    event OwnerUpdated(address);
+    event LanguagesUpdated(address);
+    event QueueHandlerUpdated(address);
+    event DistributionAdded(Distribution);
 
     error InvalidLanguageCode();
 
@@ -33,6 +35,18 @@ contract DistributionQueue {
         require(msg.sender == owner, "Only the current owner can set a new owner");
         owner = owner_;
         emit OwnerUpdated(owner_);
+    }
+
+    function updateLanguages(address languages_) public {
+        require(msg.sender == owner, "Only the owner can set the `languages` address");
+        languages = ILanguages(languages_);
+        emit LanguagesUpdated(languages_);
+    }
+
+    function updateQueueHandler(address queueHandler_) public {
+        require(msg.sender == owner, "Only the owner can set the `queueHandler` address");
+        queueHandler = queueHandler_;
+        emit QueueHandlerUpdated(queueHandler_);
     }
 
     function addDistribution(string calldata languageCode, string calldata androidId) public {

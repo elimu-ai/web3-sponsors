@@ -20,10 +20,11 @@ contract SponsorshipQueue {
     uint24 public queueNumberFront = 0;
     uint24 public queueNumberNext = 0;
 
-    event OwnerUpdated(address owner);
-    event EstimatedCostUpdated(uint256 estimatedCost);
-    event LanguagesUpdated(address languages);
-    event SponsorshipAdded(Sponsorship sponsorship);
+    event OwnerUpdated(address);
+    event EstimatedCostUpdated(uint256);
+    event LanguagesUpdated(address);
+    event QueueHandlerUpdated(address);
+    event SponsorshipAdded(Sponsorship);
 
     error OnlyOwner();
     error InvalidLanguageCode();
@@ -54,6 +55,11 @@ contract SponsorshipQueue {
     function updateLanguages(address languages_) public onlyOwner {
         languages = ILanguages(languages_);
         emit LanguagesUpdated(languages_);
+    }
+
+    function updateQueueHandler(address queueHandler_) public onlyOwner {
+        queueHandler = queueHandler_;
+        emit QueueHandlerUpdated(queueHandler_);
     }
 
     function addSponsorship(string calldata languageCode) public payable {
