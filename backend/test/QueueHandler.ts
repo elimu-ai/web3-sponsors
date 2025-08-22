@@ -43,7 +43,7 @@ describe("QueueHandler", function () {
       await distributionVerifier.getAddress()
     );
 
-    return { queueHandler, roles, distributionVerifier, account1, account2, account3 };
+    return { queueHandler, distributionVerifier, distributionQueue, roles, account1, account2, account3 };
   }
 
   describe("Deployment", function () {
@@ -100,7 +100,14 @@ describe("QueueHandler", function () {
     it("Transaction should be rejected if distribution queue is empty", async function () {
       const { queueHandler } = await loadFixture(deployFixture);
 
-      await expect(queueHandler.processQueuePair()).to.be.rejected;
+      await expect(queueHandler.processQueuePair()).to.be.rejectedWith("The distribution queue cannot be empty");
+    });
+
+    it("Transaction should be rejected if distribution has 0 approvals, 0 rejections", async function () {
+      const { queueHandler, distributionQueue } = await loadFixture(deployFixture);
+
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
+      await expect(queueHandler.processQueuePair()).to.be.rejectedWith("The distribution must first be approved/rejected");
     });
   });
 });
