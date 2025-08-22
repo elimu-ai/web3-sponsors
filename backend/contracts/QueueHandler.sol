@@ -54,8 +54,8 @@ contract QueueHandler {
         // Check if the next distribution in the queue has been approved/rejected yet
         uint24 distributionQueueNumber = distributionQueue.queueNumberFront();
         bool isDistributionApproved = distributionVerifier.isDistributionApproved(distributionQueueNumber);
-        bool isRejected = distributionVerifier.isDistributionRejected(distributionQueueNumber);
-        require(isDistributionApproved || isRejected, "The distribution must first be approved/rejected");
+        bool isDistributionRejected = distributionVerifier.isDistributionRejected(distributionQueueNumber);
+        require(isDistributionApproved || isDistributionRejected, "The distribution must first be approved/rejected");
 
         // Before proceeding, verify that the queue of sponsorships is not empty
         require(sponsorshipQueue.getLength() > 0, "The sponsorship queue cannot be empty");
