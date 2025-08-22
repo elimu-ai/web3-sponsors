@@ -73,7 +73,7 @@ contract SponsorshipQueue {
         emit SponsorshipAdded(sponsorship);
     }
 
-    function enqueue(Sponsorship memory sponsorship) public {
+    function enqueue(Sponsorship memory sponsorship) private {
         queueNumberNext += 1;
         queue[queueNumberNext] = sponsorship;
     }

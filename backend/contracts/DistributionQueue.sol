@@ -63,7 +63,7 @@ contract DistributionQueue {
         emit DistributionAdded(distribution);
     }
 
-    function enqueue(Distribution memory sponsorship) public {
+    function enqueue(Distribution memory sponsorship) private {
         queueNumberNext += 1;
         queue[queueNumberNext] = sponsorship;
     }
