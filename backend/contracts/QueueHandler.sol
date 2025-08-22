@@ -13,6 +13,7 @@ contract QueueHandler {
     SponsorshipQueue public immutable sponsorshipQueue;
     DistributionQueue public immutable distributionQueue;
     IDistributionVerifier public distributionVerifier;
+    uint256 public queuePairingCount = 0;
 
     event OwnerUpdated(address);
     event RolesUpdated(address);
@@ -69,6 +70,9 @@ contract QueueHandler {
 
             // Transfer ETH from the sponsorship to the distributor
             sponsorshipQueue.payDistributor(distribution.distributor, sponsorship);
+
+            // Count the total number of distributions paired with a sponsorship
+            queuePairingCount++;
         }
     }
 }
