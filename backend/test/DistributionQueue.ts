@@ -2,7 +2,7 @@ import {
   loadFixture,
 } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { expect } from "chai";
-import hre from "hardhat";
+import hre, { ethers } from "hardhat";
 
 describe("DistributionQueue", function () {
   // We define a fixture to reuse the same setup in every test.
@@ -30,11 +30,19 @@ describe("DistributionQueue", function () {
     });
   });
 
+  describe("Update owner address", function () {
+    it("Should change the owner", async function () {
+      const { distributionQueue, account1, account2 } = await loadFixture(deployFixture);
+
+      expect(await distributionQueue.owner()).to.equal(account1.address);
+      await distributionQueue.updateOwner(account2.address);
+      expect(await distributionQueue.owner()).to.equal(account2.address);
+    });
+  });
+
   describe("Update QueueHandler address", function () {
     it("Should change the queue handler", async function () {
       const { distributionQueue, account1, account2 } = await loadFixture(deployFixture);
-
-      console.log("account2.address:", account2.address);
 
       expect(await distributionQueue.queueHandler()).to.equal(account1.address);
       await distributionQueue.updateQueueHandler(account2.address);

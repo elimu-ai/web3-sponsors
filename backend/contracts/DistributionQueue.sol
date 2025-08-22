@@ -2,6 +2,7 @@
 pragma solidity ^0.8.28;
 
 import { ILanguages } from "@elimu-ai/dao-contracts/ILanguages.sol";
+import "hardhat/console.sol";
 
 struct Distribution {
     string languageCode;
@@ -32,6 +33,7 @@ contract DistributionQueue {
     }
 
     function updateOwner(address owner_) public {
+        console.log("updateOwner");
         require(msg.sender == owner, "Only the current owner can set a new owner");
         owner = owner_;
         emit OwnerUpdated(owner_);
@@ -44,6 +46,7 @@ contract DistributionQueue {
     }
 
     function updateQueueHandler(address queueHandler_) public {
+        console.log("updateQueueHandler");
         require(msg.sender == owner, "Only the owner can set the `queueHandler` address");
         queueHandler = queueHandler_;
         emit QueueHandlerUpdated(queueHandler_);
