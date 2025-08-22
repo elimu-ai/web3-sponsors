@@ -80,6 +80,7 @@ contract SponsorshipQueue {
 
     function dequeue() public returns (Sponsorship memory) {
         require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
+        require(getLength() > 0, "Queue is empty");
         Sponsorship memory sponsorship = queue[queueNumberFront];
         delete queue[queueNumberFront];
         queueNumberFront += 1;
@@ -93,5 +94,6 @@ contract SponsorshipQueue {
     function payDistributor(address distributor, Sponsorship memory sponsorship) public {
         require(msg.sender == queueHandler, "Only the queue handler can process payouts");
         payable(distributor).transfer(sponsorship.estimatedCost);
+        // TODO: emit event
     }
 }

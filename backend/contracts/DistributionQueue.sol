@@ -70,6 +70,7 @@ contract DistributionQueue {
 
     function dequeue() public returns (Distribution memory) {
         require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
+        require(getLength() > 0, "Queue is empty");
         Distribution memory distribution = queue[queueNumberFront];
         delete queue[queueNumberFront];
         queueNumberFront += 1;
