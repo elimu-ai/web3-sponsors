@@ -52,7 +52,7 @@ contract QueueHandler {
         require(distributionQueue.getLength() > 0, "The distribution queue cannot be empty");
 
         // Check if the next distribution in the queue has been approved/rejected yet
-        uint24 distributionQueueNumber = distributionQueue.queueNumberFirst();
+        uint24 distributionQueueNumber = distributionQueue.queueNumberFront();
         bool isDistributionApproved = distributionVerifier.isDistributionApproved(distributionQueueNumber);
         bool isRejected = distributionVerifier.isDistributionRejected(distributionQueueNumber);
         require(isDistributionApproved || isRejected, "The distribution must first be approved/rejected");
@@ -67,7 +67,7 @@ contract QueueHandler {
             // Remove the sponsorship from the queue
             Sponsorship memory sponsorship = sponsorshipQueue.dequeue();
 
-            // Transfer ETH from the sponorship to the distributor
+            // Transfer ETH from the sponsorship to the distributor
             sponsorshipQueue.payDistributor(distribution.distributor, sponsorship);
         }
     }

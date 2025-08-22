@@ -17,8 +17,8 @@ contract SponsorshipQueue {
     ILanguages public languages;
     address public queueHandler;
     mapping(uint24 => Sponsorship) public queue;
-    uint24 public queueNumberFirst = 0;
-    uint24 public queueNumberLast = 0;
+    uint24 public queueNumberFront = 0;
+    uint24 public queueNumberNext = 0;
 
     event OwnerUpdated(address owner);
     event EstimatedCostUpdated(uint256 estimatedCost);
@@ -72,20 +72,20 @@ contract SponsorshipQueue {
     }
 
     function enqueue(Sponsorship memory sponsorship) public {
-        queueNumberLast += 1;
-        queue[queueNumberLast] = sponsorship;
+        queueNumberNext += 1;
+        queue[queueNumberNext] = sponsorship;
     }
 
     function dequeue() public returns (Sponsorship memory) {
         require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
-        Sponsorship memory sponsorship = queue[queueNumberFirst];
-        delete queue[queueNumberFirst];
-        queueNumberFirst += 1;
+        Sponsorship memory sponsorship = queue[queueNumberFront];
+        delete queue[queueNumberFront];
+        queueNumberFront += 1;
         return sponsorship;
     }
 
     function getLength() public view returns (uint256) {
-        return queueNumberLast - queueNumberFirst;
+        return queueNumberNext - queueNumberFront;
     }
 
     function payDistributor(address distributor, Sponsorship memory sponsorship) public payable {
