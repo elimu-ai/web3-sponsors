@@ -17,6 +17,7 @@ contract QueueHandler {
     event OwnerUpdated(address);
     event RolesUpdated(address);
     event DistributionVerifierUpdated(address);
+    event QueuePairProcessed(Distribution, Sponsorship);
 
     constructor(address roles_, address sponsorshipQueue_, address distributionQueue_, address distributionVerifier_) {
         owner = msg.sender;
@@ -70,10 +71,10 @@ contract QueueHandler {
         sponsorshipQueue.payDistributor(distribution.distributor, sponsorship);
 
         // Emit event
-        // TODO
+        emit QueuePairProcessed(distribution, sponsorship);
     }
 
-    /// @notice Remove rejected distribution from the distribution queue
+    /// @notice Remove rejected distribution from the queue
     function removeRejectedDistribution() public {
         // Verify that the queue of distributions is not empty
         require(distributionQueue.getLength() > 0, "The distribution queue cannot be empty");
