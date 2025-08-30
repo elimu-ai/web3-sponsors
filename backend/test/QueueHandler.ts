@@ -110,7 +110,14 @@ describe("QueueHandler", function () {
       const { queueHandler, distributionQueue } = await loadFixture(deployFixture);
 
       await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
+
+      const distributionQueueLengthBefore = await distributionQueue.getLength();
+      expect(distributionQueueLengthBefore).to.equal(1);
+
       await expect(queueHandler.processQueuePair()).to.be.rejectedWith("The distribution must first be approved/rejected");
+
+      const distributionQueueLengthAfter = await distributionQueue.getLength();
+      expect(distributionQueueLengthAfter).to.equal(1);
     });
 
     it("Transaction should be processed if distribution has 1 approval, 0 rejections", async function () {
@@ -120,10 +127,20 @@ describe("QueueHandler", function () {
       await distributionVerifier.verifyDistribution(1, true);
 
       await sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") });
-      
-      await queueHandler.processQueuePair();
-    });
 
-    // TODO: test dequeue
+      const distributionQueueLengthBefore = await distributionQueue.getLength();
+      expect(distributionQueueLengthBefore).to.equal(1);
+      
+      const sponsorshipQueueLengthBefore = await sponsorshipQueue.getLength();
+      expect(sponsorshipQueueLengthBefore).to.equal(1);
+
+      await queueHandler.processQueuePair();
+
+      const distributionQueueLengthAfter = await distributionQueue.getLength();
+      expect(distributionQueueLengthAfter).to.equal(0);
+
+      const sponsorshipQueueLengthAfter = await sponsorshipQueue.getLength();
+      expect(sponsorshipQueueLengthAfter).to.equal(0);
+    });
   });
 });
