@@ -143,4 +143,21 @@ describe("QueueHandler", function () {
       expect(sponsorshipQueueLengthAfter).to.equal(0);
     });
   });
+
+  describe("Remove Rejected Distribution", function () {
+    it("Rejected distribution should be removed from queue", async function () {
+      const { queueHandler, distributionQueue, distributionVerifier } = await loadFixture(deployFixture);
+
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
+      await distributionVerifier.verifyDistribution(1, false);
+
+      const distributionQueueLengthBefore = await distributionQueue.getLength();
+      expect(distributionQueueLengthBefore).to.equal(1);
+
+      await queueHandler.removeRejectedDistribution();
+
+      const distributionQueueLengthAfter = await distributionQueue.getLength();
+      expect(distributionQueueLengthAfter).to.equal(0);
+    });
+  });
 });

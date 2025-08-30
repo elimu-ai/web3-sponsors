@@ -80,5 +80,17 @@ contract QueueHandler {
         // TODO
     }
 
-    // TODO: remove rejected distribution from the queue
+    /// @notice Remove rejected distribution from the distribution queue
+    function removeRejectedDistribution() public {
+        // Verify that the queue of distributions is not empty
+        require(distributionQueue.getLength() > 0, "The distribution queue cannot be empty");
+
+        // Verify that the next distribution in the queue has been rejected
+        uint24 distributionQueueNumber = distributionQueue.queueNumberFront();
+        bool isDistributionRejected = distributionVerifier.isDistributionRejected(distributionQueueNumber);
+        require(isDistributionRejected, "Only rejected distributions can be removed from the queue");
+
+        // Remove the distribution from the queue
+        distributionQueue.dequeue();
+    }
 }
