@@ -97,9 +97,9 @@ describe("SponsorshipQueue", function () {
       console.log("queueLengthAfter:", queueLengthAfter);
       expect(queueLengthAfter).to.equal(1);
 
-      const sponsorshipAtQueueNumber0After = await sponsorshipQueue.queue(0);
-      console.log("sponsorshipAtQueueNumber0After:", sponsorshipAtQueueNumber0After);
-      expect(sponsorshipAtQueueNumber0After.sponsor).to.equal(account1.address);
+      const sponsorshipAtQueueNumber1After = await sponsorshipQueue.queue(1);
+      console.log("sponsorshipAtQueueNumber1After:", sponsorshipAtQueueNumber1After);
+      expect(sponsorshipAtQueueNumber1After.sponsor).to.equal(account1.address);
     });
   });
 });

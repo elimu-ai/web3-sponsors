@@ -17,8 +17,8 @@ contract SponsorshipQueue {
     ILanguages public languages;
     address public queueHandler;
     mapping(uint24 => Sponsorship) public queue;
-    uint24 public queueNumberFront = 0;
-    uint24 public queueNumberNext = 0;
+    uint24 public queueNumberFront = 1;
+    uint24 public queueNumberNext = 1;
 
     event OwnerUpdated(address);
     event EstimatedCostUpdated(uint256);
