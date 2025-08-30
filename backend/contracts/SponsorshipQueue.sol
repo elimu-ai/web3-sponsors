@@ -94,6 +94,5 @@ contract SponsorshipQueue {
     function payDistributor(address distributor, Sponsorship memory sponsorship) public {
         require(msg.sender == queueHandler, "Only the queue handler can process payouts");
         payable(distributor).transfer(sponsorship.estimatedCost);
-        // TODO: emit event
     }
 }

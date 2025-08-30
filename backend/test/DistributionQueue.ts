@@ -82,17 +82,17 @@ describe("DistributionQueue", function () {
       console.log("queueLengthBefore:", queueLengthBefore);
       expect(queueLengthBefore).to.equal(0);
 
-      const distributionAtQueueNumber0Before = await distributionQueue.queue(0);
-      console.log("distributionAtQueueNumber0Before:", distributionAtQueueNumber0Before);
-      expect(distributionAtQueueNumber0Before.distributor).to.equal(ethers.ZeroAddress);
+      const distributionAtQueueNumber1Before = await distributionQueue.queue(1);
+      console.log("distributionAtQueueNumber1Before:", distributionAtQueueNumber1Before);
+      expect(distributionAtQueueNumber1Before.distributor).to.equal(ethers.ZeroAddress);
 
       const queueNumberFrontBefore = await distributionQueue.queueNumberFront();
       console.log("queueNumberFrontBefore:", queueNumberFrontBefore);
-      expect(queueNumberFrontBefore).to.equal(0);
+      expect(queueNumberFrontBefore).to.equal(1);
 
       const queueNumberNextBefore = await distributionQueue.queueNumberNext();
       console.log("queueNumberNextBefore:", queueNumberNextBefore);
-      expect(queueNumberNextBefore).to.equal(0);
+      expect(queueNumberNextBefore).to.equal(1);
 
       await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
       
@@ -100,17 +100,17 @@ describe("DistributionQueue", function () {
       console.log("queueLengthAfter:", queueLengthAfter);
       expect(queueLengthAfter).to.equal(1);
 
-      const distributionAtQueueNumber0After = await distributionQueue.queue(0);
-      console.log("distributionAtQueueNumber0After:", distributionAtQueueNumber0After);
-      expect(distributionAtQueueNumber0After.distributor).to.equal(account1.address);
+      const distributionAtQueueNumber1After = await distributionQueue.queue(1);
+      console.log("distributionAtQueueNumber1After:", distributionAtQueueNumber1After);
+      expect(distributionAtQueueNumber1After.distributor).to.equal(account1.address);
 
       const queueNumberFrontAfter = await distributionQueue.queueNumberFront();
       console.log("queueNumberFrontAfter:", queueNumberFrontAfter);
-      expect(queueNumberFrontAfter).to.equal(0);
+      expect(queueNumberFrontAfter).to.equal(1);
 
       const queueNumberNextAfter = await distributionQueue.queueNumberNext();
       console.log("queueNumberNextAfter:", queueNumberNextAfter);
-      expect(queueNumberNextAfter).to.equal(1);
+      expect(queueNumberNextAfter).to.equal(2);
     });
   });
 });

@@ -43,7 +43,10 @@ describe("QueueHandler", function () {
       await distributionVerifier.getAddress()
     );
 
-    return { queueHandler, distributionVerifier, distributionQueue, roles, account1, account2, account3 };
+    await distributionQueue.updateQueueHandler(await queueHandler.getAddress());
+    await sponsorshipQueue.updateQueueHandler(await queueHandler.getAddress());
+
+    return { queueHandler, distributionVerifier, distributionQueue, sponsorshipQueue, roles, account1, account2, account3 };
   }
 
   describe("Deployment", function () {
@@ -109,5 +112,18 @@ describe("QueueHandler", function () {
       await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
       await expect(queueHandler.processQueuePair()).to.be.rejectedWith("The distribution must first be approved/rejected");
     });
+
+    it("Transaction should be processed if distribution has 1 approval, 0 rejections", async function () {
+      const { queueHandler, distributionVerifier, distributionQueue, sponsorshipQueue } = await loadFixture(deployFixture);
+
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
+      await distributionVerifier.verifyDistribution(1, true);
+
+      await sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") });
+      
+      await queueHandler.processQueuePair();
+    });
+
+    // TODO: test dequeue
   });
 });

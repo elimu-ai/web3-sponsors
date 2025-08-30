@@ -13,11 +13,12 @@ contract QueueHandler {
     SponsorshipQueue public immutable sponsorshipQueue;
     DistributionQueue public immutable distributionQueue;
     IDistributionVerifier public distributionVerifier;
-    uint256 public queuePairingCount = 0;
 
     event OwnerUpdated(address);
     event RolesUpdated(address);
     event DistributionVerifierUpdated(address);
+
+    error DistributionRejectedError();
 
     constructor(address roles_, address sponsorshipQueue_, address distributionQueue_, address distributionVerifier_) {
         owner = msg.sender;
@@ -49,7 +50,7 @@ contract QueueHandler {
     function processQueuePair() public {
         require(roles.isDaoOperator(msg.sender), "Only DAO operators can process queue pairing");
 
-        // Before proceeding, verify that the queue of distributions is not empty
+        // Verify that the queue of distributions is not empty
         require(distributionQueue.getLength() > 0, "The distribution queue cannot be empty");
 
         // Check if the next distribution in the queue has been approved/rejected yet
@@ -58,21 +59,26 @@ contract QueueHandler {
         bool isDistributionRejected = distributionVerifier.isDistributionRejected(distributionQueueNumber);
         require(isDistributionApproved || isDistributionRejected, "The distribution must first be approved/rejected");
 
-        // Before proceeding, verify that the queue of sponsorships is not empty
+        // If the distribution has been rejected, cancel the sponsorship pairing
+        if (isDistributionRejected) {
+            revert DistributionRejectedError();
+        }
+
+        // Verify that the queue of sponsorships is not empty
         require(sponsorshipQueue.getLength() > 0, "The sponsorship queue cannot be empty");
 
         // Remove the distribution from the queue
         Distribution memory distribution = distributionQueue.dequeue();
 
-        if (isDistributionApproved) {
-            // Remove the sponsorship from the queue
-            Sponsorship memory sponsorship = sponsorshipQueue.dequeue();
+        // Remove the sponsorship from the queue
+        Sponsorship memory sponsorship = sponsorshipQueue.dequeue();
 
-            // Transfer ETH from the sponsorship to the distributor
-            sponsorshipQueue.payDistributor(distribution.distributor, sponsorship);
+        // Transfer ETH from the sponsorship to the distributor
+        sponsorshipQueue.payDistributor(distribution.distributor, sponsorship);
 
-            // Count the total number of distributions paired with a sponsorship
-            queuePairingCount++;
-        }
+        // Emit event
+        // TODO
     }
+
+    // TODO: remove rejected distribution from the queue
 }
