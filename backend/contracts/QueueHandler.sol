@@ -17,8 +17,7 @@ contract QueueHandler {
     event OwnerUpdated(address);
     event RolesUpdated(address);
     event DistributionVerifierUpdated(address);
-
-    error DistributionRejectedError();
+    event QueuePairProcessed(Distribution, Sponsorship);
 
     constructor(address roles_, address sponsorshipQueue_, address distributionQueue_, address distributionVerifier_) {
         owner = msg.sender;
@@ -53,16 +52,11 @@ contract QueueHandler {
         // Verify that the queue of distributions is not empty
         require(distributionQueue.getLength() > 0, "The distribution queue cannot be empty");
 
-        // Check if the next distribution in the queue has been approved/rejected yet
+        // Get the next distribution in the queue
         uint24 distributionQueueNumber = distributionQueue.queueNumberFront();
-        bool isDistributionApproved = distributionVerifier.isDistributionApproved(distributionQueueNumber);
-        bool isDistributionRejected = distributionVerifier.isDistributionRejected(distributionQueueNumber);
-        require(isDistributionApproved || isDistributionRejected, "The distribution must first be approved/rejected");
 
-        // If the distribution has been rejected, cancel the sponsorship pairing
-        if (isDistributionRejected) {
-            revert DistributionRejectedError();
-        }
+        // Verify that the distribution has been approved
+        require(distributionVerifier.isDistributionApproved(distributionQueueNumber), "Only approved distributions can be processed");
 
         // Verify that the queue of sponsorships is not empty
         require(sponsorshipQueue.getLength() > 0, "The sponsorship queue cannot be empty");
@@ -77,8 +71,20 @@ contract QueueHandler {
         sponsorshipQueue.payDistributor(distribution.distributor, sponsorship);
 
         // Emit event
-        // TODO
+        emit QueuePairProcessed(distribution, sponsorship);
     }
 
-    // TODO: remove rejected distribution from the queue
+    /// @notice Remove rejected distribution from the queue
+    function removeRejectedDistribution() public {
+        // Verify that the queue of distributions is not empty
+        require(distributionQueue.getLength() > 0, "The distribution queue cannot be empty");
+
+        // Verify that the next distribution in the queue has been rejected
+        uint24 distributionQueueNumber = distributionQueue.queueNumberFront();
+        bool isDistributionRejected = distributionVerifier.isDistributionRejected(distributionQueueNumber);
+        require(isDistributionRejected, "Only rejected distributions can be removed from the queue");
+
+        // Remove the distribution from the queue
+        distributionQueue.dequeue();
+    }
 }
