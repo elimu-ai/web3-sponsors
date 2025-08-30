@@ -40,6 +40,26 @@ describe("SponsorshipQueue", function () {
     });
   });
 
+  describe("Update owner address", function () {
+    it("Should change the owner", async function () {
+      const { sponsorshipQueue, account1, account2 } = await loadFixture(deployFixture);
+
+      expect(await sponsorshipQueue.owner()).to.equal(account1.address);
+      await sponsorshipQueue.updateOwner(account2.address);
+      expect(await sponsorshipQueue.owner()).to.equal(account2.address);
+    });
+  });
+
+  describe("Update Languages address", function () {
+    it("Should change the Languages contract", async function () {
+      const { sponsorshipQueue, languages, account2 } = await loadFixture(deployFixture);
+
+      expect(await sponsorshipQueue.languages()).to.equal(await languages.getAddress());
+      await sponsorshipQueue.updateLanguages(account2.address);
+      expect(await sponsorshipQueue.languages()).to.equal(account2.address);
+    });
+  });
+
   describe("EstimatedCost", function () {
     it("Should emit an event on update", async function () {
       const { sponsorshipQueue } = await loadFixture(deployFixture);
