@@ -14,10 +14,15 @@ struct Distribution {
 contract DistributionQueue {
     address public owner;
     ILanguages public languages;
-    Distribution[] queue;
+    address public queueHandler;
+    mapping(uint24 => Distribution) public queue;
+    uint24 public queueNumberFront = 1;
+    uint24 public queueNumberNext = 1;
 
-    event OwnerUpdated(address owner);
-    event DistributionAdded(Distribution distribution);
+    event OwnerUpdated(address);
+    event LanguagesUpdated(address);
+    event QueueHandlerUpdated(address);
+    event DistributionAdded(Distribution);
 
     error InvalidLanguageCode();
 
@@ -32,6 +37,18 @@ contract DistributionQueue {
         emit OwnerUpdated(owner_);
     }
 
+    function updateLanguages(address languages_) public {
+        require(msg.sender == owner, "Only the owner can set the `languages` address");
+        languages = ILanguages(languages_);
+        emit LanguagesUpdated(languages_);
+    }
+
+    function updateQueueHandler(address queueHandler_) public {
+        require(msg.sender == owner, "Only the owner can set the `queueHandler` address");
+        queueHandler = queueHandler_;
+        emit QueueHandlerUpdated(queueHandler_);
+    }
+
     function addDistribution(string calldata languageCode, string calldata androidId) public {
         if (!languages.isSupportedLanguage(languageCode)) {
             revert InvalidLanguageCode();
@@ -42,11 +59,25 @@ contract DistributionQueue {
             block.timestamp,
             msg.sender
         );
-        queue.push(distribution);
+        enqueue(distribution);
         emit DistributionAdded(distribution);
     }
 
-    function getQueueCount() public view returns (uint256) {
-        return queue.length;
+    function enqueue(Distribution memory sponsorship) private {
+        queue[queueNumberNext] = sponsorship;
+        queueNumberNext += 1;
+    }
+
+    function dequeue() public returns (Distribution memory) {
+        require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
+        require(getLength() > 0, "Queue is empty");
+        Distribution memory distribution = queue[queueNumberFront];
+        delete queue[queueNumberFront];
+        queueNumberFront += 1;
+        return distribution;
+    }
+
+    function getLength() public view returns (uint256) {
+        return queueNumberNext - queueNumberFront;
     }
 }

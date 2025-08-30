@@ -42,7 +42,7 @@ describe("DistributionVerifier", function () {
   });
 
   describe("Update owner address", function () {
-    it("Should change the right owner", async function () {
+    it("Should change the owner", async function () {
       const { distributionVerifier, account1, account2 } = await loadFixture(deployFixture);
 
       expect(await distributionVerifier.owner()).to.equal(account1.address);
