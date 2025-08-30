@@ -114,7 +114,7 @@ describe("QueueHandler", function () {
       const distributionQueueLengthBefore = await distributionQueue.getLength();
       expect(distributionQueueLengthBefore).to.equal(1);
 
-      await expect(queueHandler.processQueuePair()).to.be.rejectedWith("The distribution must first be approved/rejected");
+      await expect(queueHandler.processQueuePair()).to.be.rejectedWith("Only approved distributions can be processed");
 
       const distributionQueueLengthAfter = await distributionQueue.getLength();
       expect(distributionQueueLengthAfter).to.equal(1);
