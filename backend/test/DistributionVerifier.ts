@@ -75,6 +75,20 @@ describe("DistributionVerifier", function () {
       await distributionVerifier.verifyDistribution(1, true);
       expect(await distributionVerifier.isDistributionApproved(1)).to.equal(true);
     });
+
+    it("Transaction should be rejected if duplicate", async function () {
+      const { distributionVerifier } = await loadFixture(deployFixture);
+
+      expect(await distributionVerifier.approvalCount(1)).to.equal(0);
+
+      // 1st verification
+      await distributionVerifier.verifyDistribution(1, true);
+      expect(await distributionVerifier.approvalCount(1)).to.equal(1);
+
+      // 2nd verification
+      await expect(distributionVerifier.verifyDistribution(1, true)).to.be.rejectedWith("Verification already exists for this DAO operator");
+      expect(await distributionVerifier.approvalCount(1)).to.equal(1);
+    });
   });
 
   describe("Is approved", function () {

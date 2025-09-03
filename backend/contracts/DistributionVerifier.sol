@@ -7,8 +7,9 @@ import { IRoles } from "@elimu-ai/dao-contracts/IRoles.sol";
 contract DistributionVerifier {
     address public owner;
     IRoles public roles;
-    mapping(uint24 => uint8) approvalCount;
-    mapping(uint24 => uint8) rejectionCount;
+    mapping(uint24 => uint8) public approvalCount;
+    mapping(uint24 => uint8) public rejectionCount;
+    mapping(uint24 => mapping(address => bool)) verifications;
 
     event OwnerUpdated(address owner);
     event RolesUpdated(address roles);
@@ -34,11 +35,14 @@ contract DistributionVerifier {
 
     function verifyDistribution(uint24 queueNumber, bool approved) public {
         require(roles.isDaoOperator(msg.sender), "Only DAO operators can approve/reject distributions");
+        require(!verifications[queueNumber][msg.sender], "Verification already exists for this DAO operator");
         if (approved) {
             approvalCount[queueNumber] += 1;
+            verifications[queueNumber][msg.sender] = true;
             emit DistributionApproved(queueNumber, msg.sender);
         } else {
             rejectionCount[queueNumber] += 1;
+            verifications[queueNumber][msg.sender] = true;
             emit DistributionRejected(queueNumber, msg.sender);
         }
     }
