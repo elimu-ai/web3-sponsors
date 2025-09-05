@@ -190,6 +190,20 @@ describe("QueueHandler", function () {
   });
 
   describe("Remove Rejected Distribution", function () {
+    it("Transaction should be rejected if distribution queue is empty", async function () {
+      const { queueHandler } = await loadFixture(deployFixture);
+
+      await expect(queueHandler.removeRejectedDistribution()).to.be.rejectedWith("The distribution queue cannot be empty");
+    });
+
+    it("Transaction should be rejected if the distribution has not been rejected", async function () {
+      const { queueHandler, distributionQueue } = await loadFixture(deployFixture);
+
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
+
+      await expect(queueHandler.removeRejectedDistribution()).to.be.rejectedWith("Only rejected distributions can be removed from the queue");
+    });
+
     it("Rejected distribution should be removed from queue", async function () {
       const { queueHandler, distributionQueue, distributionVerifier } = await loadFixture(deployFixture);
 
