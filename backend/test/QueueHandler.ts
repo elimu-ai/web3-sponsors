@@ -157,6 +157,28 @@ describe("QueueHandler", function () {
       const sponsorshipQueueLengthAfter = await sponsorshipQueue.getLength();
       expect(sponsorshipQueueLengthAfter).to.equal(0);
     });
+
+
+    it("Distributor balance should increase after successful queue pair processing", async function () {
+      const { queueHandler, distributionVerifier, distributionQueue, sponsorshipQueue, account2 } = await loadFixture(deployFixture);
+
+      await distributionQueue.connect(account2).addDistribution("HIN", "fbc880caac090c43");
+      await distributionVerifier.verifyDistribution(1, true);
+
+      await sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") });
+
+      const sponsorBalanceBefore = await ethers.provider.getBalance(account2);
+      console.log("sponsorBalanceBefore:", ethers.formatEther(sponsorBalanceBefore));
+
+      await queueHandler.processQueuePair();
+
+      const sponsorBalanceAfter = await ethers.provider.getBalance(account2);
+      console.log("sponsorBalanceAfter:", ethers.formatEther(sponsorBalanceAfter));
+
+      const sponsorBalanceDiff = sponsorBalanceAfter - sponsorBalanceBefore;
+      console.log("sponsorBalanceDiff:", ethers.formatEther(sponsorBalanceDiff));
+      expect(sponsorBalanceDiff).to.equal(hre.ethers.parseUnits("0.02"));
+    });
   });
 
   describe("Remove Rejected Distribution", function () {
