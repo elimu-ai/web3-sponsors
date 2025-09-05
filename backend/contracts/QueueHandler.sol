@@ -4,7 +4,7 @@ pragma solidity ^0.8.28;
 import { IRoles } from "@elimu-ai/dao-contracts/IRoles.sol";
 import { Sponsorship, SponsorshipQueue } from "./SponsorshipQueue.sol";
 import { Distribution, DistributionQueue } from "./DistributionQueue.sol";
-import { IDistributionVerifier } from "./interface/DistributionVerifier.sol";
+import { IDistributionVerifier } from "./interface/IDistributionVerifier.sol";
 
 /// @notice Handles pairing of sponsorships with distributions
 contract QueueHandler {
