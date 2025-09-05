@@ -120,6 +120,21 @@ describe("QueueHandler", function () {
       expect(distributionQueueLengthAfter).to.equal(1);
     });
 
+    it("Transaction should be rejected if sponsorship queue is empty", async function () {
+      const { queueHandler, distributionVerifier, distributionQueue, sponsorshipQueue } = await loadFixture(deployFixture);
+
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
+      await distributionVerifier.verifyDistribution(1, true);
+
+      const distributionQueueLengthBefore = await distributionQueue.getLength();
+      expect(distributionQueueLengthBefore).to.equal(1);
+
+      await expect(queueHandler.processQueuePair()).to.be.rejectedWith("The sponsorship queue cannot be empty");
+
+      const distributionQueueLengthAfter = await distributionQueue.getLength();
+      expect(distributionQueueLengthAfter).to.equal(1);
+    });
+
     it("Transaction should be processed if distribution has 1 approval, 0 rejections", async function () {
       const { queueHandler, distributionVerifier, distributionQueue, sponsorshipQueue } = await loadFixture(deployFixture);
 
