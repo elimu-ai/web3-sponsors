@@ -120,6 +120,30 @@ describe("QueueHandler", function () {
       expect(distributionQueueLengthAfter).to.equal(1);
     });
 
+    it("Transaction should be rejected if distribution has 0 approvals, 1 rejection", async function () {
+      const { queueHandler, distributionVerifier, distributionQueue, sponsorshipQueue } = await loadFixture(deployFixture);
+
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
+      await distributionVerifier.verifyDistribution(1, false);
+
+      await expect(queueHandler.processQueuePair()).to.be.rejectedWith("Only approved distributions can be processed");
+    });
+
+    it("Transaction should be rejected if sponsorship queue is empty", async function () {
+      const { queueHandler, distributionVerifier, distributionQueue, sponsorshipQueue } = await loadFixture(deployFixture);
+
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
+      await distributionVerifier.verifyDistribution(1, true);
+
+      const distributionQueueLengthBefore = await distributionQueue.getLength();
+      expect(distributionQueueLengthBefore).to.equal(1);
+
+      await expect(queueHandler.processQueuePair()).to.be.rejectedWith("The sponsorship queue cannot be empty");
+
+      const distributionQueueLengthAfter = await distributionQueue.getLength();
+      expect(distributionQueueLengthAfter).to.equal(1);
+    });
+
     it("Transaction should be processed if distribution has 1 approval, 0 rejections", async function () {
       const { queueHandler, distributionVerifier, distributionQueue, sponsorshipQueue } = await loadFixture(deployFixture);
 
@@ -142,9 +166,44 @@ describe("QueueHandler", function () {
       const sponsorshipQueueLengthAfter = await sponsorshipQueue.getLength();
       expect(sponsorshipQueueLengthAfter).to.equal(0);
     });
+
+    it("Distributor balance should increase after successful queue pair processing", async function () {
+      const { queueHandler, distributionVerifier, distributionQueue, sponsorshipQueue, account2 } = await loadFixture(deployFixture);
+
+      await distributionQueue.connect(account2).addDistribution("HIN", "fbc880caac090c43");
+      await distributionVerifier.verifyDistribution(1, true);
+
+      await sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") });
+
+      const sponsorBalanceBefore = await ethers.provider.getBalance(account2);
+      console.log("sponsorBalanceBefore:", ethers.formatEther(sponsorBalanceBefore));
+
+      await queueHandler.processQueuePair();
+
+      const sponsorBalanceAfter = await ethers.provider.getBalance(account2);
+      console.log("sponsorBalanceAfter:", ethers.formatEther(sponsorBalanceAfter));
+
+      const sponsorBalanceDiff = sponsorBalanceAfter - sponsorBalanceBefore;
+      console.log("sponsorBalanceDiff:", ethers.formatEther(sponsorBalanceDiff));
+      expect(sponsorBalanceDiff).to.equal(hre.ethers.parseUnits("0.02"));
+    });
   });
 
   describe("Remove Rejected Distribution", function () {
+    it("Transaction should be rejected if distribution queue is empty", async function () {
+      const { queueHandler } = await loadFixture(deployFixture);
+
+      await expect(queueHandler.removeRejectedDistribution()).to.be.rejectedWith("The distribution queue cannot be empty");
+    });
+
+    it("Transaction should be rejected if the distribution has not been rejected", async function () {
+      const { queueHandler, distributionQueue } = await loadFixture(deployFixture);
+
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
+
+      await expect(queueHandler.removeRejectedDistribution()).to.be.rejectedWith("Only rejected distributions can be removed from the queue");
+    });
+
     it("Rejected distribution should be removed from queue", async function () {
       const { queueHandler, distributionQueue, distributionVerifier } = await loadFixture(deployFixture);
 
