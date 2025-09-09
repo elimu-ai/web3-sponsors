@@ -65,7 +65,7 @@ describe("SponsorshipQueue", function () {
       const firstAccountBalance = await hre.ethers.provider.getBalance(account1.address);
       console.log("firstAccountBalance:", firstAccountBalance);
 
-      await expect(sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") }))
+      await expect(sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") }))
         .to.emit(sponsorshipQueue, "SponsorshipAdded");
     });
 
@@ -77,7 +77,7 @@ describe("SponsorshipQueue", function () {
 
       console.log("sponsorshipQueue.target:", sponsorshipQueue.target);
 
-      await sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") });
+      await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
       const contractBalance = await hre.ethers.provider.getBalance(sponsorshipQueue.target);
       console.log("contractBalance:", contractBalance);
       expect(contractBalance).to.equal(hre.ethers.parseUnits("0.02"));
@@ -90,7 +90,7 @@ describe("SponsorshipQueue", function () {
       console.log("queueLengthBefore:", queueLengthBefore);
       expect(queueLengthBefore).to.equal(0);
 
-      await sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") });
+      await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
       
       const queueLengthAfter = await sponsorshipQueue.getLength();
       console.log("queueLengthAfter:", queueLengthAfter);

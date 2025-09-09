@@ -46,7 +46,7 @@ contract SponsorshipQueue {
         emit QueueHandlerUpdated(queueHandler_);
     }
 
-    function addSponsorship(string calldata languageCode) public payable {
+    function addSponsorship() public payable {
         payable(address(this)).send(estimatedCost);
         Sponsorship memory sponsorship = Sponsorship(
             estimatedCost,
