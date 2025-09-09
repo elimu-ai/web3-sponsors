@@ -14,14 +14,10 @@ describe("SponsorshipQueue", function () {
 
     const estimatedCost = hre.ethers.parseUnits("0.02");
 
-    const Languages = await hre.ethers.getContractFactory("DummyLanguages");
-    const languages = await Languages.deploy();
-    await languages.addSupportedLanguage("HIN");
-
     const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
-    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost, await languages.getAddress());
+    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost);
 
-    return { sponsorshipQueue, languages, account1, account2 };
+    return { sponsorshipQueue, account1, account2 };
   }
 
   describe("Deployment", function () {
@@ -50,16 +46,6 @@ describe("SponsorshipQueue", function () {
     });
   });
 
-  describe("Update Languages address", function () {
-    it("Should change the Languages contract", async function () {
-      const { sponsorshipQueue, languages, account2 } = await loadFixture(deployFixture);
-
-      expect(await sponsorshipQueue.languages()).to.equal(await languages.getAddress());
-      await sponsorshipQueue.updateLanguages(account2.address);
-      expect(await sponsorshipQueue.languages()).to.equal(account2.address);
-    });
-  });
-
   describe("EstimatedCost", function () {
     it("Should emit an event on update", async function () {
       const { sponsorshipQueue } = await loadFixture(deployFixture);
@@ -73,13 +59,6 @@ describe("SponsorshipQueue", function () {
   });
 
   describe("Sponsorships", function () {
-    it ("Should revert with an error if invalid language code", async function () {
-      const { sponsorshipQueue } = await loadFixture(deployFixture);
-
-      await expect(sponsorshipQueue.addSponsorship("SWA", { value: hre.ethers.parseUnits("0.02") }))
-        .to.be.revertedWithCustomError(sponsorshipQueue, "InvalidLanguageCode");
-    });
-
     it("Should emit an event on addSponsorship", async function () {
       const { sponsorshipQueue, account1 } = await loadFixture(deployFixture);
 

@@ -21,13 +21,13 @@ describe("QueueHandler", function () {
     const Roles = await hre.ethers.getContractFactory("DummyRoles");
     const roles = await Roles.deploy(elimuToken.getAddress(), gElimuToken.getAddress());
 
+    const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
+    const estimatedCost = hre.ethers.parseUnits("0.02");
+    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost);
+
     const Languages = await hre.ethers.getContractFactory("DummyLanguages");
     const languages = await Languages.deploy();
     await languages.addSupportedLanguage("HIN");
-
-    const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
-    const estimatedCost = hre.ethers.parseUnits("0.02");
-    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost, await languages.getAddress());
 
     const DistributionQueue = await hre.ethers.getContractFactory("DistributionQueue");
     const distributionQueue = await DistributionQueue.deploy(await languages.getAddress());
