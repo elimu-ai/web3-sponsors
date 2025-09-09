@@ -62,9 +62,9 @@ contract SponsorshipQueue {
         if (!languages.isSupportedLanguage(languageCode)) {
             revert InvalidLanguageCode();
         }
-        payable(address(this)).send(msg.value);
+        payable(address(this)).send(estimatedCost);
         Sponsorship memory sponsorship = Sponsorship(
-            msg.value,
+            estimatedCost,
             languageCode,
             block.timestamp,
             msg.sender
