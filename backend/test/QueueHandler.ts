@@ -21,13 +21,13 @@ describe("QueueHandler", function () {
     const Roles = await hre.ethers.getContractFactory("DummyRoles");
     const roles = await Roles.deploy(elimuToken.getAddress(), gElimuToken.getAddress());
 
+    const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
+    const estimatedCost = hre.ethers.parseUnits("0.02");
+    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost);
+
     const Languages = await hre.ethers.getContractFactory("DummyLanguages");
     const languages = await Languages.deploy();
     await languages.addSupportedLanguage("HIN");
-
-    const SponsorshipQueue = await hre.ethers.getContractFactory("SponsorshipQueue");
-    const estimatedCost = hre.ethers.parseUnits("0.02");
-    const sponsorshipQueue = await SponsorshipQueue.deploy(estimatedCost, await languages.getAddress());
 
     const DistributionQueue = await hre.ethers.getContractFactory("DistributionQueue");
     const distributionQueue = await DistributionQueue.deploy(await languages.getAddress());
@@ -150,7 +150,7 @@ describe("QueueHandler", function () {
       await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
       await distributionVerifier.verifyDistribution(1, true);
 
-      await sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") });
+      await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
 
       const distributionQueueLengthBefore = await distributionQueue.getLength();
       expect(distributionQueueLengthBefore).to.equal(1);
@@ -173,7 +173,7 @@ describe("QueueHandler", function () {
       await distributionQueue.connect(account2).addDistribution("HIN", "fbc880caac090c43");
       await distributionVerifier.verifyDistribution(1, true);
 
-      await sponsorshipQueue.addSponsorship("HIN", { value: hre.ethers.parseUnits("0.02") });
+      await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
 
       const sponsorBalanceBefore = await ethers.provider.getBalance(account2);
       console.log("sponsorBalanceBefore:", ethers.formatEther(sponsorBalanceBefore));

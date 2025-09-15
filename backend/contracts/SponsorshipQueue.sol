@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-import { ILanguages } from "@elimu-ai/dao-contracts/ILanguages.sol";
-
 struct Sponsorship {
     uint256 estimatedCost;
-    string languageCode;
     uint256 timestamp;
     address sponsor;
 }
@@ -14,7 +11,6 @@ struct Sponsorship {
 contract SponsorshipQueue {
     address public owner;
     uint256 public estimatedCost;
-    ILanguages public languages;
     address public queueHandler;
     mapping(uint24 => Sponsorship) public queue;
     uint24 public queueNumberFront = 1;
@@ -22,16 +18,14 @@ contract SponsorshipQueue {
 
     event OwnerUpdated(address);
     event EstimatedCostUpdated(uint256);
-    event LanguagesUpdated(address);
     event QueueHandlerUpdated(address);
     event SponsorshipAdded(Sponsorship);
 
     error InvalidLanguageCode();
 
-    constructor(uint256 estimatedCost_, address languages_) {
+    constructor(uint256 estimatedCost_) {
         owner = msg.sender;
         estimatedCost = estimatedCost_;
-        languages = ILanguages(languages_);
     }
 
     function updateOwner(address owner_) public {
@@ -46,26 +40,16 @@ contract SponsorshipQueue {
         emit EstimatedCostUpdated(estimatedCost_);
     }
 
-    function updateLanguages(address languages_) public {
-        require(msg.sender == owner, "Only the owner can set the `languages` address");
-        languages = ILanguages(languages_);
-        emit LanguagesUpdated(languages_);
-    }
-
     function updateQueueHandler(address queueHandler_) public {
         require(msg.sender == owner, "Only the owner can set the `queueHandler` address");
         queueHandler = queueHandler_;
         emit QueueHandlerUpdated(queueHandler_);
     }
 
-    function addSponsorship(string calldata languageCode) public payable {
-        if (!languages.isSupportedLanguage(languageCode)) {
-            revert InvalidLanguageCode();
-        }
-        payable(address(this)).send(msg.value);
+    function addSponsorship() public payable {
+        payable(address(this)).send(estimatedCost);
         Sponsorship memory sponsorship = Sponsorship(
-            msg.value,
-            languageCode,
+            estimatedCost,
             block.timestamp,
             msg.sender
         );

@@ -49,7 +49,7 @@ export default function AddSponsorship() {
               Connect wallet first
             </button>
           ) : (
-            <SelectLanguage />
+            <ReadEstimatedCost />
           )}
         </div>
       </main>
@@ -58,41 +58,17 @@ export default function AddSponsorship() {
   );
 }
 
-export function SelectLanguage() {
-  console.debug("SelectLanguage")
-
-  const [languageCode, setLanguageCode] = useState("");
-  const handleLanguageCodeChange = (event: any) => {
-    console.debug('handleLanguageCodeChange');
-    setLanguageCode(event.target.value);
-  }
-  console.debug('languageCode:', languageCode);
+export function ReadEstimatedCost() {
+  console.debug("ReadEstimatedCost")
 
   return (
     <>
-      <select
-          onChange={handleLanguageCodeChange}
-          className="p-4 text-2xl text-indigo-200 bg-indigo-800 rounded-lg">
-        <option value="">-- Select language --</option>
-        <option value="ENG">ENG</option>
-        <option value="HIN">HIN</option>
-        <option value="TGL">TGL</option>
-        <option value="THA">THA</option>
-        <option value="VIE">VIE</option>
-      </select><br />
-
-      {(languageCode.length != 3) ? (
-        <button disabled={true} className="mt-4 p-8 text-2xl text-zinc-400 bg-zinc-300 rounded-lg">
-          Send 0.0001 ETH ⟠
-        </button>
-      ) : (
-        <SimulateContractButton languageCode={languageCode} />
-      )}
+      <SimulateContractButton estimatedCost={0.0001} />
     </>
   )
 }
 
-export function SimulateContractButton({ languageCode }: any) {
+export function SimulateContractButton({ estimatedCost }: any) {
   console.debug("SimulateContractButton");
 
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
@@ -102,8 +78,7 @@ export function SimulateContractButton({ languageCode }: any) {
     abi,
     address: deploymentAddress,
     functionName: "addSponsorship",
-    args: [languageCode],
-    value: parseEther("0.0001")
+    value: parseEther(estimatedCost)
   })
   console.debug("isPending:", isPending);
   console.debug("isError:", isError);
@@ -123,7 +98,7 @@ export function SimulateContractButton({ languageCode }: any) {
   return <WriteContractButton />
 }
 
-export function WriteContractButton({ languageCode }: any) {
+export function WriteContractButton({ estimatedCost }: any) {
   console.debug("WriteContractButton");
 
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
@@ -138,12 +113,11 @@ export function WriteContractButton({ languageCode }: any) {
           abi,
           address: deploymentAddress,
           functionName: "addSponsorship",
-          args: [languageCode],
-          value: parseEther("0.0001")
+          value: parseEther(estimatedCost)
         })
       }
     >
-      Send 0.0001 ETH ⟠
+      Send {estimatedCost} ETH ⟠
     </button>
   )
 }
