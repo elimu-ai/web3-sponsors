@@ -15,7 +15,7 @@ export default function Distributions() {
     const { isLoading, isError, error, data } = useReadContract({
         abi,
         address: deploymentAddress,
-        functionName: "getQueueCount"
+        functionName: "getLength"
     });
     console.debug("isLoading:", isLoading);
     console.debug("isError:", isError);
