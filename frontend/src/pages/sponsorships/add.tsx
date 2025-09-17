@@ -63,12 +63,12 @@ export function ReadEstimatedCost() {
 
   return (
     <>
-      <SimulateContractButton />
+      <SimulateContractButton estimatedCost={0.0001} />
     </>
   )
 }
 
-export function SimulateContractButton() {
+export function SimulateContractButton({ estimatedCost }: any) {
   console.debug("SimulateContractButton");
 
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
@@ -77,7 +77,8 @@ export function SimulateContractButton() {
   const { isPending, isError, error, isSuccess } = useSimulateContract({
     abi,
     address: deploymentAddress,
-    functionName: "addSponsorship"
+    functionName: "addSponsorship",
+    value: parseEther(String(estimatedCost))
   })
   console.debug("isPending:", isPending);
   console.debug("isError:", isError);
@@ -94,10 +95,10 @@ export function SimulateContractButton() {
     return <ErrorIndicator description={error.name} />
   }
 
-  return <WriteContractButton />
+  return <WriteContractButton estimatedCost={estimatedCost} />
 }
 
-export function WriteContractButton() {
+export function WriteContractButton({ estimatedCost }: any) {
   console.debug("WriteContractButton");
 
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
@@ -111,11 +112,12 @@ export function WriteContractButton() {
         writeContract({
           abi,
           address: deploymentAddress,
-          functionName: "addSponsorship"
+          functionName: "addSponsorship",
+          value: parseEther(String(estimatedCost))
         })
       }
     >
-      Send 0.0001 ETH ⟠
+      Send {estimatedCost} ETH ⟠
     </button>
   )
 }
