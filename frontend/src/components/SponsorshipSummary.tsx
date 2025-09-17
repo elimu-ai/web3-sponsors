@@ -37,7 +37,7 @@ export default function SponsorshipSummary({ queueNumber }: any) {
     const sponsor = sponsorship[2];
     return (
         <>
-            Queue number: #{queueNumber + 1}
+            Queue number: #{queueNumber}
             <div className="mt-2">
                 {new Date(timestamp * 1_000).toISOString().substring(0,10)} {new Date(timestamp * 1_000).toISOString().substring(11,16)}
             </div>

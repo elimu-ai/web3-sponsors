@@ -41,7 +41,7 @@ export default function Distributions() {
             {Array(queueCount).fill(1).map((el, i) =>
                 <Link key={i} href={`/distributions/${i + 1}`}>
                     <div className="skew-y-3 p-4 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
-                        <DistributionSummary queueIndex={i} />
+                        <DistributionSummary queueNumber={i + 1} />
                     </div>
                 </Link>
             )}
