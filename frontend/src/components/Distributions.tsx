@@ -30,15 +30,15 @@ export default function Distributions() {
         return <ErrorIndicator description={error.name} />
     }
 
-    const queueCount = Number(data);
-    console.debug("queueCount:", queueCount);
-    if (queueCount == 0) {
+    const queueLength = Number(data);
+    console.debug("queueLength:", queueLength);
+    if (queueLength == 0) {
         return <div>None yet</div>;
     }
 
     return (
         <>
-            {Array(queueCount).fill(1).map((el, i) =>
+            {Array(queueLength).fill(1).map((el, i) =>
                 <Link key={i} href={`/distributions/${i + 1}`}>
                     <div className="skew-y-3 p-4 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
                         <DistributionSummary queueNumber={i + 1} />

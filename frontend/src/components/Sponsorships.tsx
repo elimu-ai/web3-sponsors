@@ -30,15 +30,15 @@ export default function Sponsorships() {
         return <ErrorIndicator description={error.name} />
     }
 
-    const queueCount = Number(data);
-    console.debug("queueCount:", queueCount);
-    if (queueCount == 0) {
+    const queueLength = Number(data);
+    console.debug("queueLength:", queueLength);
+    if (queueLength == 0) {
         return <div>None yet</div>;
     }
 
     return (
         <>
-            {Array(queueCount).fill(1).map((el, i) =>
+            {Array(queueLength).fill(1).map((el, i) =>
                 <Link key={i} href={`/sponsorships/${i + 1}`}>
                     <div className="skew-y-3 p-4 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
                         <SponsorshipSummary queueNumber={i + 1} />
