@@ -5,10 +5,10 @@ import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
 import ErrorIndicator from "./ErrorIndicator";
 
-export default function SponsorshipSummary({ queueIndex }: any) {
+export default function SponsorshipSummary({ queueNumber }: any) {
     console.debug("SponsorshipSummary");
 
-    console.debug("queueIndex:", queueIndex);
+    console.debug("queueNumber:", queueNumber);
 
     const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
     console.debug("deploymentAddress:", deploymentAddress);
@@ -16,7 +16,7 @@ export default function SponsorshipSummary({ queueIndex }: any) {
         abi,
         address: deploymentAddress,
         functionName: "queue",
-        args: [queueIndex]
+        args: [queueNumber]
     });
     console.debug("isLoading:", isLoading);
     console.debug("isError:", isError);
@@ -33,19 +33,15 @@ export default function SponsorshipSummary({ queueIndex }: any) {
     
     const sponsorship: any = data;
     const estimatedCost = BigInt(sponsorship[0]);
-    const languageCode = String(sponsorship[1]);
-    const timestamp = Number(sponsorship[2]);
-    const sponsor = sponsorship[3];
+    const timestamp = Number(sponsorship[1]);
+    const sponsor = sponsorship[2];
     return (
         <>
-            Queue number: #{queueIndex + 1}
+            Queue number: #{queueNumber}
             <div className="mt-2">
                 {new Date(timestamp * 1_000).toISOString().substring(0,10)} {new Date(timestamp * 1_000).toISOString().substring(11,16)}
             </div>
             Amount: {formatEther(estimatedCost)} ETH
-            <div className="mt-2">
-                Language: <code>{languageCode}</code>
-            </div>
             <div className="mt-2">
                 Sponsor: <code>{sponsor}</code>
             </div>

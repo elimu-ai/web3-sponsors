@@ -78,7 +78,7 @@ export function SimulateContractButton({ estimatedCost }: any) {
     abi,
     address: deploymentAddress,
     functionName: "addSponsorship",
-    value: parseEther(estimatedCost)
+    value: parseEther(String(estimatedCost))
   })
   console.debug("isPending:", isPending);
   console.debug("isError:", isError);
@@ -95,7 +95,7 @@ export function SimulateContractButton({ estimatedCost }: any) {
     return <ErrorIndicator description={error.name} />
   }
 
-  return <WriteContractButton />
+  return <WriteContractButton estimatedCost={estimatedCost} />
 }
 
 export function WriteContractButton({ estimatedCost }: any) {
@@ -113,7 +113,7 @@ export function WriteContractButton({ estimatedCost }: any) {
           abi,
           address: deploymentAddress,
           functionName: "addSponsorship",
-          value: parseEther(estimatedCost)
+          value: parseEther(String(estimatedCost))
         })
       }
     >

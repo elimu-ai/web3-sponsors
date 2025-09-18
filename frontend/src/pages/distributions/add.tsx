@@ -137,7 +137,7 @@ export function SimulateContractButton({ languageCode, androidId}: any) {
     return <ErrorIndicator description={error.name} />
   }
 
-  return <WriteContractButton />
+  return <WriteContractButton languageCode={languageCode} androidId={androidId} />
 }
 
 export function WriteContractButton({ languageCode, androidId}: any) {
