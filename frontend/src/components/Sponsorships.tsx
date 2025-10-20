@@ -39,7 +39,7 @@ export default function Sponsorships() {
     return <LoadQueueNumbers queueLength={queueLength} />
 }
 
-export function LoadQueueNumbers({ queueLength }: any) {
+export function LoadQueueNumbers({ queueLength }: { queueLength: number }) {
     console.debug('LoadQueueNumbers')
 
     console.debug('queueLength:', queueLength)
