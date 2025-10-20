@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "author": "Ξlimu DAO",
   "license": "MIT",
   "scripts": {
@@ -10,9 +10,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@coinbase/onchainkit": "^0.23.4",
     "@rainbow-me/rainbowkit": "^2.1.2",
-    "next": "^14.2.21",
+    "next": "^14.2.32",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

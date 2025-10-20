@@ -1,15 +1,14 @@
 import { useReadContract } from "wagmi";
-import { abi } from "../../../backend/ignition/deployments/chain-84532/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
-import deployed_addresses from "../../../backend/ignition/deployments/chain-84532/deployed_addresses.json";
+import { abi } from "../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import deployed_addresses from "../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
-import { Avatar, Name } from "@coinbase/onchainkit/identity";
 import ErrorIndicator from "./ErrorIndicator";
 
-export default function SponsorshipSummary({ queueIndex }: any) {
+export default function SponsorshipSummary({ queueNumber }: any) {
     console.debug("SponsorshipSummary");
 
-    console.debug("queueIndex:", queueIndex);
+    console.debug("queueNumber:", queueNumber);
 
     const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
     console.debug("deploymentAddress:", deploymentAddress);
@@ -17,7 +16,7 @@ export default function SponsorshipSummary({ queueIndex }: any) {
         abi,
         address: deploymentAddress,
         functionName: "queue",
-        args: [queueIndex]
+        args: [queueNumber]
     });
     console.debug("isLoading:", isLoading);
     console.debug("isError:", isError);
@@ -38,13 +37,13 @@ export default function SponsorshipSummary({ queueIndex }: any) {
     const sponsor = sponsorship[2];
     return (
         <>
-            Queue number: #{queueIndex + 1}
+            Queue number: #{queueNumber}
             <div className="mt-2">
                 {new Date(timestamp * 1_000).toISOString().substring(0,10)} {new Date(timestamp * 1_000).toISOString().substring(11,16)}
             </div>
             Amount: {formatEther(estimatedCost)} ETH
             <div className="mt-2">
-                Sponsor: <code><Name address={sponsor} className="p-8 rounded-lg bg-purple-100 dark:bg-purple-900" /></code>
+                Sponsor: <code>{sponsor.substring(0, 6)}...{sponsor.substring(38, 42)}</code>
             </div>
         </>
     )

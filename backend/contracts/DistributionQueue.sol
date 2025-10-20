@@ -1,78 +1,83 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-enum DistributionStatus {
-    DeviceDelivered,
-    Approved,
-    Rejected,
-    Paid
-}
+import { ILanguages } from "@elimu-ai/dao-contracts/ILanguages.sol";
 
 struct Distribution {
+    string languageCode;
+    string androidId;
     uint256 timestamp;
     address distributor;
-    DistributionStatus status;
 }
 
+/// @notice A queue of distributions for the Ξlimu DAO's education program (see https://sponsors.elimu.ai)
 contract DistributionQueue {
     address public owner;
-    address public attestationHandler;
-    Distribution[] public queue;
+    ILanguages public languages;
+    address public queueHandler;
+    mapping(uint24 => Distribution) public queue;
+    uint24 public queueNumberFront = 1;
+    uint24 public queueNumberNext = 1;
 
-    event OwnerUpdated(address owner);
-    event AttestationHandlerUpdated(address attestationHandler);
-    event DistributionAdded(Distribution distribution);
-    event DistributionStatusUpdated(Distribution distribution);
+    event OwnerUpdated(address);
+    event LanguagesUpdated(address);
+    event QueueHandlerUpdated(address);
+    event DistributionAdded(Distribution);
 
-    error OnlyOwner();
-    error OnlyAttestationHandler();
+    error InvalidLanguageCode();
 
-    modifier onlyOwner() {
-        if (msg.sender != owner) {
-            revert OnlyOwner();
-        }
-        _;
-    }
-
-    modifier onlyAttestationHandler() {
-        if (msg.sender != attestationHandler) {
-            revert OnlyAttestationHandler();
-        }
-        _;
-    }
-
-    constructor(address _attestationHandler) {
+    constructor(address languages_) {
         owner = msg.sender;
-        attestationHandler = _attestationHandler;
+        languages = ILanguages(languages_);
     }
 
-    function updateOwner(address _owner) public onlyOwner() {
-        owner = _owner;
-        emit OwnerUpdated(_owner);
+    function updateOwner(address owner_) public {
+        require(msg.sender == owner, "Only the current owner can set a new owner");
+        owner = owner_;
+        emit OwnerUpdated(owner_);
     }
 
-    function updateAttestationHandler(address _attestationHandler) public onlyOwner() {
-        attestationHandler = _attestationHandler;
-        emit AttestationHandlerUpdated(_attestationHandler);
+    function updateLanguages(address languages_) public {
+        require(msg.sender == owner, "Only the owner can set the `languages` address");
+        languages = ILanguages(languages_);
+        emit LanguagesUpdated(languages_);
     }
 
-    function addDistribution() public {
+    function updateQueueHandler(address queueHandler_) public {
+        require(msg.sender == owner, "Only the owner can set the `queueHandler` address");
+        queueHandler = queueHandler_;
+        emit QueueHandlerUpdated(queueHandler_);
+    }
+
+    function addDistribution(string calldata languageCode, string calldata androidId) public {
+        if (!languages.isSupportedLanguage(languageCode)) {
+            revert InvalidLanguageCode();
+        }
         Distribution memory distribution = Distribution(
+            languageCode,
+            androidId,
             block.timestamp,
-            msg.sender,
-            DistributionStatus.DeviceDelivered
+            msg.sender
         );
-        queue.push(distribution);
+        enqueue(distribution);
         emit DistributionAdded(distribution);
     }
 
-    function updateDistributionStatus(uint256 queueIndex, DistributionStatus _distributionStatus) public onlyAttestationHandler() {
-        Distribution memory distribution = queue[queueIndex];
-        distribution.status = _distributionStatus;
-        emit DistributionStatusUpdated(distribution);
+    function enqueue(Distribution memory sponsorship) private {
+        queue[queueNumberNext] = sponsorship;
+        queueNumberNext += 1;
     }
 
-    function getQueueCount() public view returns (uint256) {
-        return queue.length;
+    function dequeue() public returns (Distribution memory) {
+        require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
+        require(getLength() > 0, "Queue is empty");
+        Distribution memory distribution = queue[queueNumberFront];
+        delete queue[queueNumberFront];
+        queueNumberFront += 1;
+        return distribution;
+    }
+
+    function getLength() public view returns (uint256) {
+        return queueNumberNext - queueNumberFront;
     }
 }

@@ -1,8 +1,10 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 
 const SponsorshipQueueModule = buildModule("SponsorshipQueueModule", (m) => {
-  const estimatedCost = m.getParameter("estimatedCost", ethers.parseUnits("0.002"));
+  console.log("network.name:", network.name);
+
+  const estimatedCost = ethers.parseUnits("0.0001");
 
   const sponsorshipQueue = m.contract("SponsorshipQueue", [estimatedCost]);
 

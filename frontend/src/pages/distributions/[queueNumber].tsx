@@ -3,7 +3,6 @@ import MainHeader from "@/components/MainHeader";
 import DistributionSummary from "@/components/DistributionSummary";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import Attestations from "@/components/Attestations";
 
 export default function DistributionDetails() {
   console.debug("DistributionDetails");
@@ -11,8 +10,6 @@ export default function DistributionDetails() {
   const router = useRouter();
   const queueNumber = Number(router.query.queueNumber);
   console.debug("queueNumber:", queueNumber);
-  const queueIndex = queueNumber - 1;
-  console.debug("queueIndex:", queueIndex);
 
   return (
     <>
@@ -31,15 +28,7 @@ export default function DistributionDetails() {
         </h1>
 
         <div className="mt-8 p-4 text-2xl bg-zinc-50 dark:bg-zinc-900 rounded-lg">
-          <DistributionSummary queueIndex={queueIndex} />
-        </div>
-
-        <h2 className="mt-8 text-2xl">
-          Attestations:
-        </h2>
-        
-        <div className="mt-8 text-xl space-y-2">
-          <Attestations queueIndex={queueIndex} />
+          <DistributionSummary queueNumber={queueNumber} />
         </div>
       </main>
       <MainFooter />

@@ -2,7 +2,7 @@ import {
   loadFixture,
 } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { expect } from "chai";
-import hre from "hardhat";
+import hre, { ethers } from "hardhat";
 
 describe("DistributionQueue", function () {
   // We define a fixture to reuse the same setup in every test.
@@ -10,97 +10,107 @@ describe("DistributionQueue", function () {
   // and reset Hardhat Network to that snapshot in every test.
   async function deployFixture() {
     // Contracts are deployed using the first signer/account by default
-    const [firstAccount, otherAccount] = await hre.ethers.getSigners();
+    const [account1, account2] = await hre.ethers.getSigners();
 
-    const attestationHandler = hre.ethers.ZeroAddress;
+    const Languages = await hre.ethers.getContractFactory("DummyLanguages");
+    const languages = await Languages.deploy();
+    await languages.addSupportedLanguage("HIN");
 
     const DistributionQueue = await hre.ethers.getContractFactory("DistributionQueue");
-    const distributionQueue = await DistributionQueue.deploy(attestationHandler);
+    const distributionQueue = await DistributionQueue.deploy(await languages.getAddress());
 
-    return { distributionQueue, firstAccount, otherAccount };
+    return { distributionQueue, languages, account1, account2 };
   }
 
   describe("Deployment", function () {
     it("Should set the right owner", async function () {
-      const { distributionQueue, firstAccount } = await loadFixture(deployFixture);
+      const { distributionQueue, account1 } = await loadFixture(deployFixture);
 
-      expect(await distributionQueue.owner()).to.equal(firstAccount.address);
-    });
-
-    it("Should set the right attestation handler", async function () {
-      const { distributionQueue } = await loadFixture(deployFixture);
-
-      expect(await distributionQueue.attestationHandler()).to.equal(hre.ethers.ZeroAddress);
+      expect(await distributionQueue.owner()).to.equal(account1.address);
     });
   });
 
-  describe("AttestationHandler", function () {
-    it("Should emit an event on update attestation handler", async function () {
-      const { distributionQueue, otherAccount } = await loadFixture(deployFixture);
+  describe("Update owner address", function () {
+    it("Should change the owner", async function () {
+      const { distributionQueue, account1, account2 } = await loadFixture(deployFixture);
 
-      const attestationHandler = otherAccount.address;
-      console.log("attestationHandler:", attestationHandler);
-      await expect(distributionQueue.updateAttestationHandler(attestationHandler))
-        .to.emit(distributionQueue, "AttestationHandlerUpdated");
+      expect(await distributionQueue.owner()).to.equal(account1.address);
+      await distributionQueue.updateOwner(account2.address);
+      expect(await distributionQueue.owner()).to.equal(account2.address);
     });
   });
 
-  describe("Distributions", function () {
-    it("Should emit an event on addDistribution", async function () {
-      const { distributionQueue } = await loadFixture(deployFixture);
+  describe("Update Languages address", function () {
+    it("Should change the Languages contract", async function () {
+      const { distributionQueue, languages, account2 } = await loadFixture(deployFixture);
 
-      await expect(distributionQueue.addDistribution())
-        .to.emit(distributionQueue, "DistributionAdded");
+      expect(await distributionQueue.languages()).to.equal(await languages.getAddress());
+      await distributionQueue.updateLanguages(account2.address);
+      expect(await distributionQueue.languages()).to.equal(account2.address);
     });
+  });
 
-    it("Should increase queue count on addDistribution", async function () {
-      const { distributionQueue } = await loadFixture(deployFixture);
+  describe("Update QueueHandler address", function () {
+    it("Should change the queue handler", async function () {
+      const { distributionQueue, account2 } = await loadFixture(deployFixture);
 
-      const queueCountBefore = await distributionQueue.getQueueCount();
-      console.log("queueCountBefore:", queueCountBefore);
-      expect(queueCountBefore).to.equal(0);
-
-      await distributionQueue.addDistribution();
-      
-      const queueCountAfter = await distributionQueue.getQueueCount();
-      console.log("queueCountAfter:", queueCountAfter);
-      expect(queueCountAfter).to.equal(1);
+      expect(await distributionQueue.queueHandler()).to.equal(ethers.ZeroAddress);
+      await distributionQueue.updateQueueHandler(account2.address);
+      expect(await distributionQueue.queueHandler()).to.equal(account2.address);
     });
   });
 
   describe("Distributions", function () {
+    it ("Should revert with an error if invalid language code", async function () {
+      const { distributionQueue } = await loadFixture(deployFixture);
+
+      await expect(distributionQueue.addDistribution("SWA", "fbc880caac090c43"))
+        .to.be.revertedWithCustomError(distributionQueue, "InvalidLanguageCode");
+    });
+
     it("Should emit an event on addDistribution", async function () {
       const { distributionQueue } = await loadFixture(deployFixture);
 
-      await expect(distributionQueue.addDistribution())
+      await expect(distributionQueue.addDistribution("HIN", "fbc880caac090c43"))
         .to.emit(distributionQueue, "DistributionAdded");
     });
 
     it("Should increase queue count on addDistribution", async function () {
-      const { distributionQueue } = await loadFixture(deployFixture);
+      const { distributionQueue, account1 } = await loadFixture(deployFixture);
 
-      const queueCountBefore = await distributionQueue.getQueueCount();
-      console.log("queueCountBefore:", queueCountBefore);
-      expect(queueCountBefore).to.equal(0);
+      const queueLengthBefore = await distributionQueue.getLength();
+      console.log("queueLengthBefore:", queueLengthBefore);
+      expect(queueLengthBefore).to.equal(0);
 
-      await distributionQueue.addDistribution();
+      const distributionAtQueueNumber1Before = await distributionQueue.queue(1);
+      console.log("distributionAtQueueNumber1Before:", distributionAtQueueNumber1Before);
+      expect(distributionAtQueueNumber1Before.distributor).to.equal(ethers.ZeroAddress);
+
+      const queueNumberFrontBefore = await distributionQueue.queueNumberFront();
+      console.log("queueNumberFrontBefore:", queueNumberFrontBefore);
+      expect(queueNumberFrontBefore).to.equal(1);
+
+      const queueNumberNextBefore = await distributionQueue.queueNumberNext();
+      console.log("queueNumberNextBefore:", queueNumberNextBefore);
+      expect(queueNumberNextBefore).to.equal(1);
+
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
       
-      const queueCountAfter = await distributionQueue.getQueueCount();
-      console.log("queueCountAfter:", queueCountAfter);
-      expect(queueCountAfter).to.equal(1);
-    });
-  });
+      const queueLengthAfter = await distributionQueue.getLength();
+      console.log("queueLengthAfter:", queueLengthAfter);
+      expect(queueLengthAfter).to.equal(1);
 
-  describe("DistributionStatus", function () {
-    it("Should emit an event on updateDistributionStatus", async function () {
-      const { distributionQueue, otherAccount } = await loadFixture(deployFixture);
+      const distributionAtQueueNumber1After = await distributionQueue.queue(1);
+      console.log("distributionAtQueueNumber1After:", distributionAtQueueNumber1After);
+      expect(distributionAtQueueNumber1After.distributor).to.equal(account1.address);
 
-      await distributionQueue.addDistribution();
+      const queueNumberFrontAfter = await distributionQueue.queueNumberFront();
+      console.log("queueNumberFrontAfter:", queueNumberFrontAfter);
+      expect(queueNumberFrontAfter).to.equal(1);
 
-      await distributionQueue.updateAttestationHandler(otherAccount.address);
-
-      await expect(distributionQueue.connect(otherAccount).updateDistributionStatus(0, 1))
-        .to.emit(distributionQueue, "DistributionStatusUpdated");
+      const queueNumberNextAfter = await distributionQueue.queueNumberNext();
+      console.log("queueNumberNextAfter:", queueNumberNextAfter);
+      expect(queueNumberNextAfter).to.equal(2);
     });
   });
 });

@@ -3,10 +3,11 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useAccount, useSimulateContract, useWriteContract } from "wagmi";
-import { abi } from "../../../../backend/ignition/deployments/chain-84532/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
-import deployed_addresses from "../../../../backend/ignition/deployments/chain-84532/deployed_addresses.json";
+import { abi } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address, parseEther } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
+import { useState } from "react";
 
 export default function AddSponsorship() {
   console.debug("AddSponsorship");
@@ -48,7 +49,7 @@ export default function AddSponsorship() {
               Connect wallet first
             </button>
           ) : (
-            <SimulateContractButton />
+            <ReadEstimatedCost />
           )}
         </div>
       </main>
@@ -57,7 +58,17 @@ export default function AddSponsorship() {
   );
 }
 
-export function SimulateContractButton() {
+export function ReadEstimatedCost() {
+  console.debug("ReadEstimatedCost")
+
+  return (
+    <>
+      <SimulateContractButton estimatedCost={0.0001} />
+    </>
+  )
+}
+
+export function SimulateContractButton({ estimatedCost }: any) {
   console.debug("SimulateContractButton");
 
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
@@ -67,7 +78,7 @@ export function SimulateContractButton() {
     abi,
     address: deploymentAddress,
     functionName: "addSponsorship",
-    value: parseEther("0.002")
+    value: parseEther(String(estimatedCost))
   })
   console.debug("isPending:", isPending);
   console.debug("isError:", isError);
@@ -75,7 +86,7 @@ export function SimulateContractButton() {
   console.debug("isSuccess:", isSuccess);
 
   if (isPending) {
-    return <button disabled={true} className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+    return <button disabled={true} className="mt-4 p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
       <LoadingIndicator /> &nbsp; Simulating...
     </button>
   }
@@ -84,10 +95,10 @@ export function SimulateContractButton() {
     return <ErrorIndicator description={error.name} />
   }
 
-  return <WriteContractButton />
+  return <WriteContractButton estimatedCost={estimatedCost} />
 }
 
-export function WriteContractButton() {
+export function WriteContractButton({ estimatedCost }: any) {
   console.debug("WriteContractButton");
 
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
@@ -96,17 +107,17 @@ export function WriteContractButton() {
   const { writeContract } = useWriteContract();
   return (
     <button 
-      className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
+      className="mt-4 p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
       onClick={() =>
         writeContract({
           abi,
           address: deploymentAddress,
           functionName: "addSponsorship",
-          value: parseEther("0.002")
+          value: parseEther(String(estimatedCost))
         })
       }
     >
-      Send 0.02 ETH ⟠
+      Send {estimatedCost} ETH ⟠
     </button>
   )
 }
