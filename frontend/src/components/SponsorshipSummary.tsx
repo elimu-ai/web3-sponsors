@@ -43,7 +43,7 @@ export default function SponsorshipSummary({ queueNumber }: any) {
             </div>
             Amount: {formatEther(estimatedCost)} ETH
             <div className="mt-2">
-                Sponsor: <code>{sponsor}</code>
+                Sponsor: <code>{sponsor.substring(0, 6)}...{sponsor.substring(38, 42)}</code>
             </div>
         </>
     )
