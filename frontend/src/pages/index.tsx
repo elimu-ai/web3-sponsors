@@ -1,7 +1,7 @@
 import Distributions from "@/components/Distributions";
+import EstimatedCost from "@/components/EstimatedCost";
 import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
-import SponsorshipSummary from "@/components/SponsorshipSummary";
 import Sponsorships from "@/components/Sponsorships";
 import Head from "next/head";
 import Image from "next/image";
@@ -43,7 +43,7 @@ export default function Home() {
 
         <div id="steps" className="mt-16 p-8 flex flex-col space-y-8 border-4 border-purple-50 dark:border-purple-950 rounded-lg">
           <div className="flex flex-col items-center text-center">
-            <h2 className="text-2xl">Step 1 - Sponsor sends 0.0001 ETH</h2>
+            <h2 className="text-2xl">Step 1 - Sponsor sends <EstimatedCost /> ETH</h2>
             <Image src="/step1.avif" alt="Step 1" className="rounded-lg mt-4" width={160} height={0} />
           </div>
 

@@ -2,12 +2,12 @@ import LoadingIndicator from "@/components/LoadingIndicator";
 import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
-import { useAccount, useSimulateContract, useWriteContract } from "wagmi";
+import { useAccount, useReadContract, useSimulateContract, useWriteContract } from "wagmi";
 import { abi } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
 import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
-import { Address, parseEther } from "viem";
+import { Address, formatEther, parseEther } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
-import { useState } from "react";
+import EstimatedCost from "@/components/EstimatedCost";
 
 export default function AddSponsorship() {
   console.debug("AddSponsorship");
@@ -38,8 +38,8 @@ export default function AddSponsorship() {
         </h1>
 
         <div className="mt-8">
-          Your sponsorship will cover the estimated cost for<br />
-          delivering education to one out-of-school child.
+          Your sponsorship will cover the estimated cost (Ξ<EstimatedCost />)<br />
+          for delivering education to one out-of-school child.
         </div>
 
         <div className="mt-8">
@@ -61,15 +61,40 @@ export default function AddSponsorship() {
 export function ReadEstimatedCost() {
   console.debug("ReadEstimatedCost")
 
+  const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
+  console.debug("deploymentAddress:", deploymentAddress);
+  const { isLoading, isError, error, data } = useReadContract({
+      abi,
+      address: deploymentAddress,
+      functionName: "estimatedCost"
+  });
+  console.debug("isLoading:", isLoading);
+  console.debug("isError:", isError);
+  console.debug("error:", error);
+  console.debug("data:", data);
+
+  if (isLoading) {
+      return <LoadingIndicator />
+  }
+
+  if (isError) {
+      return <ErrorIndicator description={error.name} />
+  }
+
+  const estimatedCost: bigint = BigInt(String(data))
+  console.debug("estimatedCost:", estimatedCost);
+
   return (
     <>
-      <SimulateContractButton estimatedCost={0.0001} />
+      <SimulateContractButton estimatedCost={estimatedCost} />
     </>
   )
 }
 
-export function SimulateContractButton({ estimatedCost }: any) {
+export function SimulateContractButton({ estimatedCost }: { estimatedCost: bigint }) {
   console.debug("SimulateContractButton");
+
+  console.debug("estimatedCost:", estimatedCost)
 
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
   console.debug("deploymentAddress:", deploymentAddress);
@@ -78,7 +103,7 @@ export function SimulateContractButton({ estimatedCost }: any) {
     abi,
     address: deploymentAddress,
     functionName: "addSponsorship",
-    value: parseEther(String(estimatedCost))
+    value: estimatedCost
   })
   console.debug("isPending:", isPending);
   console.debug("isError:", isError);
@@ -98,8 +123,10 @@ export function SimulateContractButton({ estimatedCost }: any) {
   return <WriteContractButton estimatedCost={estimatedCost} />
 }
 
-export function WriteContractButton({ estimatedCost }: any) {
+export function WriteContractButton({ estimatedCost }: { estimatedCost: bigint }) {
   console.debug("WriteContractButton");
+
+  console.debug("estimatedCost:", estimatedCost)
 
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
   console.debug("deploymentAddress:", deploymentAddress);
@@ -113,11 +140,11 @@ export function WriteContractButton({ estimatedCost }: any) {
           abi,
           address: deploymentAddress,
           functionName: "addSponsorship",
-          value: parseEther(String(estimatedCost))
+          value: estimatedCost
         })
       }
     >
-      Send {estimatedCost} ETH ⟠
+      Send {formatEther(estimatedCost)} ETH ⟠
     </button>
   )
 }
