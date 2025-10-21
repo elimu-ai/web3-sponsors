@@ -49,7 +49,7 @@ export default function DistributionSummary({ queueNumber }: any) {
                 Android ID: {androidId}
             </div>
             <div className="mt-2">
-                Distributor: <code>{distributor}</code>
+                Distributor: <code>{distributor.substring(0, 6)}...{distributor.substring(38, 42)}</code>
             </div>
         </>
     )
