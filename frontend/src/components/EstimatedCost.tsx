@@ -21,7 +21,7 @@ export default function EstimatedCost() {
   console.debug("data:", data);
 
   if (isLoading) {
-      return <LoadingIndicator height={8} />
+      return <LoadingIndicator />
   }
 
   if (isError) {
