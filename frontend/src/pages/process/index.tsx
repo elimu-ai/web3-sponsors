@@ -3,7 +3,8 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useAccount, useReadContract, useSimulateContract, useWriteContract } from "wagmi";
-import { abi } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionQueueModule#DistributionQueue.json";
+import { abi as abi_sponsorship_queue } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import { abi as abi_distribution_queue } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionQueueModule#DistributionQueue.json";
 import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
@@ -58,7 +59,7 @@ export function LoadSponsorshipQueueLength() {
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
     console.debug("deploymentAddress:", deploymentAddress);
     const { isLoading, isError, error, data } = useReadContract({
-        abi,
+        abi: abi_sponsorship_queue,
         address: deploymentAddress,
         functionName: "getLength"
     });
@@ -90,7 +91,7 @@ export function LoadDistributionQueueLength() {
   const deploymentAddress: Address = deployed_addresses["DistributionQueueModule#DistributionQueue"] as `0x${string}`;
     console.debug("deploymentAddress:", deploymentAddress);
     const { isLoading, isError, error, data } = useReadContract({
-        abi,
+        abi: abi_distribution_queue,
         address: deploymentAddress,
         functionName: "getLength"
     });
