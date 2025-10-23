@@ -74,6 +74,10 @@ export default function Home() {
         <div className="mt-16 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
           <Distributions />
         </div>
+
+        <div className="mt-12 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
+          DAO operators can <Link href="/process" className="text-purple-600">process</Link> queue pairs.
+        </div>
       </main>
       <MainFooter />
     </>

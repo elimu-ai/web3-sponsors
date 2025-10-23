@@ -4,6 +4,7 @@ import deployed_addresses from "../../../backend/ignition/deployments/chain-1115
 import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
 import ErrorIndicator from "./ErrorIndicator";
+import VerificationStatus from "./VerificationStatus";
 
 export default function DistributionSummary({ queueNumber }: any) {
     console.debug("DistributionSummary");
@@ -53,6 +54,9 @@ export default function DistributionSummary({ queueNumber }: any) {
             </div>
             <div className="mt-2">
                 Distributor: <code>{distributor.substring(0, 6)}...{distributor.substring(38, 42)}</code>
+            </div>
+            <div className="mt-2">
+                <VerificationStatus queueNumber={queueNumber} />
             </div>
         </>
     )

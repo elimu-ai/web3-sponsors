@@ -1,4 +1,4 @@
-import { useReadContract, useSimulateContract } from "wagmi";
+import { useReadContract, useSimulateContract, useWriteContract } from "wagmi";
 import { abi as abi_sponsorship_queue } from "../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
 import { abi as abi_distribution_queue } from "../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionQueueModule#DistributionQueue.json";
 import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/chain-11155111/artifacts/QueueHandlerModule#QueueHandler.json"
@@ -8,6 +8,7 @@ import { Address } from "viem";
 import ErrorIndicator from "./ErrorIndicator";
 import SponsorshipSummary from "./SponsorshipSummary";
 import DistributionSummary from "./DistributionSummary";
+import Link from "next/link";
 
 export default function NextQueuePair() {
     console.debug("NextQueuePair");
@@ -75,14 +76,18 @@ export function LoadDistributionQueueNumberFront({ sponsorshipQueueNumberFront }
     return (
         <>
             <div className="flex gap-x-4">
-                <div className="mt-8 p-4 text-2xl bg-zinc-50 dark:bg-zinc-900 rounded-lg">
-                    <SponsorshipSummary queueNumber={sponsorshipQueueNumberFront} />
-                </div>
-                <div className="mt-8 p-4 text-2xl bg-zinc-50 dark:bg-zinc-900 rounded-lg">
-                    <DistributionSummary queueNumber={distributionQueueNumberFront} />
-                </div>
+                <Link href={`/sponsorships/${sponsorshipQueueNumberFront}`}>
+                    <div className="skew-y-3 p-4 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+                        <SponsorshipSummary queueNumber={sponsorshipQueueNumberFront} />
+                    </div>
+                </Link>
+                <Link href={`/distributions/${distributionQueueNumberFront}`}>
+                    <div className="skew-y-3 p-4 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+                        <DistributionSummary queueNumber={distributionQueueNumberFront} />
+                    </div>
+                </Link>
             </div>
-            <div className="mt-4 text-center">
+            <div className="mt-8 text-center">
                 <SimulateContractButton />
             </div>
         </>
@@ -108,7 +113,7 @@ export function SimulateContractButton() {
   if (isPending) {
     return (
       <>
-        <button disabled={true} className="p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+        <button disabled={true} className="p-8 text-2xl bg-gray-200 dark:bg-gray-800 rounded-lg border-gray-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
           <LoadingIndicator /> &nbsp; Simulating...
         </button>
       </>
@@ -119,6 +124,28 @@ export function SimulateContractButton() {
     return <ErrorIndicator description={error.name} />
   }
 
-  return <>WriteContractButton...</>
+  return <WriteContractButton />
 }
 
+export function WriteContractButton() {
+  console.debug("WriteContractButton");
+
+  const deploymentAddress: Address = deployed_addresses["QueueHandlerModule#QueueHandler"] as `0x${string}`;
+  console.debug("deploymentAddress:", deploymentAddress);
+
+  const { writeContract } = useWriteContract();
+  return (
+    <button 
+      className="mt-4 p-8 text-2xl bg-gray-200 dark:bg-gray-800 rounded-lg border-gray-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
+      onClick={() =>
+        writeContract({
+          abi: abi_queue_handler,
+          address: deploymentAddress,
+          functionName: "processQueuePair"
+        })
+      }
+    >
+        Process Queue Pair 🔗
+    </button>
+  )
+}

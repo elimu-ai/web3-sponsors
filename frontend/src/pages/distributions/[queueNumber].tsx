@@ -30,6 +30,12 @@ export default function DistributionDetails() {
         <div className="mt-8 p-4 text-2xl bg-zinc-50 dark:bg-zinc-900 rounded-lg">
           <DistributionSummary queueNumber={queueNumber} />
         </div>
+
+        <div className="mt-8">
+          <a href="https://sepolia.etherscan.io/address/0xC3313d6BB50C081AE07B6B097700eC2ED0568377#writeContract#F3" className="text-purple-600">
+            Add verification ↗
+          </a>
+        </div>
       </main>
       <MainFooter />
     </>
