@@ -4,7 +4,6 @@ import deployed_addresses from "../../../backend/ignition/deployments/chain-1115
 import { Address, createPublicClient, http } from "viem";
 import { sepolia } from "viem/chains";
 import LoadingIndicator from "./LoadingIndicator";
-import { ethers } from "ethers";
 
 export default function Verifications({ queueNumber }: { queueNumber: number }) {
     console.debug("Verifications");
@@ -22,20 +21,18 @@ export default function Verifications({ queueNumber }: { queueNumber: number }) 
     const [events, setEvents] = useState(Array(0))
     useEffect(() => {
         async function fetchContractEvents() {
-            const contract = new ethers.Contract(
-                deploymentAddress,
-                abi,
-                new ethers.JsonRpcProvider("https://ethereum-sepolia-rpc.publicnode.com")
-            )
-            console.debug("contract:", contract)
-
-            const filter = contract.filters.DistributionRejected
-            const contractEvents = await contract.queryFilter(
-                "*",
-                -50000
-            )
-            console.debug("contractEvents:", contractEvents)
-            setEvents(contractEvents)
+            const logs = await publicClient.getContractEvents({
+                abi: abi,
+                address: deploymentAddress,
+                fromBlock: await publicClient.getBlockNumber() - BigInt(10_000),
+                toBlock: await publicClient.getBlockNumber(),
+                eventName: "DistributionApproved",
+                args: {
+                    queueNumber: queueNumber
+                }
+            })
+            console.debug("logs:", logs)
+            setEvents(logs)
         }
         fetchContractEvents()
     }, [queueNumber])
@@ -59,10 +56,10 @@ export default function Verifications({ queueNumber }: { queueNumber: number }) 
             <tbody>
                 {events.map((el, i) =>
                     <tr key={i}>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{events[i].blockNumber}</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">{Number(events[i].args[0])}</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{events[i].args[1].substring(0, 6)}...{events[i].args[1].substring(38, 42)}</code></td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{events[i].fragment.name}</code></td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{Number(events[i].blockNumber)}</td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">{Number(events[i].args.queueNumber)}</td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{events[i].args.operator.substring(0, 6)}...{events[i].args.operator.substring(38, 42)}</code></td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{events[i].eventName}</code></td>
                     </tr>
                 )}
             </tbody>
