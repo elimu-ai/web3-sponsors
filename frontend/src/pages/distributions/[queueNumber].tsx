@@ -3,6 +3,7 @@ import MainHeader from "@/components/MainHeader";
 import DistributionSummary from "@/components/DistributionSummary";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Verifications from "@/components/Verifications";
 
 export default function DistributionDetails() {
   console.debug("DistributionDetails");
@@ -23,7 +24,7 @@ export default function DistributionDetails() {
       <main
         className={`flex flex-col items-center px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64`}
         >
-        <h1 className="relative flex place-items-center text-4xl">
+        <h1 className="text-4xl">
           Distribution Details
         </h1>
 
@@ -35,6 +36,16 @@ export default function DistributionDetails() {
           <a href="https://sepolia.etherscan.io/address/0xC3313d6BB50C081AE07B6B097700eC2ED0568377#writeContract#F3" className="text-purple-600">
             Add verification ↗
           </a>
+        </div>
+
+        <div className="mt-8 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
+          <h2 className="text-2xl text-center">
+            On-Chain Verifications
+          </h2>
+
+          <div className="mt-4 text-center">
+            <Verifications queueNumber={queueNumber} />
+          </div>
         </div>
       </main>
       <MainFooter />
