@@ -58,7 +58,7 @@ export default function Verifications({ queueNumber }: { queueNumber: number }) 
             </thead>
             <tbody>
                 {events.map((el, i) =>
-                    <tr>
+                    <tr key={i}>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{events[i].blockNumber}</td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">{Number(events[i].args[0])}</td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{events[i].args[1].substring(0, 6)}...{events[i].args[1].substring(38, 42)}</code></td>
