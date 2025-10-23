@@ -5,10 +5,11 @@ import { Address, createPublicClient, http } from "viem";
 import { sepolia } from "viem/chains";
 import LoadingIndicator from "./LoadingIndicator";
 
-export default function Verifications({ queueNumber }: { queueNumber: number }) {
+export default function Verifications({ queueNumber, eventName }: { queueNumber: number, eventName: string }) {
     console.debug("Verifications");
 
     console.debug("queueNumber:", queueNumber)
+    console.debug("eventName:", eventName)
 
     const deploymentAddress: Address = deployed_addresses["DistributionVerifierModule#DistributionVerifier"] as `0x${string}`;
     console.debug("deploymentAddress:", deploymentAddress);
@@ -26,7 +27,7 @@ export default function Verifications({ queueNumber }: { queueNumber: number }) 
                 address: deploymentAddress,
                 fromBlock: await publicClient.getBlockNumber() - BigInt(10_000),
                 toBlock: await publicClient.getBlockNumber(),
-                eventName: "DistributionApproved",
+                eventName: eventName,
                 args: {
                     queueNumber: queueNumber
                 }
@@ -47,8 +48,8 @@ export default function Verifications({ queueNumber }: { queueNumber: number }) 
         <table className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-800 border-spacing-2 border-separate rounded-lg">
             <thead>
                 <tr>
-                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Block #</th>
-                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Queue #</th>
+                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Block Number</th>
+                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Queue Number</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">DAO Operator</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Verification</th>
                 </tr>
@@ -57,7 +58,7 @@ export default function Verifications({ queueNumber }: { queueNumber: number }) 
                 {events.map((el, i) =>
                     <tr key={i}>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{Number(events[i].blockNumber)}</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">{Number(events[i].args.queueNumber)}</td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{Number(events[i].args.queueNumber)}</td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{events[i].args.operator.substring(0, 6)}...{events[i].args.operator.substring(38, 42)}</code></td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{events[i].eventName}</code></td>
                     </tr>

@@ -40,11 +40,17 @@ export default function DistributionDetails() {
 
         <div className="mt-8 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
           <h2 className="text-2xl text-center">
-            On-Chain Verifications
+            On-Chain Approvals 👍🏽
           </h2>
-
           <div className="mt-4 text-center">
-            <Verifications queueNumber={queueNumber} />
+            <Verifications queueNumber={queueNumber} eventName="DistributionApproved" />
+          </div>
+
+          <h2 className="mt-8 text-2xl text-center">
+            On-Chain Rejections 👎🏽
+          </h2>
+          <div className="mt-4 text-center">
+            <Verifications queueNumber={queueNumber} eventName="DistributionRejected"  />
           </div>
         </div>
       </main>
