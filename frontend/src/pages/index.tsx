@@ -63,7 +63,7 @@ export default function Home() {
           Sponsorship Queue:
         </h2>
 
-        <div className="mt-16 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+        <div className="mt-8 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
           <Sponsorships />
         </div>
 
@@ -71,7 +71,7 @@ export default function Home() {
           Distribution Queue:
         </h2>
 
-        <div className="mt-16 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+        <div className="mt-8 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
           <Distributions />
         </div>
 

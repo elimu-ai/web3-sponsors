@@ -49,7 +49,7 @@ function LoadQueuePairProcessedEvents() {
 
     return (
         events.map((el, i) =>
-            <div key={i} className="mt-8 p-4 text-2xl bg-zinc-50 dark:bg-zinc-900 rounded-lg">
+            <div key={i} className="mt-4 p-4 text-2xl bg-zinc-50 dark:bg-zinc-900 rounded-lg">
                 <div className="text-zinc-400">
                     Block: #{Number(events[i].blockNumber)} ({new Date(Number(events[i].blockTimestamp) * 1_000).toISOString().substring(0,10)} {new Date(Number(events[i].blockTimestamp) * 1_000).toISOString().substring(11,16)})
                 </div>
