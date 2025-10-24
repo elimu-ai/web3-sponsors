@@ -33,21 +33,21 @@ export default function DistributionDetails() {
         </div>
 
         <div className="mt-8">
-          <a href="https://sepolia.etherscan.io/address/0xC3313d6BB50C081AE07B6B097700eC2ED0568377#writeContract#F3" className="text-purple-600">
+          <a href="https://sepolia.etherscan.io/address/0xC3313d6BB50C081AE07B6B097700eC2ED0568377#writeContract#F3" className="text-purple-600" target="_blank">
             Add verification ↗
           </a>
         </div>
 
         <div className="mt-8 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
           <h2 className="text-2xl text-center">
-            On-Chain Approvals 👍🏽
+            Verification Approvals 👍🏽
           </h2>
           <div className="mt-4 text-center">
             <Verifications queueNumber={queueNumber} eventName="DistributionApproved" />
           </div>
 
           <h2 className="mt-8 text-2xl text-center">
-            On-Chain Rejections 👎🏽
+            Verification Rejections 👎🏽
           </h2>
           <div className="mt-4 text-center">
             <Verifications queueNumber={queueNumber} eventName="DistributionRejected"  />

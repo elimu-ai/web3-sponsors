@@ -8,8 +8,8 @@ import { abi as abi_distribution_queue } from "../../../../backend/ignition/depl
 import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
-import { useState } from "react";
 import NextQueuePair from "@/components/NextQueuePair";
+import ProcessedQueuePairs from "@/components/ProcessedQueuePairs";
 
 export default function Process() {
   console.debug("Process");
@@ -40,12 +40,22 @@ export default function Process() {
         </h1>
 
         <div className="mt-8 text-center">
-          Pair the next distribution (if approved)<br />
-          with the next sponsorship
+          Pair the next sponsorship with the<br />
+          next distribution (if approved).
         </div>
 
         <div className="mt-8">
           <LoadSponsorshipQueueLength />
+        </div>
+
+        <div className="mt-8 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
+          <h2 className="text-2xl text-center">
+            Previously Processed Queue Pairs 👇🏽
+          </h2>
+
+          <div className="mt-8">
+            <ProcessedQueuePairs />
+          </div>
         </div>
       </main>
       <MainFooter />

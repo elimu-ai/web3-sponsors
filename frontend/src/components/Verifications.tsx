@@ -57,10 +57,10 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
             <tbody>
                 {events.map((el, i) =>
                     <tr key={i}>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{Number(events[i].blockNumber)}</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{Number(events[i].args.queueNumber)}</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{events[i].args.operator.substring(0, 6)}...{events[i].args.operator.substring(38, 42)}</code></td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{events[i].eventName}</code></td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{Number(el.blockNumber)}</td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{Number(el.args.queueNumber)}</td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.args.operator.substring(0, 6)}...{el.args.operator.substring(38, 42)}</code></td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.eventName}</code></td>
                     </tr>
                 )}
             </tbody>
