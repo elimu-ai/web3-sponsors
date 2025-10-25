@@ -33,7 +33,7 @@ export default function DistributionDetails() {
         </div>
 
         <div className="mt-8">
-          <a href="https://sepolia.etherscan.io/address/0xC3313d6BB50C081AE07B6B097700eC2ED0568377#writeContract#F3" className="text-purple-600" target="_blank">
+          <a className="text-purple-600" href="https://sepolia.etherscan.io/address/0xC3313d6BB50C081AE07B6B097700eC2ED0568377#writeContract#F3" target="_blank">
             Add verification ↗
           </a>
         </div>

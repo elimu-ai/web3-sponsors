@@ -89,7 +89,11 @@ export function LoadSponsorshipQueueLength() {
     const queueLength = Number(data);
     console.debug("queueLength:", queueLength);
     if (queueLength == 0) {
-        return <div>The sponsorship queue is empty</div>;
+        return (
+          <div className="mt-4 p-8 bg-orange-800 border-orange-400 border-4 rounded-lg">
+              <p>Error: <code>The sponsorship queue is empty</code></p>
+          </div>
+        )
     }
 
     return <LoadDistributionQueueLength />
@@ -121,7 +125,11 @@ export function LoadDistributionQueueLength() {
     const queueLength = Number(data);
     console.debug("queueLength:", queueLength);
     if (queueLength == 0) {
-        return <div>The distribution queue is empty</div>;
+        return (
+          <div className="mt-4 p-8 bg-orange-800 border-orange-400 border-4 rounded-lg">
+              <p>Error: <code>The distribution queue is empty</code></p>
+          </div>
+        )
     }
 
     return <NextQueuePair />

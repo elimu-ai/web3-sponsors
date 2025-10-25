@@ -90,6 +90,11 @@ export function LoadIsDistributionRejected({ queueNumber } : { queueNumber: numb
                 <span className="p-2 text-sm text-orange-400 border-orange-600 bg-orange-800 border-2 rounded-xl">
                     Verification: <code className="ml-2 font-bold bg-orange-900 px-2 py-1 rounded-lg">REJECTED🟠</code>
                 </span>
+                <div className="pt-2 text-sm">
+                    <a className="text-orange-700" href="https://sepolia.etherscan.io/address/0x0B96769D277D8b7EaED38d2e269101615fB3e237#writeContract#F2" target="_blank">
+                        Remove from queue ↗
+                    </a>
+                </div>
             </>
         )
     } else {
