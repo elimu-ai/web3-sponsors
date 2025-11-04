@@ -1,7 +1,7 @@
 import Distributions from "@/components/Distributions";
+import EstimatedCost from "@/components/EstimatedCost";
 import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
-import SponsorshipSummary from "@/components/SponsorshipSummary";
 import Sponsorships from "@/components/Sponsorships";
 import Head from "next/head";
 import Image from "next/image";
@@ -12,10 +12,10 @@ export default function Home() {
   return (
     <>
       <Head>
-          <title>Sponsors 🫶🏽</title>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap" rel="stylesheet" />
+        <title>Sponsors 🫶🏽</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap" rel="stylesheet" />
       </Head>
       <MainHeader />
       <main
@@ -43,7 +43,7 @@ export default function Home() {
 
         <div id="steps" className="mt-16 p-8 flex flex-col space-y-8 border-4 border-purple-50 dark:border-purple-950 rounded-lg">
           <div className="flex flex-col items-center text-center">
-            <h2 className="text-2xl">Step 1 - Sponsor sends 0.0001 ETH</h2>
+            <h2 className="text-2xl">Step 1 - Sponsor sends <EstimatedCost /> ETH</h2>
             <Image src="/step1.avif" alt="Step 1" className="rounded-lg mt-4" width={160} height={0} />
           </div>
 
@@ -63,7 +63,7 @@ export default function Home() {
           Sponsorship Queue:
         </h2>
 
-        <div className="mt-16 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+        <div className="mt-8 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
           <Sponsorships />
         </div>
 
@@ -71,8 +71,12 @@ export default function Home() {
           Distribution Queue:
         </h2>
 
-        <div className="mt-16 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+        <div className="mt-8 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
           <Distributions />
+        </div>
+
+        <div className="mt-12 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
+          DAO operators can <Link href="/process" className="text-purple-600">process</Link> queue pairs.
         </div>
       </main>
       <MainFooter />
