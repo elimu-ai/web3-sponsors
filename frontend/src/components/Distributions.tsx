@@ -33,7 +33,7 @@ export default function Distributions() {
     const queueLength = Number(data);
     console.debug("queueLength:", queueLength);
     if (queueLength == 0) {
-        return <div>None yet</div>;
+        return <div>The queue is empty</div>;
     }
 
     return <LoadQueueNumbers queueLength={queueLength} />

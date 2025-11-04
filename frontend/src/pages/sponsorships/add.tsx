@@ -37,7 +37,7 @@ export default function AddSponsorship() {
           Become a Sponsor <span className="animate-pulse">💜</span>
         </h1>
 
-        <div className="mt-8">
+        <div className="mt-8 text-center">
           Your sponsorship will cover the estimated cost (Ξ<EstimatedCost />)<br />
           for delivering education to one out-of-school child.
         </div>

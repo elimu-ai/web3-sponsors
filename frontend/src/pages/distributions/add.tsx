@@ -37,7 +37,7 @@ export default function AddDistribution() {
           Become a Distributor <span>🛵💨</span>
         </h1>
 
-        <div className="mt-8">
+        <div className="mt-8 text-center">
           Help create real-world impact by delivering<br />
           education to out-of-school children.
         </div>

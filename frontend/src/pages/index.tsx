@@ -12,10 +12,10 @@ export default function Home() {
   return (
     <>
       <Head>
-          <title>Sponsors 🫶🏽</title>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap" rel="stylesheet" />
+        <title>Sponsors 🫶🏽</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap" rel="stylesheet" />
       </Head>
       <MainHeader />
       <main
@@ -63,7 +63,7 @@ export default function Home() {
           Sponsorship Queue:
         </h2>
 
-        <div className="mt-16 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+        <div className="mt-8 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
           <Sponsorships />
         </div>
 
@@ -71,8 +71,12 @@ export default function Home() {
           Distribution Queue:
         </h2>
 
-        <div className="mt-16 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+        <div className="mt-8 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
           <Distributions />
+        </div>
+
+        <div className="mt-12 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
+          DAO operators can <Link href="/process" className="text-purple-600">process</Link> queue pairs.
         </div>
       </main>
       <MainFooter />

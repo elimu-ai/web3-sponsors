@@ -4,6 +4,7 @@ import deployed_addresses from "../../../backend/ignition/deployments/chain-1115
 import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
 import ErrorIndicator from "./ErrorIndicator";
+import VerificationStatus from "./VerificationStatus";
 
 export default function DistributionSummary({ queueNumber }: any) {
     console.debug("DistributionSummary");
@@ -38,6 +39,9 @@ export default function DistributionSummary({ queueNumber }: any) {
     const distributor = distribution[3];
     return (
         <>
+            <div className="mb-4 text-center text-4xl">
+                🛵💨
+            </div>
             Queue number: #{queueNumber}
             <div className="mt-2">
                 {new Date(timestamp * 1_000).toISOString().substring(0,10)} {new Date(timestamp * 1_000).toISOString().substring(11,16)}
@@ -50,6 +54,9 @@ export default function DistributionSummary({ queueNumber }: any) {
             </div>
             <div className="mt-2">
                 Distributor: <code>{distributor.substring(0, 6)}...{distributor.substring(38, 42)}</code>
+            </div>
+            <div className="mt-2">
+                <VerificationStatus queueNumber={queueNumber} />
             </div>
         </>
     )
