@@ -23,7 +23,7 @@ export default function SponsorshipDetails() {
       <main
         className={`flex flex-col items-center px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64`}
         >
-        <h1 className="relative flex place-items-center text-4xl">
+        <h1 className="text-4xl">
           Sponsorship Details
         </h1>
 
