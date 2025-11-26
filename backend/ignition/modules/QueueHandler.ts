@@ -11,7 +11,7 @@ const QueueHandlerModule = buildModule("QueueHandlerModule", (m) => {
     rolesAddress = "0x3c32D6016928A83522F8836c80116b7F2b978268";
   } else if (network.name == "mainnet") {
     // https://github.com/elimu-ai/web3-smart-contracts/blob/main/dao-contracts/ignition/deployments/chain-1/deployed_addresses.json
-    rolesAddress = "0x addr mainnet";
+    rolesAddress = "0x9aAa9f6189cF070e1149E9C85c4d10526f430cE3";
   }
   console.log("rolesAddress:", rolesAddress);
 
