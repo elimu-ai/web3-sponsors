@@ -26,7 +26,7 @@ export default function Home() {
         </h1>
 
         <div className="text-4xl mt-8">
-          Sponsor the education of one individual child
+          Sponsor the education of one out-of-school child
         </div>
 
         <Link href="/sponsorships/add" className="mt-8 shadow-lg shadow-purple-500/100">
@@ -56,6 +56,11 @@ export default function Home() {
           <div className="flex flex-col items-center text-center">
             <h2 className="text-2xl">Step 3 - Child receives learning device</h2>
             <Image src="/step3.jpg" alt="Step 3" className="rounded-lg mt-4" width={320} height={0} />
+          </div>
+
+          <div className="flex flex-col items-center text-center">
+            <h2 className="text-2xl">Step 4 - Sponsor observes learning progress</h2>
+            <Image src="/step4.png" alt="Step 4" className="rounded-lg mt-4" width={320} height={0} />
           </div>
         </div>
 
