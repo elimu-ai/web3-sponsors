@@ -26,17 +26,19 @@ export default function Home() {
         </h1>
 
         <div className="text-4xl mt-8">
-          Sponsor the education of one individual child
+          Sponsor the education of one out-of-school child
         </div>
 
         <Link href="/sponsorships/add" className="mt-8 shadow-lg shadow-purple-500/100">
-          <button className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+          <button className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1"
+              id="sponsorButton">
             Become a Sponsor <span className="animate-pulse">💜</span>
           </button>
         </Link>
 
         <Link href="/distributions/add" className="mt-8 shadow-lg shadow-indigo-500/100">
-          <button className="p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+          <button className="p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1"
+              id="distributorButton">
             Become a Distributor <span>🛵💨</span>
           </button>
         </Link>
@@ -57,6 +59,11 @@ export default function Home() {
             <h2 className="text-2xl">Step 3 - Child receives learning device</h2>
             <Image src="/step3.jpg" alt="Step 3" className="rounded-lg mt-4" width={320} height={0} />
           </div>
+
+          <div className="flex flex-col items-center text-center">
+            <h2 className="text-2xl">Step 4 - Sponsor observes learning progress</h2>
+            <Image src="/step4.png" alt="Step 4" className="rounded-lg mt-4" width={320} height={0} />
+          </div>
         </div>
 
         <h2 className="mt-16 text-4xl">
@@ -76,7 +83,7 @@ export default function Home() {
         </div>
 
         <div className="mt-12 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
-          DAO operators can <Link href="/process" className="text-purple-600">process</Link> queue pairs.
+          DAO operators can <Link href="/process" className="text-purple-600" id="processLink">process</Link> queue pairs.
         </div>
       </main>
       <MainFooter />
