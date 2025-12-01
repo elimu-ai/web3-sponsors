@@ -30,13 +30,15 @@ export default function Home() {
         </div>
 
         <Link href="/sponsorships/add" className="mt-8 shadow-lg shadow-purple-500/100">
-          <button className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+          <button className="p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1"
+              id="sponsorButton">
             Become a Sponsor <span className="animate-pulse">💜</span>
           </button>
         </Link>
 
         <Link href="/distributions/add" className="mt-8 shadow-lg shadow-indigo-500/100">
-          <button className="p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+          <button className="p-8 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1"
+              id="distributorButton">
             Become a Distributor <span>🛵💨</span>
           </button>
         </Link>
@@ -81,7 +83,7 @@ export default function Home() {
         </div>
 
         <div className="mt-12 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
-          DAO operators can <Link href="/process" className="text-purple-600">process</Link> queue pairs.
+          DAO operators can <Link href="/process" className="text-purple-600" id="processLink">process</Link> queue pairs.
         </div>
       </main>
       <MainFooter />
