@@ -4,6 +4,7 @@ import { Address } from "viem";
 import { useReadContract } from "wagmi";
 import LoadingIndicator from "./LoadingIndicator";
 import ErrorIndicator from "./ErrorIndicator";
+import Link from "next/link";
 
 export default function VerificationStatus({ queueNumber } : { queueNumber: number }) {
     console.debug("VerificationStatus")
@@ -84,6 +85,9 @@ export function LoadIsDistributionRejected({ queueNumber } : { queueNumber: numb
     const isDistributionRejected = Boolean(data)
     console.debug('isDistributionRejected:', isDistributionRejected)
 
+    const deploymentAddressQueueHandler: Address = deployed_addresses["QueueHandlerModule#QueueHandler"] as `0x${string}`;
+    console.debug("deploymentAddressQueueHandler:", deploymentAddressQueueHandler);
+
     if (isDistributionRejected) {
         return (
             <>
@@ -91,9 +95,9 @@ export function LoadIsDistributionRejected({ queueNumber } : { queueNumber: numb
                     Verification: <code className="ml-2 font-bold bg-orange-900 px-2 py-1 rounded-lg">REJECTED🟠</code>
                 </span>
                 <div className="pt-2 text-sm">
-                    <a className="text-orange-700" href="https://sepolia.etherscan.io/address/0x0B96769D277D8b7EaED38d2e269101615fB3e237#writeContract#F2" target="_blank">
+                    <Link className="text-orange-700" href={`https://sepolia.etherscan.io/address/${deploymentAddressQueueHandler}#writeContract#F2`} target="_blank">
                         Remove from queue ↗
-                    </a>
+                    </Link>
                 </div>
             </>
         )
