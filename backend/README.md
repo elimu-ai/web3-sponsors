@@ -43,3 +43,6 @@ npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network
 npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network mainnet --verify
 ```
 [`./ignition/deployments/chain-1/deployed_addresses.json`](./ignition/deployments/chain-1/deployed_addresses.json)
+
+> [!NOTE]
+> After deploying the `QueueHandler`, remember to update its address in the `DistributionQueue`.
