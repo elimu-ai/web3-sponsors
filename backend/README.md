@@ -45,4 +45,4 @@ npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network mainnet
 [`./ignition/deployments/chain-1/deployed_addresses.json`](./ignition/deployments/chain-1/deployed_addresses.json)
 
 > [!NOTE]
-> After deploying the `QueueHandler`, remember to update its address in the `DistributionQueue`.
+> After deploying the `QueueHandler`, remember to update its address in the `SponsorshipQueue` and `DistributionQueue`.
