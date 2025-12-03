@@ -16,7 +16,7 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
 
     const publicClient = createPublicClient({
         chain: sepolia,
-        transport: http()
+        transport: http("https://0xrpc.io/sep")
     })
 
     const [events, setEvents] = useState(Array(0))
@@ -25,8 +25,7 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
             const logs = await publicClient.getContractEvents({
                 abi: abi,
                 address: deploymentAddress,
-                fromBlock: await publicClient.getBlockNumber() - BigInt(10_000),
-                toBlock: await publicClient.getBlockNumber(),
+                fromBlock: BigInt(9221467), // https://sepolia.etherscan.io/tx/0x73d97908a99a4cf0b3da3fe22348d076d7741cd530b7d18e49c9be567d95b52c
                 eventName: eventName,
                 args: {
                     queueNumber: queueNumber
