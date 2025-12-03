@@ -68,11 +68,11 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
             const logs = await publicClient.getContractEvents({
                 abi: abi,
                 address: deploymentAddress,
-                fromBlock: BigInt(9221445), // https://sepolia.etherscan.io/tx/0x0c63182068b5411916bd73c99e0d7d6ec68ee625c56846db8800a5da7bd08266
+                fromBlock: BigInt(9_760_174), // https://sepolia.etherscan.io/tx/0xf6a2674e6c35787a620e914e52348189e1ed0b47b04b67a0170f611024da01de
                 eventName: "SponsorshipAdded",
-                // args: {
-                //     sponsor: ethereumAddress
-                // }
+                args: {
+                    sponsor: ethereumAddress
+                }
             })
             console.debug("logs:", logs)
             setEvents(logs)
@@ -100,9 +100,9 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
             <tbody>
                 {events.map((el, i) =>
                     <tr key={i}>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">{new Date(Number(el.args[0].timestamp) * 1_000).toISOString().substring(0,10)} {new Date(Number(el.args[0].timestamp) * 1_000).toISOString().substring(11,16)}</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">Ξ{formatEther(el.args[0].estimatedCost)}</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.args[0].sponsor.substring(0, 6)}...{el.args[0].sponsor.substring(38, 42)}</code></td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">{new Date(Number(el.args.timestamp) * 1_000).toISOString().substring(0,10)} {new Date(Number(el.args.timestamp) * 1_000).toISOString().substring(11,16)}</td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">Ξ{formatEther(el.args.estimatedCost)}</td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.args.sponsor.substring(0, 6)}...{el.args.sponsor.substring(38, 42)}</code></td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.eventName}</code></td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">
                             <Link className="text-purple-600" href={`https://sepolia.etherscan.io/tx/${el.transactionHash}`} target="_blank">

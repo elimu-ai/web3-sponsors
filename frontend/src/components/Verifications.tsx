@@ -25,7 +25,7 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
             const logs = await publicClient.getContractEvents({
                 abi: abi,
                 address: deploymentAddress,
-                fromBlock: BigInt(9221467), // https://sepolia.etherscan.io/tx/0x73d97908a99a4cf0b3da3fe22348d076d7741cd530b7d18e49c9be567d95b52c
+                fromBlock: BigInt(9_760_205), // https://sepolia.etherscan.io/tx/0x916f56787bef5054de0ba10018d5621061d2384d30ae2d806a553e82963968de
                 eventName: eventName,
                 args: {
                     queueNumber: queueNumber
