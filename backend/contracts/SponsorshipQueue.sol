@@ -7,7 +7,7 @@ struct Sponsorship {
     address sponsor;
 }
 
-/// @notice A queue of sponsorships for the Ξlimu DAO's education program (see https://sponsors.elimu.ai)
+/// @notice A queue of sponsorships for the Ξlimu DAO's education sponsorship program (https://sponsors.elimu.ai)
 contract SponsorshipQueue {
     address public owner;
     uint256 public estimatedCost;
@@ -19,7 +19,7 @@ contract SponsorshipQueue {
     event OwnerUpdated(address);
     event EstimatedCostUpdated(uint256);
     event QueueHandlerUpdated(address);
-    event SponsorshipAdded(Sponsorship);
+    event SponsorshipAdded(uint256 estimatedCost, uint256 timestamp, address indexed sponsor);
 
     error InvalidLanguageCode();
 
@@ -47,14 +47,14 @@ contract SponsorshipQueue {
     }
 
     function addSponsorship() public payable {
-        payable(address(this)).send(estimatedCost);
+        require(msg.value == estimatedCost, "Must send exactly the estimated cost");
         Sponsorship memory sponsorship = Sponsorship(
             estimatedCost,
             block.timestamp,
             msg.sender
         );
         enqueue(sponsorship);
-        emit SponsorshipAdded(sponsorship);
+        emit SponsorshipAdded(estimatedCost, block.timestamp, msg.sender);
     }
 
     function enqueue(Sponsorship memory sponsorship) private {

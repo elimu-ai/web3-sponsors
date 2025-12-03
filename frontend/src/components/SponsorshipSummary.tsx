@@ -4,6 +4,7 @@ import deployed_addresses from "../../../backend/ignition/deployments/chain-1115
 import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
 import ErrorIndicator from "./ErrorIndicator";
+import Link from "next/link";
 
 export default function SponsorshipSummary({ queueNumber }: any) {
     console.debug("SponsorshipSummary");
@@ -46,7 +47,9 @@ export default function SponsorshipSummary({ queueNumber }: any) {
             </div>
             Amount: {formatEther(estimatedCost)} ETH
             <div className="mt-2">
-                Sponsor: <code>{sponsor.substring(0, 6)}...{sponsor.substring(38, 42)}</code>
+                Sponsor: <Link href={`/sponsors/${sponsor}`}>
+                    <code>{sponsor.substring(0, 6)}...{sponsor.substring(38, 42)}</code>
+                </Link>
             </div>
         </>
     )

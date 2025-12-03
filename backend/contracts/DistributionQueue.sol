@@ -10,7 +10,7 @@ struct Distribution {
     address distributor;
 }
 
-/// @notice A queue of distributions for the Ξlimu DAO's education program (see https://sponsors.elimu.ai)
+/// @notice A queue of distributions for the Ξlimu DAO's education sponsorship program (https://sponsors.elimu.ai)
 contract DistributionQueue {
     address public owner;
     ILanguages public languages;
