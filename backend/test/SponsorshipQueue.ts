@@ -59,21 +59,22 @@ describe("SponsorshipQueue", function () {
   });
 
   describe("Sponsorships", function () {
-    it("Should emit an event on addSponsorship", async function () {
-      const { sponsorshipQueue, account1 } = await loadFixture(deployFixture);
+    it("addSponsorship should be rejected if mismatching ETH amount", async function () {
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
 
-      const firstAccountBalance = await hre.ethers.provider.getBalance(account1.address);
-      console.log("firstAccountBalance:", firstAccountBalance);
+      await expect(sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.0222") }))
+        .to.be.rejectedWith("Must send exactly the estimated cost");
+    });
+
+    it("Should emit an event on addSponsorship", async function () {
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
 
       await expect(sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") }))
         .to.emit(sponsorshipQueue, "SponsorshipAdded");
     });
 
     it("Should increase contract balance on addSponsorship", async function () {
-      const { sponsorshipQueue, account1 } = await loadFixture(deployFixture);
-
-      const firstAccountBalance = await hre.ethers.provider.getBalance(account1.address);
-      console.log("firstAccountBalance:", firstAccountBalance);
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
 
       console.log("sponsorshipQueue.target:", sponsorshipQueue.target);
 

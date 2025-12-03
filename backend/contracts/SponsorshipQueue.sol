@@ -47,7 +47,7 @@ contract SponsorshipQueue {
     }
 
     function addSponsorship() public payable {
-        payable(address(this)).send(estimatedCost);
+        require(msg.value == estimatedCost, "Must send exactly the estimated cost");
         Sponsorship memory sponsorship = Sponsorship(
             estimatedCost,
             block.timestamp,
