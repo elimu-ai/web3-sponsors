@@ -4,9 +4,6 @@ import deployed_addresses from "../../../backend/ignition/deployments/chain-1115
 import { sepolia } from "viem/chains"
 import { useEffect, useState } from "react"
 import LoadingIndicator from "./LoadingIndicator"
-import Link from "next/link"
-import SponsorshipSummary from "./SponsorshipSummary"
-import DistributionSummary from "./DistributionSummary"
 
 export default function ProcessedQueuePairs() {
     console.debug("ProcessedQueuePairs")
@@ -22,7 +19,7 @@ function LoadQueuePairProcessedEvents() {
 
     const publicClient = createPublicClient({
         chain: sepolia,
-        transport: http()
+        transport: http("https://0xrpc.io/sep")
     })
 
     const [events, setEvents] = useState(Array(0))
@@ -31,8 +28,7 @@ function LoadQueuePairProcessedEvents() {
             const logs = await publicClient.getContractEvents({
                 abi: abi_queue_handler,
                 address: deploymentAddress,
-                fromBlock: await publicClient.getBlockNumber() - BigInt(10_000),
-                toBlock: await publicClient.getBlockNumber(),
+                fromBlock: BigInt(9221476), // https://sepolia.etherscan.io/tx/0x9087c36ff5970e52fc30cc03b4ffd931bd6bdcedb806b2997e73b4ea3c5152ea
                 eventName: "QueuePairProcessed"
             })
             console.debug("logs:", logs)
