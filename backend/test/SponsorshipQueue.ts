@@ -67,10 +67,20 @@ describe("SponsorshipQueue", function () {
     });
 
     it("Should emit an event on addSponsorship", async function () {
-      const { sponsorshipQueue } = await loadFixture(deployFixture);
+      const { sponsorshipQueue, account1 } = await loadFixture(deployFixture);
 
-      await expect(sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") }))
-        .to.emit(sponsorshipQueue, "SponsorshipAdded");
+      const tx = await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
+      await expect(tx).to.emit(sponsorshipQueue, "SponsorshipAdded");
+
+      // Ensure that the indexed `sponsor` parameter gets added to the event logs
+      //   event SponsorshipAdded(uint256 estimatedCost, uint256 timestamp, address indexed sponsor);
+      const receipt = await tx.wait();
+      const eventLog = receipt?.logs[0];
+      const topics = eventLog?.topics;
+      expect(topics?.length).to.equal(2);
+      const addressAsHex = topics?.at(1);
+      const address = "0x" + addressAsHex?.slice(-40);
+      expect(address).to.equal(account1.address.toLowerCase());
     });
 
     it("Should increase contract balance on addSponsorship", async function () {
