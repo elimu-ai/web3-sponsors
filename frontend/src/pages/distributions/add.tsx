@@ -81,11 +81,11 @@ export function InputAndroidId() {
           onChange={handleLanguageCodeChange}
           className="p-4 text-2xl text-indigo-200 bg-indigo-800 rounded-lg">
         <option value="">-- Select language --</option>
-        <option value="ENG">ENG</option>
-        <option value="HIN">HIN</option>
-        <option value="TGL">TGL</option>
-        <option value="THA">THA</option>
-        <option value="VIE">VIE</option>
+        <option value="ENG">ENG (eng.elimu.ai)</option>
+        <option value="HIN">HIN (hin.elimu.ai)</option>
+        <option value="TGL">TGL (tgl.elimu.ai)</option>
+        <option value="THA">THA (tha.elimu.ai)</option>
+        <option value="VIE">VIE (vie.elimu.ai)</option>
       </select><br />
 
       <input
