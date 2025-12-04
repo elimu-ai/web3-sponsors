@@ -51,7 +51,7 @@ export default function DistributionSummary({ queueNumber }: any) {
                 Language: <code>{languageCode}</code> (<Link className="text-purple-600" target="_blank" href={`http://${languageCode.toLowerCase()}.elimu.ai`}>{languageCode.toLowerCase()}.elimu.ai</Link>)
             </div>
             <div className="mt-2">
-                Android ID: <code>{androidId}</code>
+                Android ID: <Link className="text-purple-600" target="_blank" href={`http://${languageCode.toLowerCase()}.elimu.ai/analytics/students`}><code>{androidId}</code></Link>
             </div>
             <div className="mt-2">
                 Distributor: <code>{distributor.substring(0, 6)}...{distributor.substring(38, 42)}</code>
