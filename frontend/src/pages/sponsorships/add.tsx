@@ -38,7 +38,7 @@ export default function AddSponsorship() {
         </h1>
 
         <div className="mt-8 text-center">
-          Your sponsorship will cover the estimated cost (Ξ<EstimatedCost />)<br />
+          Your sponsorship will cover the estimated cost (<EstimatedCost /> ETH)<br />
           for delivering education to one out-of-school child.
         </div>
 
