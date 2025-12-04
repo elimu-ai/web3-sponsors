@@ -14,6 +14,10 @@ export default function Sponsor() {
   console.debug("Sponsor");
 
   const router = useRouter();
+  if (!router.isReady) {
+      return <LoadingIndicator />
+  }
+
   const ethereumAddress: string = String(router.query.ethereumAddress);
   console.debug("ethereumAddress:", ethereumAddress);
 
