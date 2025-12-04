@@ -2,6 +2,7 @@
 pragma solidity ^0.8.30;
 
 import { ILanguages } from "@elimu-ai/dao-contracts/ILanguages.sol";
+import { ProtocolVersion } from "./ProtocolVersion.sol";
 
 struct Distribution {
     string languageCode;
@@ -11,7 +12,7 @@ struct Distribution {
 }
 
 /// @notice A queue of distributions for the Ξlimu DAO's education sponsorship program (https://sponsors.elimu.ai)
-contract DistributionQueue {
+contract DistributionQueue is ProtocolVersion {
     address public owner;
     ILanguages public languages;
     address public queueHandler;

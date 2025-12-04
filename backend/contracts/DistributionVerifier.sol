@@ -3,9 +3,10 @@ pragma solidity ^0.8.30;
 
 import { IRoles } from "@elimu-ai/dao-contracts/IRoles.sol";
 import { IDistributionVerifier } from "./interface/IDistributionVerifier.sol";
+import { ProtocolVersion } from "./ProtocolVersion.sol";
 
 /// @notice Handles approval/rejection of distributions added to `DistributionQueue.sol`
-contract DistributionVerifier is IDistributionVerifier {
+contract DistributionVerifier is IDistributionVerifier, ProtocolVersion {
     address public owner;
     IRoles public roles;
     mapping(uint24 => uint8) public approvalCount;

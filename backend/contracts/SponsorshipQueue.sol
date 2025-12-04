@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
+import { ProtocolVersion } from "./ProtocolVersion.sol";
+
 struct Sponsorship {
     uint256 estimatedCost;
     uint256 timestamp;
@@ -8,7 +10,7 @@ struct Sponsorship {
 }
 
 /// @notice A queue of sponsorships for the Ξlimu DAO's education sponsorship program (https://sponsors.elimu.ai)
-contract SponsorshipQueue {
+contract SponsorshipQueue is ProtocolVersion {
     address public owner;
     uint256 public estimatedCost;
     address public queueHandler;
