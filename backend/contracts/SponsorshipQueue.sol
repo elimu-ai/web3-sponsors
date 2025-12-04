@@ -19,7 +19,7 @@ contract SponsorshipQueue {
     event OwnerUpdated(address);
     event EstimatedCostUpdated(uint256);
     event QueueHandlerUpdated(address);
-    event SponsorshipAdded(uint256 estimatedCost, uint256 timestamp, address indexed sponsor);
+    event SponsorshipAdded(uint256 timestamp, address indexed sponsor);
 
     error InvalidLanguageCode();
 
@@ -54,7 +54,7 @@ contract SponsorshipQueue {
             msg.sender
         );
         enqueue(sponsorship);
-        emit SponsorshipAdded(estimatedCost, block.timestamp, msg.sender);
+        emit SponsorshipAdded(block.timestamp, msg.sender);
     }
 
     function enqueue(Sponsorship memory sponsorship) private {
