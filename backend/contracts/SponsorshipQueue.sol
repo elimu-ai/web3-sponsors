@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
-import { ProtocolVersion } from "./ProtocolVersion.sol";
+import { ProtocolVersion } from "./utils/ProtocolVersion.sol";
 
 struct Sponsorship {
     uint256 estimatedCost;

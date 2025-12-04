@@ -5,7 +5,7 @@ import { IRoles } from "@elimu-ai/dao-contracts/IRoles.sol";
 import { Sponsorship, SponsorshipQueue } from "./SponsorshipQueue.sol";
 import { Distribution, DistributionQueue } from "./DistributionQueue.sol";
 import { IDistributionVerifier } from "./interface/IDistributionVerifier.sol";
-import { ProtocolVersion } from "./ProtocolVersion.sol";
+import { ProtocolVersion } from "./utils/ProtocolVersion.sol";
 
 /// @notice Handles pairing of sponsorships with distributions
 contract QueueHandler is ProtocolVersion {
