@@ -95,7 +95,6 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
             <thead>
                 <tr>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Timestamp</th>
-                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Estimated Cost</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Sponsor</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Event Name</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Transaction</th>
@@ -105,7 +104,6 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
                 {events.map((el, i) =>
                     <tr key={i}>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">{new Date(el.blockTimestamp * 1_000).toISOString().substring(0,10)} {new Date(el.blockTimestamp * 1_000).toISOString().substring(11,16)}</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">{formatEther(el.args.estimatedCost)} ETH</td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.args.sponsor.substring(0, 6)}...{el.args.sponsor.substring(38, 42)}</code></td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.eventName}</code></td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">

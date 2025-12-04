@@ -73,7 +73,7 @@ describe("SponsorshipQueue", function () {
       await expect(tx).to.emit(sponsorshipQueue, "SponsorshipAdded");
 
       // Ensure that the indexed `sponsor` parameter gets added to the event logs
-      //   event SponsorshipAdded(uint256 estimatedCost, uint256 timestamp, address indexed sponsor);
+      //   event SponsorshipAdded(uint256 timestamp, address indexed sponsor);
       const receipt = await tx.wait();
       const eventLog = receipt?.logs[0];
       const topics = eventLog?.topics;
