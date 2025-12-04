@@ -14,6 +14,10 @@ export default function Sponsor() {
   console.debug("Sponsor");
 
   const router = useRouter();
+  if (!router.isReady) {
+      return <LoadingIndicator />
+  }
+
   const ethereumAddress: string = String(router.query.ethereumAddress);
   console.debug("ethereumAddress:", ethereumAddress);
 
@@ -100,7 +104,7 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
             <tbody>
                 {events.map((el, i) =>
                     <tr key={i}>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">{new Date(Number(el.args.timestamp) * 1_000).toISOString().substring(0,10)} {new Date(Number(el.args.timestamp) * 1_000).toISOString().substring(11,16)}</td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">{new Date(el.blockTimestamp * 1_000).toISOString().substring(0,10)} {new Date(el.blockTimestamp * 1_000).toISOString().substring(11,16)}</td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">{formatEther(el.args.estimatedCost)} ETH</td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.args.sponsor.substring(0, 6)}...{el.args.sponsor.substring(38, 42)}</code></td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.eventName}</code></td>
