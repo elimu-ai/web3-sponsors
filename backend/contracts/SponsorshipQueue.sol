@@ -21,7 +21,7 @@ contract SponsorshipQueue is ProtocolVersion {
     event OwnerUpdated(address);
     event EstimatedCostUpdated(uint256);
     event QueueHandlerUpdated(address);
-    event SponsorshipAdded(uint256 timestamp, address indexed sponsor);
+    event SponsorshipAdded(address indexed sponsor);
 
     error InvalidLanguageCode();
 
@@ -56,7 +56,7 @@ contract SponsorshipQueue is ProtocolVersion {
             msg.sender
         );
         enqueue(sponsorship);
-        emit SponsorshipAdded(block.timestamp, msg.sender);
+        emit SponsorshipAdded(msg.sender);
     }
 
     function enqueue(Sponsorship memory sponsorship) private {
