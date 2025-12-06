@@ -68,7 +68,6 @@ contract SponsorshipQueue is ProtocolVersion {
         require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
         require(getLength() > 0, "Queue is empty");
         Sponsorship memory sponsorship = queue[queueNumberFront];
-        delete queue[queueNumberFront];
         queueNumberFront += 1;
         return sponsorship;
     }

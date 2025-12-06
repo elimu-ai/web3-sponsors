@@ -73,7 +73,6 @@ contract DistributionQueue is ProtocolVersion {
         require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
         require(getLength() > 0, "Queue is empty");
         Distribution memory distribution = queue[queueNumberFront];
-        delete queue[queueNumberFront];
         queueNumberFront += 1;
         return distribution;
     }
