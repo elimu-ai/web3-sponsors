@@ -2,7 +2,7 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { abi } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import { abi } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionQueueModule#DistributionQueue.json";
 import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address, createPublicClient, formatEther, http } from "viem";
 import { sepolia } from "viem/chains";
@@ -10,8 +10,8 @@ import { useEffect, useState } from "react";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import Link from "next/link";
 
-export default function Sponsor() {
-  console.debug("Sponsor");
+export default function Distributor() {
+  console.debug("Distributor");
 
   const router = useRouter();
   if (!router.isReady) {
@@ -34,16 +34,16 @@ export default function Sponsor() {
         className={`flex flex-col items-center px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64`}
         >
         <h1 className="text-4xl">
-          Sponsor <code>{ethereumAddress.substring(0, 6)}...{ethereumAddress.substring(38, 42)}</code>
+          Distributor <code>{ethereumAddress.substring(0, 6)}...{ethereumAddress.substring(38, 42)}</code>
         </h1>
 
         <div className="mt-8 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
             <h2 className="text-2xl text-center">
-                Sponsorships 👇🏽
+                Distributions 👇🏽
             </h2>
 
             <div className="mt-8">
-                <LoadSponsorshipAddedEvents ethereumAddress={ethereumAddress} />
+                <LoadDistributionAddedEvents ethereumAddress={ethereumAddress} />
             </div>
         </div>
       </main>
@@ -52,13 +52,13 @@ export default function Sponsor() {
   );
 }
 
-export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress: string}) {
-    console.log("LoadSponsorshipEvents")
+export function LoadDistributionAddedEvents({ ethereumAddress }: {ethereumAddress: string}) {
+    console.log("LoadDistributionAddedEvents")
 
     console.log("ethereumAddress:", ethereumAddress)
 
 
-    const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`
+    const deploymentAddress: Address = deployed_addresses["DistributionQueueModule#DistributionQueue"] as `0x${string}`
     console.debug("deploymentAddress:", deploymentAddress)
 
     const publicClient = createPublicClient({
@@ -72,10 +72,10 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
             const logs = await publicClient.getContractEvents({
                 abi: abi,
                 address: deploymentAddress,
-                fromBlock: BigInt(9_760_174), // https://sepolia.etherscan.io/tx/0xf6a2674e6c35787a620e914e52348189e1ed0b47b04b67a0170f611024da01de
-                eventName: "SponsorshipAdded",
+                fromBlock: BigInt(9_779_634), // https://sepolia.etherscan.io/tx/0x745464abf22bd45b6e726d6c83aa211e30d1c24d9f902911aa67e6ff8cf1585c
+                eventName: "DistributionAdded",
                 args: {
-                    sponsor: ethereumAddress
+                    distributor: ethereumAddress
                 }
             })
             console.debug("logs:", logs)
@@ -96,8 +96,8 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
                 <tr>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Timestamp</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Queue Number</th>
-                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Estimated Cost</th>
-                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Paired Distribution</th>
+                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Language Code</th>
+                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Paired Sponsorship</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Student ID</th>
                 </tr>
             </thead>
@@ -111,11 +111,11 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
                             </Link>
                         </td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">
-                            <Link href={`/sponsorships/${el.args.queueNumber}`} className="text-purple-600">
+                            <Link href={`/distributions/${el.args.queueNumber}`} className="text-purple-600">
                                 #{el.args.queueNumber}
                             </Link>
                         </td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">??? ETH</td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">???</td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#???</td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">Student #???</td>
                     </tr>

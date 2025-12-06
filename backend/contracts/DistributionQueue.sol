@@ -23,7 +23,7 @@ contract DistributionQueue is ProtocolVersion {
     event OwnerUpdated(address);
     event LanguagesUpdated(address);
     event QueueHandlerUpdated(address);
-    event DistributionAdded(Distribution);
+    event DistributionAdded(uint24 queueNumber, address indexed distributor);
 
     error InvalidLanguageCode();
 
@@ -61,7 +61,7 @@ contract DistributionQueue is ProtocolVersion {
             msg.sender
         );
         enqueue(distribution);
-        emit DistributionAdded(distribution);
+        emit DistributionAdded(queueNumberNext - 1, msg.sender);
     }
 
     function enqueue(Distribution memory sponsorship) private {
@@ -73,7 +73,6 @@ contract DistributionQueue is ProtocolVersion {
         require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
         require(getLength() > 0, "Queue is empty");
         Distribution memory distribution = queue[queueNumberFront];
-        delete queue[queueNumberFront];
         queueNumberFront += 1;
         return distribution;
     }

@@ -15,8 +15,8 @@ contract DistributionVerifier is IDistributionVerifier, ProtocolVersion {
 
     event OwnerUpdated(address owner);
     event RolesUpdated(address roles);
-    event DistributionApproved(uint24 queueNumber, address operator);
-    event DistributionRejected(uint24 queueNumber, address operator);
+    event DistributionApproved(uint24 queueNumber, address indexed operator);
+    event DistributionRejected(uint24 queueNumber, address indexed operator);
 
     constructor(address roles_) {
         owner = msg.sender;

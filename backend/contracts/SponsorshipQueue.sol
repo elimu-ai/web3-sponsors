@@ -21,7 +21,7 @@ contract SponsorshipQueue is ProtocolVersion {
     event OwnerUpdated(address);
     event EstimatedCostUpdated(uint256);
     event QueueHandlerUpdated(address);
-    event SponsorshipAdded(address indexed sponsor);
+    event SponsorshipAdded(uint24 queueNumber, address indexed sponsor);
 
     error InvalidLanguageCode();
 
@@ -56,7 +56,7 @@ contract SponsorshipQueue is ProtocolVersion {
             msg.sender
         );
         enqueue(sponsorship);
-        emit SponsorshipAdded(msg.sender);
+        emit SponsorshipAdded(queueNumberNext - 1, msg.sender);
     }
 
     function enqueue(Sponsorship memory sponsorship) private {
@@ -68,7 +68,6 @@ contract SponsorshipQueue is ProtocolVersion {
         require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
         require(getLength() > 0, "Queue is empty");
         Sponsorship memory sponsorship = queue[queueNumberFront];
-        delete queue[queueNumberFront];
         queueNumberFront += 1;
         return sponsorship;
     }
