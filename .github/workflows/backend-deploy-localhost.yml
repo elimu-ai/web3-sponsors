@@ -25,3 +25,6 @@ jobs:
         cache-dependency-path: backend/package-lock.json
     - run: npm install
     - run: npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network hardhat
+    - run: npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network hardhat
+    - run: npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network hardhat
+    - run: npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network hardhat
