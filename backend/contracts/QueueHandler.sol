@@ -16,7 +16,8 @@ contract QueueHandler is ProtocolVersion {
     event OwnerUpdated(address);
     event RolesUpdated(address);
     event DistributionVerifierUpdated(address);
-    event QueuePairProcessed(Distribution, Sponsorship);
+    event QueuePairProcessed(uint24 distributionQueueNumber, uint24 sponsorshipQueueNumber, address indexed operator);
+    event RejectedDistributionRemoved(uint24 queueNumber, address indexed operator);
 
     constructor(address sponsorshipQueue_, address distributionQueue_, address distributionVerifier_) {
         owner = msg.sender;
@@ -55,13 +56,14 @@ contract QueueHandler is ProtocolVersion {
         Distribution memory distribution = distributionQueue.dequeue();
 
         // Remove the sponsorship from the queue
+        uint24 sponsorshipQueueNumber = sponsorshipQueue.queueNumberFront();
         Sponsorship memory sponsorship = sponsorshipQueue.dequeue();
 
         // Transfer ETH from the sponsorship to the distributor
         sponsorshipQueue.payDistributor(distribution.distributor, sponsorship);
 
         // Emit event
-        emit QueuePairProcessed(distribution, sponsorship);
+        emit QueuePairProcessed(distributionQueueNumber, sponsorshipQueueNumber, msg.sender);
     }
 
     /// @notice Remove rejected distribution from the queue
@@ -76,5 +78,8 @@ contract QueueHandler is ProtocolVersion {
 
         // Remove the distribution from the queue
         distributionQueue.dequeue();
+
+        // Emit event
+        emit RejectedDistributionRemoved(distributionQueueNumber, msg.sender);
     }
 }

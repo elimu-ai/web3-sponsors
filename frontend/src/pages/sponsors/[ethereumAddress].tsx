@@ -98,6 +98,7 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Sponsor</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Event Name</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Transaction</th>
+                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Queue Number</th>
                 </tr>
             </thead>
             <tbody>
@@ -111,6 +112,7 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
                                 Tx ↗
                             </Link>
                         </td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{el.args.queueNumber}</td>
                     </tr>
                 )}
             </tbody>
