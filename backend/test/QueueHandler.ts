@@ -37,7 +37,6 @@ describe("QueueHandler", function () {
 
     const QueueHandler = await hre.ethers.getContractFactory("QueueHandler");
     const queueHandler = await QueueHandler.deploy(
-      await roles.getAddress(),
       await sponsorshipQueue.getAddress(),
       await distributionQueue.getAddress(),
       await distributionVerifier.getAddress()
@@ -56,12 +55,6 @@ describe("QueueHandler", function () {
       expect(await queueHandler.owner()).to.equal(account1.address);
     });
 
-    it("Should set the right Roles contract", async function () {
-      const { queueHandler, roles } = await loadFixture(deployFixture);
-
-      expect(await queueHandler.roles()).to.equal(await roles.getAddress());
-    });
-
     it("Should set the right DistributionVerifier contract", async function () {
       const { queueHandler, distributionVerifier } = await loadFixture(deployFixture);
 
@@ -76,16 +69,6 @@ describe("QueueHandler", function () {
       expect(await queueHandler.owner()).to.equal(account1.address);
       await queueHandler.updateOwner(account2.address);
       expect(await queueHandler.owner()).to.equal(account2.address);
-    });
-  });
-
-  describe("Update Roles contract", function () {
-    it("Should change the Roles contract", async function () {
-      const { queueHandler, roles } = await loadFixture(deployFixture);
-
-      expect(await queueHandler.roles()).to.equal(await roles.getAddress());
-      await queueHandler.updateRoles(ethers.ZeroAddress);
-      expect(await queueHandler.roles()).to.equal(ethers.ZeroAddress);
     });
   });
 
