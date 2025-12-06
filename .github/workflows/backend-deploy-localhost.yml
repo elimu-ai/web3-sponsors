@@ -1,0 +1,27 @@
+name: backend - deploy localhost
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  deploy_localhost:
+
+    runs-on: ubuntu-latest
+    
+    defaults:
+        run:
+            working-directory: backend
+    
+    steps:
+    - uses: actions/checkout@v6
+    - name: Use Node.js 22.x
+      uses: actions/setup-node@v6
+      with:
+        node-version: 22.x
+        cache: 'npm'
+        cache-dependency-path: backend/package-lock.json
+    - run: npm install
+    - run: npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network hardhat
