@@ -23,7 +23,7 @@ contract DistributionQueue is ProtocolVersion {
     event OwnerUpdated(address);
     event LanguagesUpdated(address);
     event QueueHandlerUpdated(address);
-    event DistributionAdded(uint24 queueNumber, string indexed languageCode, address indexed distributor);
+    event DistributionAdded(uint24 queueNumber, address indexed distributor);
 
     error InvalidLanguageCode();
 
@@ -61,7 +61,7 @@ contract DistributionQueue is ProtocolVersion {
             msg.sender
         );
         enqueue(distribution);
-        emit DistributionAdded(queueNumberNext - 1, languageCode, msg.sender);
+        emit DistributionAdded(queueNumberNext - 1, msg.sender);
     }
 
     function enqueue(Distribution memory sponsorship) private {
