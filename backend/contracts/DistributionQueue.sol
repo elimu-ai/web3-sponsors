@@ -61,7 +61,7 @@ contract DistributionQueue is ProtocolVersion {
             msg.sender
         );
         enqueue(distribution);
-        emit DistributionAdded(queueNumberFront - 1, languageCode, msg.sender);
+        emit DistributionAdded(queueNumberNext - 1, languageCode, msg.sender);
     }
 
     function enqueue(Distribution memory sponsorship) private {

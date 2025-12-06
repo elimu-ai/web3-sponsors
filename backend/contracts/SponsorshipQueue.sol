@@ -56,7 +56,7 @@ contract SponsorshipQueue is ProtocolVersion {
             msg.sender
         );
         enqueue(sponsorship);
-        emit SponsorshipAdded(queueNumberFront - 1, msg.sender);
+        emit SponsorshipAdded(queueNumberNext - 1, msg.sender);
     }
 
     function enqueue(Sponsorship memory sponsorship) private {
