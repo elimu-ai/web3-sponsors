@@ -36,7 +36,7 @@ export default function Process() {
         className={`flex flex-col items-center px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64`}
         >
         <h1 className="relative flex place-items-center text-4xl">
-          Process Next Queue Pair <span>🔗</span>
+          Process Next Queue Pair 🔗
         </h1>
 
         <div className="mt-8 text-center">
