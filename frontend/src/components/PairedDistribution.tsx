@@ -6,7 +6,7 @@ import { sepolia } from "viem/chains";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-export default function PairedDistribution({ sponsorshipQueueNumber }: { sponsorshipQueueNumber: Number }) {
+export default function PairedDistribution({ sponsorshipQueueNumber }: { sponsorshipQueueNumber: number }) {
     console.debug("PairedDistribution")
 
     console.debug("sponsorshipQueueNumber:", sponsorshipQueueNumber)
