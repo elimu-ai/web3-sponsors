@@ -11,6 +11,14 @@ const config: HardhatUserConfig = {
     settings: {
       optimizer: {
         enabled: true
+      },
+      outputSelection: {
+        "*": {
+          "*": [
+            "devdoc",  // Includes @dev, @param, @return tags
+            "userdoc"  // Includes @notice tags
+          ]
+        }
       }
     }
   },
