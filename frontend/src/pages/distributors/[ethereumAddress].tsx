@@ -9,6 +9,7 @@ import { sepolia } from "viem/chains";
 import { useEffect, useState } from "react";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import Link from "next/link";
+import PairedSponsorship from "@/components/PairedSponsorship";
 
 export default function Distributor() {
   console.debug("Distributor");
@@ -98,7 +99,6 @@ export function LoadDistributionAddedEvents({ ethereumAddress }: {ethereumAddres
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Queue Number</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Language Code</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Paired Sponsorship</th>
-                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Student ID</th>
                 </tr>
             </thead>
             <tbody>
@@ -116,8 +116,9 @@ export function LoadDistributionAddedEvents({ ethereumAddress }: {ethereumAddres
                             </Link>
                         </td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">???</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#???</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">Student #???</td>
+                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">
+                            <PairedSponsorship distributionQueueNumber={el.args.queueNumber} />
+                        </td>
                     </tr>
                 )}
             </tbody>
