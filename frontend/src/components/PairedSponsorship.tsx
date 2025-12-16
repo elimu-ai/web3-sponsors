@@ -41,14 +41,10 @@ export default function PairedSponsorship({ distributionQueueNumber }: { distrib
     }
 
     // Iterate processed queue pairs and look for matching queue number
-    let sponsorshipQueueNumber = undefined
-    events.forEach(event => {
-        console.debug("event.blockNumber:", event.blockNumber)
-        if (event.args.distributionQueueNumber == distributionQueueNumber) {
-            sponsorshipQueueNumber = event.args.sponsorshipQueueNumber
-            return
-        }
-    })
+    const matchingEvent = events.find(
+        event => event.args.distributionQueueNumber == distributionQueueNumber
+    )
+    const sponsorshipQueueNumber = matchingEvent?.args.sponsorshipQueueNumber
     console.debug("sponsorshipQueueNumber:", sponsorshipQueueNumber)
 
     if (!sponsorshipQueueNumber) {
