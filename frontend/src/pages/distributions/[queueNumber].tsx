@@ -7,6 +7,7 @@ import Verifications from "@/components/Verifications";
 import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address } from "viem";
 import Link from "next/link";
+import PairedSponsorship from "@/components/PairedSponsorship";
 
 export default function DistributionDetails() {
   console.debug("DistributionDetails");
@@ -57,6 +58,15 @@ export default function DistributionDetails() {
           </h2>
           <div className="mt-4 text-center">
             <Verifications queueNumber={queueNumber} eventName="DistributionRejected"  />
+          </div>
+        </div>
+
+        <div className="mt-8 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
+          <h2 className="text-2xl text-center">
+            Paired Sponsorship 🔗
+          </h2>
+          <div className="mt-4 text-center">
+            <PairedSponsorship distributionQueueNumber={queueNumber} />
           </div>
         </div>
       </main>

@@ -6,10 +6,10 @@ import { sepolia } from "viem/chains";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-export default function PairedDistribution({ sponsorshipQueueNumber }: { sponsorshipQueueNumber: number }) {
-    console.debug("PairedDistribution")
+export default function PairedSponsorship({ distributionQueueNumber }: { distributionQueueNumber: number }) {
+    console.debug("PairedSponsorship")
 
-    console.debug("sponsorshipQueueNumber:", sponsorshipQueueNumber)
+    console.debug("distributionQueueNumber:", distributionQueueNumber)
 
     const deploymentAddress: Address = deployed_addresses["QueueHandlerModule#QueueHandler"] as `0x${string}`
     console.debug("deploymentAddress:", deploymentAddress)
@@ -42,12 +42,12 @@ export default function PairedDistribution({ sponsorshipQueueNumber }: { sponsor
 
     // Iterate processed queue pairs and look for matching queue number
     const matchingEvent = events.find(
-        event => event.args.sponsorshipQueueNumber == sponsorshipQueueNumber
+        event => event.args.distributionQueueNumber == distributionQueueNumber
     )
-    const distributionQueueNumber = matchingEvent?.args.distributionQueueNumber
-    console.debug("distributionQueueNumber:", distributionQueueNumber)
+    const sponsorshipQueueNumber = matchingEvent?.args.sponsorshipQueueNumber
+    console.debug("sponsorshipQueueNumber:", sponsorshipQueueNumber)
 
-    if (!distributionQueueNumber) {
+    if (!sponsorshipQueueNumber) {
         return (
             <span className="p-2 text-sm text-gray-300 border-gray-400 bg-gray-600 border-2 rounded-xl">
                 Pairing not yet <Link href="/process" className="text-purple-300" id="processLink">processed</Link>
@@ -55,12 +55,12 @@ export default function PairedDistribution({ sponsorshipQueueNumber }: { sponsor
         )
     } else {
       return (
-          <Link href={`/distributions/${distributionQueueNumber}`} className="text-indigo-600">
+          <Link href={`/sponsorships/${sponsorshipQueueNumber}`} className="text-indigo-600">
               <div className="skew-y-3 p-4 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
                   <div className="mb-4 text-center text-4xl">
                       🛵💨
                   </div>
-                  Distribution #{distributionQueueNumber}
+                  Sponsorship #{sponsorshipQueueNumber}
               </div>
           </Link>
       )
