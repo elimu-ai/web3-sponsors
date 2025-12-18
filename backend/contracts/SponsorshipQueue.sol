@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
-import { ProtocolVersion } from "./utils/ProtocolVersion.sol";
+import { ISponsorshipQueue } from "./interface/ISponsorshipQueue.sol";
+import { ProtocolVersion } from "./util/ProtocolVersion.sol";
 
 struct Sponsorship {
     uint256 estimatedCost;
@@ -13,7 +14,7 @@ struct Sponsorship {
 /// @author Ξlimu DAO
 /// @notice A queue of sponsorships for the Ξlimu DAO's education sponsorship program (https://sponsors.elimu.ai)
 /// @dev The address of the queue handler smart contract needs to be set after deployment
-contract SponsorshipQueue is ProtocolVersion {
+contract SponsorshipQueue is ISponsorshipQueue, ProtocolVersion {
     address public owner;
     uint256 public estimatedCost;
     address public queueHandler;
@@ -25,8 +26,6 @@ contract SponsorshipQueue is ProtocolVersion {
     event EstimatedCostUpdated(uint256);
     event QueueHandlerUpdated(address);
     event SponsorshipAdded(uint24 queueNumber, address indexed sponsor);
-
-    error InvalidLanguageCode();
 
     constructor(uint256 estimatedCost_) {
         owner = msg.sender;
