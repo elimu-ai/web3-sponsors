@@ -1,10 +1,11 @@
 {
   "name": "backend",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "author": "Ξlimu DAO",
   "license": "MIT",
   "devDependencies": {
     "@elimu-ai/dao-contracts": "^1.0.3",
+    "@elimu-ai/web3-sponsors": "^0.9.5",
     "@nomicfoundation/hardhat-toolbox": "^6.1.0",
     "@openzeppelin/contracts": "^5.4.0",
     "dotenv": "^17.2.3",

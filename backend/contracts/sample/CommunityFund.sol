@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
-import { ISponsorshipQueue } from "../interface/ISponsorshipQueue.sol";
+import { ISponsorshipQueue } from "@elimu-ai/web3-sponsors/ISponsorshipQueue.sol";
 
 contract CommunityFund {
     ISponsorshipQueue public immutable sponsorshipQueue;

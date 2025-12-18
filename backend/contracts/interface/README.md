@@ -15,7 +15,7 @@ If you want your smart contract to *add a new sponsorship* to our queue of spons
 Then, instantiate the smart contract(s) you want to interact with:
 
 ```solidity
-import { ILanguages } from "@elimu-ai/web3-sponsors/ISponsorshipQueue.sol";
+import { ISponsorshipQueue } from "@elimu-ai/web3-sponsors/ISponsorshipQueue.sol";
 
 contract MyContract {
     ISponsorshipQueue public immutable sponsorshipQueue;
@@ -49,7 +49,7 @@ contract MyContract {
 }
 ```
 
-For a sample implementation, see `CommunityFund.sol`.
+For a sample implementation, see [`CommunityFund.sol`](https://github.com/elimu-ai/web3-sponsors/tree/main/backend/contracts/sample/CommunityFund.sol).
 
 > [!WARNING]
 > The `estimatedCost` parameter set in the SponsorshipQueue smart contract can be adjusted by the Ξlimu DAO, so make sure to implement your code in a way that can handle this.
