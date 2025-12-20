@@ -21,7 +21,7 @@ contract MyContract {
     ISponsorshipQueue public immutable sponsorshipQueue;
 
     constructor() {
-        sponsorshipQueue = ISponsorshipQueue("0x47071D164900986994e4cc75DB1AF0ee0D04C6df");
+        sponsorshipQueue = ISponsorshipQueue("0x7e2551180F8d45D0fB4787c86934096fCF05B0fc");
     }
 
     function myFunction() {

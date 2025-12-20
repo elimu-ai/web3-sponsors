@@ -1,7 +1,7 @@
 {
-  "SponsorshipQueueModule#SponsorshipQueue": "0x47071D164900986994e4cc75DB1AF0ee0D04C6df",
-  "DistributionQueueModule#DistributionQueue": "0xff655AF2Fd196ecd4d346DC35181b98E2C9317bF",
-  "DistributionVerifierModule#DistributionVerifier": "0x9d12b8F36f360De78b3052fa276C2eadAbd4B593",
-  "QueueHandlerModule#QueueHandler": "0xc92104b012d05f4154E26e6722fab718e7F579C9",
-  "CommunityFundModule#CommunityFund": "0x55E973Bb28E4773c7B6D832F5C6Bb0e3e55278E0"
+  "SponsorshipQueueModule#SponsorshipQueue": "0x7e2551180F8d45D0fB4787c86934096fCF05B0fc",
+  "DistributionQueueModule#DistributionQueue": "0xc3e5BDb491Dafd9bF1b3037263aC1969fe349128",
+  "DistributionVerifierModule#DistributionVerifier": "0x9eF95e6b03918b04669F2B1E2f28C69B004Ae6DC",
+  "QueueHandlerModule#QueueHandler": "0x861735eb006791C03151A9512Fdf3cA9b06E7f33",
+  "CommunityFundModule#CommunityFund": "0x1659e163C3260591C52a685093b4b8019623b184"
 }
