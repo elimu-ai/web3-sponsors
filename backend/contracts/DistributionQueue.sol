@@ -2,7 +2,7 @@
 pragma solidity ^0.8.30;
 
 import { ILanguages } from "@elimu-ai/dao-contracts/ILanguages.sol";
-import { ProtocolVersion } from "./utils/ProtocolVersion.sol";
+import { ProtocolVersion } from "./util/ProtocolVersion.sol";
 
 struct Distribution {
     string languageCode;

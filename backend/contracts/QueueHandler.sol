@@ -4,7 +4,7 @@ pragma solidity ^0.8.30;
 import { Sponsorship, SponsorshipQueue } from "./SponsorshipQueue.sol";
 import { Distribution, DistributionQueue } from "./DistributionQueue.sol";
 import { IDistributionVerifier } from "./interface/IDistributionVerifier.sol";
-import { ProtocolVersion } from "./utils/ProtocolVersion.sol";
+import { ProtocolVersion } from "./util/ProtocolVersion.sol";
 
 /// @notice Handles pairing of sponsorships with distributions
 contract QueueHandler is ProtocolVersion {
