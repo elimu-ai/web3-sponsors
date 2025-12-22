@@ -1,6 +1,6 @@
 {
-    "name": "@elimu-ai/web3-sponsors",
-    "version": "0.9.5",
+    "name": "@elimu-ai/sponsors",
+    "version": "0.9.6",
     "description": "Interfaces for interacting with the Ξlimu DAO's education sponsorship program",
     "repository": {
         "type": "git",
@@ -9,5 +9,5 @@
     "license": "MIT",
     "author": "Ξlimu DAO",
     "homepage": "https://sponsors.elimu.ai",
-    "keywords": [ "education", "edtech", "web3", "ethereum", "dao", "sponsor", "sponsorship" ]
+    "keywords": [ "education", "edtech", "web3", "ethereum", "dao", "sponsor", "sponsorship", "impact", "social impact", "impact staking" ]
 }

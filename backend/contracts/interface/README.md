@@ -5,7 +5,7 @@ Interfaces for interacting with the Ξlimu DAO's education sponsorship program (
 If you want to integrate your own smart contracts with Ξlimu DAO's education sponsorship program, install this library:
 
 ```shell
-npm install @elimu-ai/web3-sponsors
+npm install @elimu-ai/sponsors
 ```
 
 ## Add Sponsorship 💜
@@ -15,13 +15,13 @@ If you want your smart contract to *add a new sponsorship* to our queue of spons
 Then, instantiate the smart contract(s) you want to interact with:
 
 ```solidity
-import { ISponsorshipQueue } from "@elimu-ai/web3-sponsors/ISponsorshipQueue.sol";
+import { ISponsorshipQueue } from "@elimu-ai/sponsors/ISponsorshipQueue.sol";
 
 contract MyContract {
     ISponsorshipQueue public immutable sponsorshipQueue;
 
     constructor() {
-        sponsorshipQueue = ISponsorshipQueue("0x7e2551180F8d45D0fB4787c86934096fCF05B0fc");
+        sponsorshipQueue = ISponsorshipQueue("0xA5B0265C90530B69F0C66DE9E59E6abB97E91323");
     }
 
     function myFunction() {
