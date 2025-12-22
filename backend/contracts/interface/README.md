@@ -33,19 +33,9 @@ contract MyContract {
 Next, add logic to your smart contract for checking if it holds enough ETH to pay for one sponsorship:
 
 ```diff
-import { ILanguages } from "@elimu-ai/web3-sponsors/ISponsorshipQueue.sol";
-
-contract MyContract {
-    ISponsorshipQueue public immutable sponsorshipQueue;
-
-    constructor() {
-        sponsorshipQueue = ISponsorshipQueue("0x47071D164900986994e4cc75DB1AF0ee0D04C6df");
-    }
-
-    function myFunction() {
-+        require(address(this).balance > sponsorshipQueue.estimatedCost(), "Not enough ETH");
-        sponsorshipQueue.addSponsorship();
-    }
+function myFunction() {
++    require(address(this).balance > sponsorshipQueue.estimatedCost(), "Not enough ETH");
+    sponsorshipQueue.addSponsorship();
 }
 ```
 

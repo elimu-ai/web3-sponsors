@@ -22,6 +22,6 @@ contract CommunityFund {
         if (address(this).balance < sponsorshipQueue.estimatedCost()) {
             revert InsufficientFunds(address(this).balance);
         }
-        sponsorshipQueue.addSponsorship();
+        sponsorshipQueue.addSponsorship{ value: sponsorshipQueue.estimatedCost() }();
     }
 }
