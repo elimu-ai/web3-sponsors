@@ -1,6 +1,6 @@
 {
     "name": "@elimu-ai/sponsors",
-    "version": "0.9.6",
+    "version": "0.9.7",
     "description": "Interfaces for interacting with the Ξlimu DAO's education sponsorship program",
     "repository": {
         "type": "git",

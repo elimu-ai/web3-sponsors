@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
+import { IDistributionQueue } from "./interface/IDistributionQueue.sol";
 import { ILanguages } from "@elimu-ai/dao-contracts/ILanguages.sol";
 import { ProtocolVersion } from "./util/ProtocolVersion.sol";
 
@@ -12,7 +13,7 @@ struct Distribution {
 }
 
 /// @notice A queue of distributions for the Ξlimu DAO's education sponsorship program (https://sponsors.elimu.ai)
-contract DistributionQueue is ProtocolVersion {
+contract DistributionQueue is IDistributionQueue, ProtocolVersion {
     address public owner;
     ILanguages public languages;
     address public queueHandler;
