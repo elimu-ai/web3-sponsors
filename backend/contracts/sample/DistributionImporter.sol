@@ -23,7 +23,7 @@ contract DistributionImporter {
     }
 
     function processDistributions() public {
-        for (uint256 i = 0; i < languageCodes.length - 1; i++) {
+        for (uint256 i = 0; i <= languageCodes.length - 1; i++) {
             distributionQueue.addDistribution(languageCodes[i], androidIds[i]);
         }
         emit DistributionsProcessed(msg.sender, languageCodes.length);
