@@ -26,7 +26,7 @@ npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network
 npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network hardhat
 
 npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network hardhat
-npx hardhat ignition deploy ./ignition/modules/DistributionProcessor.ts --network hardhat
+npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network hardhat
 ```
 
 Ethereum Sepolia (Chain ID `11155111`)
@@ -37,7 +37,7 @@ npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network
 npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network sepolia --verify
 
 npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network sepolia --verify
-npx hardhat ignition deploy ./ignition/modules/DistributionProcessor.ts --network sepolia --verify
+npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network sepolia --verify
 ```
 [`./ignition/deployments/chain-11155111/deployed_addresses.json`](./ignition/deployments/chain-11155111/deployed_addresses.json)
 
@@ -49,7 +49,7 @@ npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network
 npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network mainnet --verify
 
 npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network mainnet --verify
-npx hardhat ignition deploy ./ignition/modules/DistributionProcessor.ts --network mainnet --verify
+npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network mainnet --verify
 ```
 [`./ignition/deployments/chain-1/deployed_addresses.json`](./ignition/deployments/chain-1/deployed_addresses.json)
 
