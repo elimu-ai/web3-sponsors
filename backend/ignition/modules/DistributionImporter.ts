@@ -2,7 +2,7 @@ import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 import { ethers, network } from "hardhat";
 import deployed_addresses_sepolia from "../deployments/chain-11155111/deployed_addresses.json";
 
-const DistributionProcessorModule = buildModule("DistributionProcessorModule", (m) => {
+const DistributionImporterModule = buildModule("DistributionImporterModule", (m) => {
   console.log("network.name:", network.name);
 
   let distributionQueueAddress = ethers.ZeroAddress;
@@ -13,11 +13,11 @@ const DistributionProcessorModule = buildModule("DistributionProcessorModule", (
   }
   console.log("distributionQueueAddress:", distributionQueueAddress);
   
-  const distributionProcessor = m.contract("DistributionProcessor", [
+  const distributionImporter = m.contract("DistributionImporter", [
     distributionQueueAddress
   ]);
 
-  return { distributionProcessor };
+  return { distributionImporter };
 });
 
-export default DistributionProcessorModule;
+export default DistributionImporterModule;
