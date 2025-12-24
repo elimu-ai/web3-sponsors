@@ -51,7 +51,7 @@ contract DistributionQueue is IDistributionQueue, ProtocolVersion {
         emit QueueHandlerUpdated(queueHandler_);
     }
 
-    function addDistribution(string calldata languageCode, string calldata androidId) public {
+    function addDistribution(string calldata languageCode, string calldata androidId) external {
         if (!languages.isSupportedLanguage(languageCode)) {
             revert InvalidLanguageCode();
         }

@@ -58,7 +58,7 @@ contract SponsorshipQueue is ISponsorshipQueue, ProtocolVersion {
 
     /// @notice Pay ETH to this smart contract
     /// @dev The amount of ETH to pay can be changed by adjusting the `estimatedCost` variable
-    function addSponsorship() public payable {
+    function addSponsorship() external payable {
         require(msg.value == estimatedCost, "Must send exactly the estimated cost");
         Sponsorship memory sponsorship = Sponsorship(
             estimatedCost,
