@@ -10,9 +10,7 @@ npm install @elimu-ai/sponsors
 
 ## Add Sponsorship 💜
 
-If you want your smart contract to *add a new sponsorship* to our queue of sponsorships, start by importing its interface:
-
-Then, instantiate the smart contract(s) you want to interact with:
+If you want your smart contract to *add a new sponsorship* to our queue of sponsorships, start by importing its interface. Then, instantiate the smart contract address you want to interact with.
 
 ```solidity
 import { ISponsorshipQueue } from "@elimu-ai/sponsors/ISponsorshipQueue.sol";
@@ -20,12 +18,13 @@ import { ISponsorshipQueue } from "@elimu-ai/sponsors/ISponsorshipQueue.sol";
 contract MyContract {
     ISponsorshipQueue public immutable sponsorshipQueue;
 
-    constructor() {
-        sponsorshipQueue = ISponsorshipQueue("0xA5B0265C90530B69F0C66DE9E59E6abB97E91323");
+    constructor(address sponsorshipQueue_) {
+        sponsorshipQueue = ISponsorshipQueue(sponsorshipQueue_);
     }
 
     function myFunction() {
-        sponsorshipQueue.addSponsorship();
+        uint256 cost = sponsorshipQueue.estimatedCost();
+        sponsorshipQueue.addSponsorship{value: cost}();
     }
 }
 ```
@@ -34,8 +33,9 @@ Next, add logic to your smart contract for checking if it holds enough ETH to pa
 
 ```diff
 function myFunction() {
-+    require(address(this).balance > sponsorshipQueue.estimatedCost(), "Not enough ETH");
-    sponsorshipQueue.addSponsorship();
+    uint256 cost = sponsorshipQueue.estimatedCost();
++    require(address(this).balance >= cost, "Not enough ETH");
+    sponsorshipQueue.addSponsorship{value: cost}();
 }
 ```
 
@@ -46,7 +46,25 @@ For a sample implementation, see [`CommunityFund.sol`](https://github.com/elimu-
 
 ## Add Distribution 🛵💨
 
-Coming soon...
+If you want your smart contract to *add a new distribution* to our queue of distributions, add the following:
+
+```solidity
+import { IDistributionQueue } from "@elimu-ai/sponsors/IDistributionQueue.sol";
+
+contract MyContract {
+    IDistributionQueue public immutable distributionQueue;
+
+    constructor(address distributionQueue_) {
+        distributionQueue = IDistributionQueue(distributionQueue_);
+    }
+
+    function myFunction(string calldata languageCode, string calldata androidId) public {
+        distributionQueue.addDistribution(languageCode, androidId);
+    }
+}
+```
+
+For a sample implementation, see [`DistributionImporter.sol`](https://github.com/elimu-ai/web3-sponsors/tree/main/backend/contracts/sample/DistributionImporter.sol).
 
 ---
 

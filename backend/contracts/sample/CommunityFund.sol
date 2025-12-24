@@ -19,9 +19,10 @@ contract CommunityFund {
     }
 
     function fundSponsorship() public {
-        if (address(this).balance < sponsorshipQueue.estimatedCost()) {
+        uint256 cost = sponsorshipQueue.estimatedCost();
+        if (address(this).balance < cost) {
             revert InsufficientFunds(address(this).balance);
         }
-        sponsorshipQueue.addSponsorship{ value: sponsorshipQueue.estimatedCost() }();
+        sponsorshipQueue.addSponsorship{value: cost}();
     }
 }
