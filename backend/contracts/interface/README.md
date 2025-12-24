@@ -64,7 +64,7 @@ contract MyContract {
 }
 ```
 
-For a sample implementation, see [`DistributionProcessor.sol`](https://github.com/elimu-ai/web3-sponsors/tree/main/backend/contracts/sample/DistributionProcessor.sol).
+For a sample implementation, see [`DistributionImporter.sol`](https://github.com/elimu-ai/web3-sponsors/tree/main/backend/contracts/sample/DistributionImporter.sol).
 
 ---
 

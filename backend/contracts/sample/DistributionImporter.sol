@@ -3,11 +3,11 @@ pragma solidity ^0.8.30;
 
 import { IDistributionQueue } from "@elimu-ai/sponsors/IDistributionQueue.sol";
 
-contract DistributionProcessor {
+contract DistributionImporter {
     IDistributionQueue public immutable distributionQueue;
 
-    string[] languageCodes;
-    string[] androidIds;
+    string[] public languageCodes;
+    string[] public androidIds;
 
     event DistributionImported(address indexed importer, string languageCode, string androidId);
     event DistributionsProcessed(address indexed processor, uint256 count);
