@@ -1,4 +1,4 @@
-import { useReadContract, useSimulateContract, useWriteContract } from "wagmi";
+import { useReadContract, useSimulateContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { abi as abi_sponsorship_queue } from "../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
 import { abi as abi_distribution_queue } from "../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionQueueModule#DistributionQueue.json";
 import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/chain-11155111/artifacts/QueueHandlerModule#QueueHandler.json"
@@ -133,19 +133,67 @@ export function WriteContractButton() {
   const deploymentAddress: Address = deployed_addresses["QueueHandlerModule#QueueHandler"] as `0x${string}`;
   console.debug("deploymentAddress:", deploymentAddress);
 
-  const { writeContract } = useWriteContract();
-  return (
-    <button 
-      className="mt-4 p-8 text-2xl bg-gray-200 dark:bg-gray-800 rounded-lg border-gray-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
-      onClick={() =>
-        writeContract({
-          abi: abi_queue_handler,
-          address: deploymentAddress,
-          functionName: "processQueuePair"
-        })
-      }
-    >
-        Process Queue Pair 🔗
-    </button>
-  )
+  const { data: writeHash, writeContract, isSuccess: writeIsSuccess, isPending: writeIsPending } = useWriteContract();
+  console.debug("writeHash:", writeHash);
+  console.debug("writeIsPending:", writeIsPending);
+  console.debug("writeIsSuccess:", writeIsSuccess);
+
+  const { isLoading: txIsLoading } = useWaitForTransactionReceipt({ hash: writeHash });
+  console.debug("txIsLoading:", txIsLoading);
+
+  if (!writeIsSuccess) {
+    if (!writeIsPending) {
+      return (
+        <button 
+          className="mt-4 p-8 text-2xl bg-gray-200 dark:bg-gray-800 rounded-lg border-gray-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
+          onClick={() =>
+            writeContract({
+              abi: abi_queue_handler,
+              address: deploymentAddress,
+              functionName: "processQueuePair"
+            })
+          }
+        >
+            Process Queue Pair 🔗
+        </button>
+      )
+    } else {
+      return (
+        <>
+          <button disabled={true} className="mt-4 p-8 text-2xl bg-gray-200 dark:bg-gray-800 rounded-lg border-gray-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+            <LoadingIndicator /> &nbsp; Confirming...
+          </button>
+          <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 inline mb-1 mr-1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+            </svg> Check wallet
+          </div>
+        </>
+      )
+    }
+  }
+
+  if (txIsLoading) {
+    return (
+      <>
+        <button disabled={true} className="mt-4 p-8 text-2xl bg-gray-200 dark:bg-gray-800 rounded-lg border-gray-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+          <LoadingIndicator /> &nbsp; Finalizing... ⏳
+        </button>
+        <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
+          <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+            View on Etherscan ↗
+          </Link>
+        </div>
+      </>
+    )
+  } else {
+    return (
+      <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
+        The queue pair has been processed!<br />
+        <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+          View on Etherscan ↗
+        </Link>
+      </div>
+    )
+  }
 }

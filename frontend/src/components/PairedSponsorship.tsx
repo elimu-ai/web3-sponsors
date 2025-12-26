@@ -49,16 +49,16 @@ export default function PairedSponsorship({ distributionQueueNumber }: { distrib
 
     if (!sponsorshipQueueNumber) {
         return (
-            <span className="p-2 text-sm text-gray-300 border-gray-400 bg-gray-600 border-2 rounded-xl">
+            <span className="p-2 text-gray-300 border-gray-400 bg-gray-700 border-2 rounded-xl">
                 Pairing not yet <Link href="/process" className="text-purple-300" id="processLink">processed</Link>
             </span>
         )
     } else {
       return (
-          <Link href={`/sponsorships/${sponsorshipQueueNumber}`} className="text-indigo-600">
-              <div className="skew-y-3 p-4 text-2xl bg-indigo-200 dark:bg-indigo-950 rounded-lg border-indigo-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+          <Link href={`/sponsorships/${sponsorshipQueueNumber}`} className="text-purple-600">
+              <div className="skew-y-3 p-4 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
                   <div className="mb-4 text-center text-4xl">
-                      🛵💨
+                      💜
                   </div>
                   Sponsorship #{sponsorshipQueueNumber}
               </div>

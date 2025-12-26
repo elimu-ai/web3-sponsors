@@ -49,7 +49,7 @@ export default function PairedDistribution({ sponsorshipQueueNumber }: { sponsor
 
     if (!distributionQueueNumber) {
         return (
-            <span className="p-2 text-sm text-gray-300 border-gray-400 bg-gray-600 border-2 rounded-xl">
+            <span className="p-2 text-gray-300 border-gray-400 bg-gray-700 border-2 rounded-xl">
                 Pairing not yet <Link href="/process" className="text-purple-300" id="processLink">processed</Link>
             </span>
         )
