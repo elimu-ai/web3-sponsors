@@ -43,12 +43,12 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
         return <LoadingIndicator />
     }
 
+    const eventClassName = (eventName === "DistributionApproved") ? "bg-teal-700 text-teal-300" : "bg-orange-700 text-orange-300";
     return (
         <table className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-800 border-spacing-2 border-separate rounded-lg">
             <thead>
                 <tr>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Block Number</th>
-                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Queue Number</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">DAO Operator</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Verification</th>
                 </tr>
@@ -57,9 +57,8 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
                 {events.map((el, i) =>
                     <tr key={i}>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{Number(el.blockNumber)}</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{Number(el.args.queueNumber)}</td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.args.operator.substring(0, 6)}...{el.args.operator.substring(38, 42)}</code></td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.eventName}</code></td>
+                        <td className={`bg-zinc-800 text-zinc-400 p-2 rounded-md ${eventClassName}`}><code>{el.eventName}</code></td>
                     </tr>
                 )}
             </tbody>
