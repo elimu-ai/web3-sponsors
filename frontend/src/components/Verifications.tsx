@@ -48,7 +48,6 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
             <thead>
                 <tr>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Block Number</th>
-                    <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Queue Number</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">DAO Operator</th>
                     <th className="bg-zinc-700 text-zinc-300 p-4 rounded-md">Verification</th>
                 </tr>
@@ -57,9 +56,12 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
                 {events.map((el, i) =>
                     <tr key={i}>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{Number(el.blockNumber)}</td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">#{Number(el.args.queueNumber)}</td>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.args.operator.substring(0, 6)}...{el.args.operator.substring(38, 42)}</code></td>
-                        <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md"><code>{el.eventName}</code></td>
+                        {eventName == "DistributionApproved" ?
+                            <td className="p-2 rounded-md bg-teal-700 text-teal-300"><code>{el.eventName}</code></td>
+                            :
+                            <td className="p-2 rounded-md bg-orange-700 text-orange-300"><code>{el.eventName}</code></td>
+                        }
                     </tr>
                 )}
             </tbody>
