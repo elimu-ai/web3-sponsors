@@ -77,7 +77,7 @@ export default function Home() {
             </div>
 
             <div className="mt-6 border-purple-100 dark:border-purple-900 border-t-2 pt-6 text-center skew-y-3">
-              <Link href="/distributions/add" className="text-purple-400 p-2 border border-purple-900 rounded-lg hover:border-r-4 hover:border-b-4 hover:-translate-y-2">
+              <Link href="/sponsorships/add" className="text-purple-400 p-2 border border-purple-900 rounded-lg hover:border-r-4 hover:border-b-4 hover:-translate-y-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 inline mb-1 mr-1">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg> Add sponsorship
