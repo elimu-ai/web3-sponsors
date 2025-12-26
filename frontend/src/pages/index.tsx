@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>elimu.ai Sponsors 🫶🏽</title>
+        <title>Sponsors 🫶🏽 | elimu.ai</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap" rel="stylesheet" />
@@ -66,20 +66,41 @@ export default function Home() {
           </div>
         </div>
 
-        <h2 className="mt-16 text-4xl">
-          Sponsorship Queue:
-        </h2>
+        <div className="flex space-x-8">
+          <div className="w-1/2">
+            <h2 className="mt-16 text-4xl text-center">
+              Sponsorship Queue
+            </h2>
 
-        <div className="mt-8 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-          <Sponsorships />
-        </div>
+            <div className="mt-8 grid space-y-4">
+              <Sponsorships />
+            </div>
 
-        <h2 className="mt-16 text-4xl">
-          Distribution Queue:
-        </h2>
+            <div className="mt-6 border-purple-100 dark:border-purple-900 border-t-2 pt-6 text-center skew-y-3">
+              <Link href="/distributions/add" className="text-purple-400 p-2 border border-purple-900 rounded-lg hover:border-r-4 hover:border-b-4 hover:-translate-y-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 inline mb-1 mr-1">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg> Add sponsorship
+              </Link>
+            </div>
+          </div>
+          <div className="w-1/2">
+            <h2 className="mt-16 text-4xl text-center">
+              Distribution Queue
+            </h2>
 
-        <div className="mt-8 grid space-x-4 space-y-4 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-          <Distributions />
+            <div className="mt-8 grid space-y-4">
+              <Distributions />
+            </div>
+
+            <div className="mt-6 border-indigo-100 dark:border-indigo-900 border-t-2 pt-6 text-center skew-y-3">
+              <Link href="/distributions/add" className="text-indigo-400 p-2 border border-indigo-900 rounded-lg hover:border-r-4 hover:border-b-4 hover:-translate-y-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 inline mb-1 mr-1">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg> Add distribution
+              </Link>
+            </div>
+          </div>
         </div>
 
         <div className="mt-12 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
