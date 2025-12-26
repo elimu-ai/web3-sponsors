@@ -26,7 +26,7 @@ export default function Home() {
         </h1>
 
         <div className="text-4xl mt-8">
-          Sponsor the education of out-of-school children 🚀✨
+          Sponsor the education of out-of-school children
         </div>
 
         <Link href="/sponsorships/add" className="mt-8 shadow-lg shadow-purple-500/100">
@@ -69,7 +69,7 @@ export default function Home() {
         <div className="flex space-x-8">
           <div className="w-1/2">
             <h2 className="mt-16 text-4xl text-center">
-              Sponsorship Queue:
+              Sponsorship Queue
             </h2>
 
             <div className="mt-8 grid space-y-4">
@@ -86,7 +86,7 @@ export default function Home() {
           </div>
           <div className="w-1/2">
             <h2 className="mt-16 text-4xl text-center">
-              Distribution Queue:
+              Distribution Queue
             </h2>
 
             <div className="mt-8 grid space-y-4">
