@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Sponsors 🫶🏽</title>
+        <title>elimu.ai Sponsors 🫶🏽</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap" rel="stylesheet" />
@@ -26,7 +26,7 @@ export default function Home() {
         </h1>
 
         <div className="text-4xl mt-8">
-          Sponsor the education of one out-of-school child
+          Sponsor the education of out-of-school children 🚀✨
         </div>
 
         <Link href="/sponsorships/add" className="mt-8 shadow-lg shadow-purple-500/100">
