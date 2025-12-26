@@ -69,7 +69,7 @@ export default function Home() {
         <div className="flex space-x-8">
           <div className="w-1/2">
             <h2 className="mt-16 text-4xl text-center">
-              Sponsorship Queue
+              Sponsorship Queue:
             </h2>
 
             <div className="mt-8 grid space-y-4">
@@ -86,7 +86,7 @@ export default function Home() {
           </div>
           <div className="w-1/2">
             <h2 className="mt-16 text-4xl text-center">
-              Distribution Queue
+              Distribution Queue:
             </h2>
 
             <div className="mt-8 grid space-y-4">
