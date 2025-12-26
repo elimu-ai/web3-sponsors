@@ -43,7 +43,7 @@ export default function AddDistribution() {
           education to out-of-school children.
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 text-center">
           {!address ? (
             <button disabled={true} className="p-8 text-2xl text-zinc-400 bg-zinc-300 rounded-lg">
               <div className="text-6xl rotate-12 mb-4">☝🏽</div>
