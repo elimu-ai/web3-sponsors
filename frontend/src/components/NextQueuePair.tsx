@@ -189,7 +189,7 @@ export function WriteContractButton() {
   } else {
     return (
       <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
-        The queue pair has been processed!<br />
+        🎉 The queue pair has been processed successfully! 🎉<br />
         <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
           View on Etherscan ↗
         </Link>
