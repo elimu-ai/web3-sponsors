@@ -29,7 +29,7 @@ function LoadQueuePairProcessedEvents() {
             const logs = await publicClient.getContractEvents({
                 abi: abi_queue_handler,
                 address: deploymentAddress,
-                fromBlock: BigInt(9_760_219), // https://sepolia.etherscan.io/tx/0x01ea5a02fc320619f391757c038666722837e908c5094bef55b8a16824fb96e5
+                fromBlock: BigInt(10_150_061), // https://sepolia.etherscan.io/tx/0x4ccdae0794c5061a019b8674d2117b22b3e85b343ece4390b2fb22eb41d76bc3
                 eventName: "QueuePairProcessed"
             })
             console.debug("logs:", logs)
