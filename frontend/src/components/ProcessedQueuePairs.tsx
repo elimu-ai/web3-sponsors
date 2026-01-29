@@ -34,7 +34,7 @@ function LoadQueuePairProcessedEvents() {
             for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {
                 const toBlock = ((fromBlock + chunkSize) >= currentBlock) 
                     ? currentBlock 
-                    : (fromBlock + chunkSize);
+                    : (fromBlock + chunkSize - BigInt(1));
                 console.debug(`Fetching logs from block ${fromBlock} to ${toBlock}`);
                 const logs = await publicClient.getContractEvents({
                     abi: abi_queue_handler,
