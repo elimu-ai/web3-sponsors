@@ -37,7 +37,7 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
                     address: deploymentAddress,
                     fromBlock,
                     toBlock,
-                    eventName: "QueuePairProcessed",
+                    eventName: eventName,
                     args: {
                         queueNumber: queueNumber
                     }
