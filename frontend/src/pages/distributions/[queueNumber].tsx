@@ -4,6 +4,10 @@ import DistributionSummary from "@/components/DistributionSummary";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Verifications from "@/components/Verifications";
+import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
+import { Address } from "viem";
+import Link from "next/link";
+import PairedSponsorship from "@/components/PairedSponsorship";
 
 export default function DistributionDetails() {
   console.debug("DistributionDetails");
@@ -11,6 +15,9 @@ export default function DistributionDetails() {
   const router = useRouter();
   const queueNumber = Number(router.query.queueNumber);
   console.debug("queueNumber:", queueNumber);
+
+  const deploymentAddress: Address = deployed_addresses["DistributionVerifierModule#DistributionVerifier"] as `0x${string}`;
+  console.debug("deploymentAddress:", deploymentAddress);
 
   return (
     <>
@@ -33,9 +40,9 @@ export default function DistributionDetails() {
         </div>
 
         <div className="mt-8">
-          <a className="text-purple-600" href="https://sepolia.etherscan.io/address/0xC3313d6BB50C081AE07B6B097700eC2ED0568377#writeContract#F3" target="_blank">
+          <Link className="text-purple-600" href={`https://sepolia.etherscan.io/address/${deploymentAddress}#writeContract#F3`} target="_blank">
             Add verification ↗
-          </a>
+          </Link>
         </div>
 
         <div className="mt-8 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
@@ -51,6 +58,15 @@ export default function DistributionDetails() {
           </h2>
           <div className="mt-4 text-center">
             <Verifications queueNumber={queueNumber} eventName="DistributionRejected"  />
+          </div>
+        </div>
+
+        <div className="mt-8 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
+          <h2 className="text-2xl text-center">
+            Paired Sponsorship 🔗
+          </h2>
+          <div className="mt-4 text-center">
+            <PairedSponsorship distributionQueueNumber={queueNumber} />
           </div>
         </div>
       </main>

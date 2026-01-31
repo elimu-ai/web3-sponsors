@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
-import { IRoles } from "@elimu-ai/dao-contracts/IRoles.sol";
 import { Sponsorship, SponsorshipQueue } from "./SponsorshipQueue.sol";
 import { Distribution, DistributionQueue } from "./DistributionQueue.sol";
 import { IDistributionVerifier } from "./interface/IDistributionVerifier.sol";
+import { ProtocolVersion } from "./util/ProtocolVersion.sol";
 
 /// @notice Handles pairing of sponsorships with distributions
-contract QueueHandler {
+contract QueueHandler is ProtocolVersion {
     address public owner;
-    IRoles public roles;
     SponsorshipQueue public immutable sponsorshipQueue;
     DistributionQueue public immutable distributionQueue;
     IDistributionVerifier public distributionVerifier;
@@ -17,11 +16,11 @@ contract QueueHandler {
     event OwnerUpdated(address);
     event RolesUpdated(address);
     event DistributionVerifierUpdated(address);
-    event QueuePairProcessed(Distribution, Sponsorship);
+    event QueuePairProcessed(uint24 distributionQueueNumber, uint24 sponsorshipQueueNumber, address indexed operator);
+    event RejectedDistributionRemoved(uint24 queueNumber, address indexed operator);
 
-    constructor(address roles_, address sponsorshipQueue_, address distributionQueue_, address distributionVerifier_) {
+    constructor(address sponsorshipQueue_, address distributionQueue_, address distributionVerifier_) {
         owner = msg.sender;
-        roles = IRoles(roles_);
         sponsorshipQueue = SponsorshipQueue(sponsorshipQueue_);
         distributionQueue = DistributionQueue(distributionQueue_);
         distributionVerifier = IDistributionVerifier(distributionVerifier_);
@@ -33,12 +32,6 @@ contract QueueHandler {
         emit OwnerUpdated(owner_);
     }
 
-    function updateRoles(address roles_) public {
-        require(msg.sender == owner, "Only the owner can set the `roles` address");
-        roles = IRoles(roles_);
-        emit RolesUpdated(roles_);
-    }
-
     function updateDistributionVerifier(address distributionVerifier_) public {
         require(msg.sender == owner, "Only the owner can set the `distributionVerifier` address");
         distributionVerifier = IDistributionVerifier(distributionVerifier_);
@@ -47,8 +40,6 @@ contract QueueHandler {
 
     /// @notice Pair the next distribution (if approved) with the next sponsorship
     function processQueuePair() public {
-        require(roles.isDaoOperator(msg.sender), "Only DAO operators can process queue pairing");
-
         // Verify that the queue of distributions is not empty
         require(distributionQueue.getLength() > 0, "The distribution queue cannot be empty");
 
@@ -65,13 +56,14 @@ contract QueueHandler {
         Distribution memory distribution = distributionQueue.dequeue();
 
         // Remove the sponsorship from the queue
+        uint24 sponsorshipQueueNumber = sponsorshipQueue.queueNumberFront();
         Sponsorship memory sponsorship = sponsorshipQueue.dequeue();
 
         // Transfer ETH from the sponsorship to the distributor
         sponsorshipQueue.payDistributor(distribution.distributor, sponsorship);
 
         // Emit event
-        emit QueuePairProcessed(distribution, sponsorship);
+        emit QueuePairProcessed(distributionQueueNumber, sponsorshipQueueNumber, msg.sender);
     }
 
     /// @notice Remove rejected distribution from the queue
@@ -86,5 +78,8 @@ contract QueueHandler {
 
         // Remove the distribution from the queue
         distributionQueue.dequeue();
+
+        // Emit event
+        emit RejectedDistributionRemoved(distributionQueueNumber, msg.sender);
     }
 }

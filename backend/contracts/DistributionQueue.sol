@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
+import { IDistributionQueue } from "./interface/IDistributionQueue.sol";
 import { ILanguages } from "@elimu-ai/dao-contracts/ILanguages.sol";
+import { ProtocolVersion } from "./util/ProtocolVersion.sol";
 
 struct Distribution {
     string languageCode;
@@ -10,8 +12,8 @@ struct Distribution {
     address distributor;
 }
 
-/// @notice A queue of distributions for the Ξlimu DAO's education program (see https://sponsors.elimu.ai)
-contract DistributionQueue {
+/// @notice A queue of distributions for the Ξlimu DAO's education sponsorship program (https://sponsors.elimu.ai)
+contract DistributionQueue is IDistributionQueue, ProtocolVersion {
     address public owner;
     ILanguages public languages;
     address public queueHandler;
@@ -22,7 +24,7 @@ contract DistributionQueue {
     event OwnerUpdated(address);
     event LanguagesUpdated(address);
     event QueueHandlerUpdated(address);
-    event DistributionAdded(Distribution);
+    event DistributionAdded(uint24 queueNumber, address indexed distributor);
 
     error InvalidLanguageCode();
 
@@ -49,7 +51,7 @@ contract DistributionQueue {
         emit QueueHandlerUpdated(queueHandler_);
     }
 
-    function addDistribution(string calldata languageCode, string calldata androidId) public {
+    function addDistribution(string calldata languageCode, string calldata androidId) external {
         if (!languages.isSupportedLanguage(languageCode)) {
             revert InvalidLanguageCode();
         }
@@ -60,7 +62,7 @@ contract DistributionQueue {
             msg.sender
         );
         enqueue(distribution);
-        emit DistributionAdded(distribution);
+        emit DistributionAdded(queueNumberNext - 1, msg.sender);
     }
 
     function enqueue(Distribution memory sponsorship) private {
@@ -72,7 +74,6 @@ contract DistributionQueue {
         require(msg.sender == queueHandler, "Only the queue handler can remove from the queue");
         require(getLength() > 0, "Queue is empty");
         Distribution memory distribution = queue[queueNumberFront];
-        delete queue[queueNumberFront];
         queueNumberFront += 1;
         return distribution;
     }

@@ -5,6 +5,7 @@ import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
 import ErrorIndicator from "./ErrorIndicator";
 import VerificationStatus from "./VerificationStatus";
+import Link from "next/link";
 
 export default function DistributionSummary({ queueNumber }: any) {
     console.debug("DistributionSummary");
@@ -47,13 +48,15 @@ export default function DistributionSummary({ queueNumber }: any) {
                 {new Date(timestamp * 1_000).toISOString().substring(0,10)} {new Date(timestamp * 1_000).toISOString().substring(11,16)}
             </div>
             <div className="mt-2">
-                Language: {languageCode}
+                Language: <code>{languageCode}</code> (<Link className="text-purple-600" target="_blank" href={`http://${languageCode.toLowerCase()}.elimu.ai`}>{languageCode.toLowerCase()}.elimu.ai</Link>)
             </div>
             <div className="mt-2">
-                Android ID: {androidId}
+                Android ID: <Link className="text-purple-600" target="_blank" href={`http://${languageCode.toLowerCase()}.elimu.ai/analytics/students`}><code>{androidId}</code></Link>
             </div>
             <div className="mt-2">
-                Distributor: <code>{distributor.substring(0, 6)}...{distributor.substring(38, 42)}</code>
+                Distributor: <Link href={`/distributors/${distributor}`}>
+                    <code>{distributor.substring(0, 6)}...{distributor.substring(38, 42)}</code>
+                </Link>
             </div>
             <div className="mt-2">
                 <VerificationStatus queueNumber={queueNumber} />

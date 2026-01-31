@@ -59,21 +59,32 @@ describe("SponsorshipQueue", function () {
   });
 
   describe("Sponsorships", function () {
+    it("addSponsorship should be rejected if mismatching ETH amount", async function () {
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
+
+      await expect(sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.0222") }))
+        .to.be.rejectedWith("Must send exactly the estimated cost");
+    });
+
     it("Should emit an event on addSponsorship", async function () {
       const { sponsorshipQueue, account1 } = await loadFixture(deployFixture);
 
-      const firstAccountBalance = await hre.ethers.provider.getBalance(account1.address);
-      console.log("firstAccountBalance:", firstAccountBalance);
+      const tx = await sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") });
+      await expect(tx).to.emit(sponsorshipQueue, "SponsorshipAdded");
 
-      await expect(sponsorshipQueue.addSponsorship({ value: hre.ethers.parseUnits("0.02") }))
-        .to.emit(sponsorshipQueue, "SponsorshipAdded");
+      // Ensure that the indexed `sponsor` parameter gets added to the event logs
+      //   event SponsorshipAdded(uint256 timestamp, address indexed sponsor);
+      const receipt = await tx.wait();
+      const eventLog = receipt?.logs[0];
+      const topics = eventLog?.topics;
+      expect(topics?.length).to.equal(2);
+      const addressAsHex = topics?.at(1);
+      const address = "0x" + addressAsHex?.slice(-40);
+      expect(address).to.equal(account1.address.toLowerCase());
     });
 
     it("Should increase contract balance on addSponsorship", async function () {
-      const { sponsorshipQueue, account1 } = await loadFixture(deployFixture);
-
-      const firstAccountBalance = await hre.ethers.provider.getBalance(account1.address);
-      console.log("firstAccountBalance:", firstAccountBalance);
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
 
       console.log("sponsorshipQueue.target:", sponsorshipQueue.target);
 

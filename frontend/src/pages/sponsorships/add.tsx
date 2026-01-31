@@ -2,12 +2,13 @@ import LoadingIndicator from "@/components/LoadingIndicator";
 import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
-import { useAccount, useReadContract, useSimulateContract, useWriteContract } from "wagmi";
+import { useAccount, useReadContract, useSimulateContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { abi } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
 import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address, formatEther, parseEther } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
 import EstimatedCost from "@/components/EstimatedCost";
+import Link from "next/link";
 
 export default function AddSponsorship() {
   console.debug("AddSponsorship");
@@ -38,7 +39,7 @@ export default function AddSponsorship() {
         </h1>
 
         <div className="mt-8 text-center">
-          Your sponsorship will cover the estimated cost (Ξ<EstimatedCost />)<br />
+          Your sponsorship will cover the estimated cost (<EstimatedCost /> ETH)<br />
           for delivering education to one out-of-school child.
         </div>
 
@@ -131,20 +132,68 @@ export function WriteContractButton({ estimatedCost }: { estimatedCost: bigint }
   const deploymentAddress: Address = deployed_addresses["SponsorshipQueueModule#SponsorshipQueue"] as `0x${string}`;
   console.debug("deploymentAddress:", deploymentAddress);
 
-  const { writeContract } = useWriteContract();
-  return (
-    <button 
-      className="mt-4 p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
-      onClick={() =>
-        writeContract({
-          abi,
-          address: deploymentAddress,
-          functionName: "addSponsorship",
-          value: estimatedCost
-        })
-      }
-    >
-      Send {formatEther(estimatedCost)} ETH ⟠
-    </button>
-  )
+  const { data: writeHash, writeContract, isSuccess: writeIsSuccess, isPending: writeIsPending } = useWriteContract();
+  console.debug("writeHash:", writeHash);
+  console.debug("writeIsPending:", writeIsPending);
+  console.debug("writeIsSuccess:", writeIsSuccess);
+
+  const { isLoading: txIsLoading } = useWaitForTransactionReceipt({ hash: writeHash });
+  console.debug("txIsLoading:", txIsLoading);
+
+  if (!writeIsSuccess) {
+    if (!writeIsPending) {
+      return (
+        <button 
+          className="mt-4 p-8 text-2xl bg-purple-200 dark:bg-purple-950 rounded-lg border-purple-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1 active:border-r-2 active:border-b-2"
+          onClick={() =>
+            writeContract({
+              abi,
+              address: deploymentAddress,
+              functionName: "addSponsorship",
+              value: estimatedCost
+            })
+          }
+        >
+          Send {formatEther(estimatedCost)} ETH ⟠
+        </button>
+      )
+    } else {
+      return (
+        <>
+          <button disabled={true} className="mt-4 p-8 text-2xl bg-gray-200 dark:bg-gray-800 rounded-lg border-gray-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+            <LoadingIndicator /> &nbsp; Confirming...
+          </button>
+          <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 inline mb-1 mr-1">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+            </svg> Check wallet
+          </div>
+        </>
+      )
+    }
+  }
+
+  if (txIsLoading) {
+    return (
+      <>
+        <button disabled={true} className="mt-4 p-8 text-2xl bg-gray-200 dark:bg-gray-800 rounded-lg border-gray-400 border-r-4 border-b-4 hover:border-r-8 hover:border-b-8 hover:-translate-y-1">
+          <LoadingIndicator /> &nbsp; Finalizing... ⏳
+        </button>
+        <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
+          <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+            View on Etherscan ↗
+          </Link>
+        </div>
+      </>
+    )
+  } else {
+    return (
+      <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
+        🎉 Your sponsorship has been added successfully! 🎉<br />
+        <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+          View on Etherscan ↗
+        </Link>
+      </div>
+    )
+  }
 }
