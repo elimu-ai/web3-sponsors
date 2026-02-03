@@ -34,7 +34,7 @@ Ethereum Sepolia (Chain ID `11155111`)
 npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
-npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network sepolia --verify
+npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --network sepolia --verify
 
 npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network sepolia --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network sepolia --verify
