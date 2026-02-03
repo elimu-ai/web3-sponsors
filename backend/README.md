@@ -30,6 +30,10 @@ npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network
 ```
 
 Ethereum Sepolia (Chain ID `11155111`)
+> [!WARNING]
+> Before running the commands below, bump the version in these files:
+> (`./package.json`)[./package.json]
+> (`./contracts/util/ProtocolVersion.sol`)[./contracts/util/ProtocolVersion.sol]
 ```shell
 npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
@@ -42,6 +46,10 @@ npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network
 [`./ignition/deployments/chain-11155111/deployed_addresses.json`](./ignition/deployments/chain-11155111/deployed_addresses.json)
 
 Ethereum Mainnet (Chain ID `1`)
+> [!WARNING]
+> Before running the commands below, bump the version in these files:
+> (`./package.json`)[./package.json]
+> (`./contracts/util/ProtocolVersion.sol`)[./contracts/util/ProtocolVersion.sol]
 ```shell
 npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network mainnet --reset --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network mainnet --verify
