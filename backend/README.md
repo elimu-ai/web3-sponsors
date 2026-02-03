@@ -31,7 +31,7 @@ npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network
 
 Ethereum Sepolia (Chain ID `11155111`)
 ```shell
-npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network sepolia --reset --verify
+npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network sepolia --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network sepolia --verify
 npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network sepolia --verify
