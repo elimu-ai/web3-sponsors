@@ -31,7 +31,7 @@ npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network
 
 Ethereum Sepolia (Chain ID `11155111`)
 > [!IMPORTANT]
-> Before running the commands below, bump the version in these files:
+> _Before_ running the commands below, bump the version in these files:
 > - [`./package.json`](./package.json)
 > - [`./contracts/util/ProtocolVersion.sol`](./contracts/util/ProtocolVersion.sol)
 ```shell
@@ -47,7 +47,7 @@ npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network
 
 Ethereum Mainnet (Chain ID `1`)
 > [!IMPORTANT]
-> Before running the commands below, bump the version in these files:
+> _Before_ running the commands below, bump the version in these files:
 > - [`./package.json`](./package.json)
 > - [`./contracts/util/ProtocolVersion.sol`](./contracts/util/ProtocolVersion.sol)
 ```shell
