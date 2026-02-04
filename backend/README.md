@@ -35,16 +35,19 @@ Ethereum Sepolia (Chain ID `11155111`)
 > - [`./package.json`](./package.json)
 > - [`./contracts/util/ProtocolVersion.sol`](./contracts/util/ProtocolVersion.sol)
 ```shell
-# ./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json
 npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts  --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 
-# ./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json
 npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 ```
+
+Deployed addresses:
+- [`./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json)
+
+- [`./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json)
 
 Ethereum Mainnet (Chain ID `1`)
 > [!IMPORTANT]
