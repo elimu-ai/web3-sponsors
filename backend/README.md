@@ -41,9 +41,11 @@ npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network
 npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts  --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 
 npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
-npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network sepolia --verify
+npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 ```
-[`./ignition/deployments/chain-11155111/deployed_addresses.json`](./ignition/deployments/chain-11155111/deployed_addresses.json)
+[`./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json)
+
+[`./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json)
 
 Ethereum Mainnet (Chain ID `1`)
 > [!IMPORTANT]

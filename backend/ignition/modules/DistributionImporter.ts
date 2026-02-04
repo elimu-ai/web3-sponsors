@@ -1,6 +1,6 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 import { ethers, network } from "hardhat";
-import deployed_addresses_sepolia from "../deployments/chain-11155111/deployed_addresses.json";
+import deployed_addresses_sepolia from "../deployments/sepolia_v0-9-7/deployed_addresses.json";
 
 const DistributionImporterModule = buildModule("DistributionImporterModule", (m) => {
   console.log("network.name:", network.name);
