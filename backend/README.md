@@ -16,7 +16,7 @@ npx hardhat coverage
 npx istanbul check-coverage --lines 80
 ```
 
-Deployment:
+Deploying:
 
 Hardhat (`localhost`)
 ```shell
@@ -46,7 +46,6 @@ npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network
 
 Deployed addresses:
 - [`./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json)
-
 - [`./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json)
 
 Ethereum Mainnet (Chain ID `1`)
@@ -63,7 +62,6 @@ npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network mainnet
 npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network mainnet --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network mainnet --verify
 ```
-[`./ignition/deployments/chain-1/deployed_addresses.json`](./ignition/deployments/chain-1/deployed_addresses.json)
 
 > [!NOTE]
 > After deploying the `QueueHandler`, remember to update its address in the `SponsorshipQueue` and `DistributionQueue`.
