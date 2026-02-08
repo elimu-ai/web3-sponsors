@@ -6,7 +6,7 @@ Education sponsorship program, using Web3 for delivering education to out-of-sch
 
 URL: https://sponsors.elimu.ai
 
-[![](https://github.com/user-attachments/assets/0e89439b-f177-4de3-b952-5395a6c328cf)](https://sponsors.elimu.ai)
+[![](https://github.com/user-attachments/assets/993078ab-3e26-465b-a138-b18be71574d0)](https://sponsors.elimu.ai)
 
 ---
 
