@@ -1,6 +1,6 @@
 # Sponsors 🫶🏽
 
-> Dapp for sponsoring the education of one individual child
+> Dapp for sponsoring the education of an out-of-school child
 
 Education sponsorship program, using Web3 for delivering education to out-of-school children. A truly global and on-chain distribution system.
 
