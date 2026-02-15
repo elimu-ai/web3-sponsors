@@ -19,11 +19,11 @@ const config: HardhatUserConfig = {
     outputFile: "hardhat-gas-report.md"
   },
   networks: {
-    sepolia: { // Chain ID 11155111
+    sepolia: {
       url: "https://ethereum-sepolia-rpc.publicnode.com",
       accounts: privateKeys
     },
-    mainnet: { // Chain ID 1
+    mainnet: {
       url: "https://ethereum-rpc.publicnode.com",
       accounts: privateKeys
     }

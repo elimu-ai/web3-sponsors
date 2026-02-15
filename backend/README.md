@@ -29,7 +29,7 @@ npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network hardha
 npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network hardhat
 ```
 
-Ethereum Sepolia (Chain ID `11155111`)
+Ethereum Sepolia
 > [!IMPORTANT]
 > _Before_ running the commands below, bump the version in these files:
 > - [`./package.json`](./package.json)
@@ -48,7 +48,7 @@ Deployed addresses:
 - [`./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json)
 - [`./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json)
 
-Ethereum Mainnet (Chain ID `1`)
+Ethereum Mainnet
 > [!IMPORTANT]
 > _Before_ running the commands below, bump the version in these files:
 > - [`./package.json`](./package.json)
