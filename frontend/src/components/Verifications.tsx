@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { abi as abi_distribution_verifier } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/DistributionVerifierModule#DistributionVerifier.json";
-import deployed_addresses from "../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
+import { abi as abi_distribution_verifier } from "../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/DistributionVerifierModule#DistributionVerifier.json";
+import deployed_addresses from "../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json";
 import { Address, createPublicClient, http } from "viem";
 import { sepolia } from "viem/chains";
 import LoadingIndicator from "./LoadingIndicator";
