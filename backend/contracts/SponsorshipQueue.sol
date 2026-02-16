@@ -87,6 +87,6 @@ contract SponsorshipQueue is ISponsorshipQueue, ProtocolVersion, Ownable {
     /// @param sponsorship The sponsorship containing the amount to transfer
     function payDistributor(address distributor, Sponsorship memory sponsorship) public {
         require(msg.sender == queueHandler, "Only the queue handler can process payouts");
-        payable(distributor).transfer(sponsorship.estimatedCost);
+        payable(distributor).call{value: sponsorship.estimatedCost}("");
     }
 }
