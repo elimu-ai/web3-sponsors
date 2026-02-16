@@ -28,6 +28,11 @@ describe("DistributionQueue", function () {
 
       expect(await distributionQueue.owner()).to.equal(account1.address);
     });
+
+    it("Should set the correct protocol version", async function () {
+      const { distributionQueue } = await loadFixture(deployFixture);
+      expect(await distributionQueue.protocolVersion()).to.equal("0.9.8");
+    });
   });
 
   describe("Update owner address", function () {

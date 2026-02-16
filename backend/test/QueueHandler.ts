@@ -60,6 +60,11 @@ describe("QueueHandler", function () {
 
       expect(await queueHandler.distributionVerifier()).to.equal(await distributionVerifier.getAddress());
     });
+
+    it("Should set the correct protocol version", async function () {
+      const { queueHandler } = await loadFixture(deployFixture);
+      expect(await queueHandler.protocolVersion()).to.equal("0.9.8");
+    });
   });
 
   describe("Update owner address", function () {

@@ -39,6 +39,11 @@ describe("DistributionVerifier", function () {
 
       expect(await distributionVerifier.roles()).to.equal(await roles.getAddress());
     });
+
+    it("Should set the correct protocol version", async function () {
+      const { distributionVerifier } = await loadFixture(deployFixture);
+      expect(await distributionVerifier.protocolVersion()).to.equal("0.9.8");
+    });
   });
 
   describe("Update owner address", function () {
