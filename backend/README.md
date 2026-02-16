@@ -47,6 +47,7 @@ npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network
 Deployed addresses:
 - [`./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json)
 - [`./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json)
+- [`./ignition/deployments/sepolia_v0-9-9/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-9/deployed_addresses.json)
 
 Ethereum Mainnet
 > [!IMPORTANT]
