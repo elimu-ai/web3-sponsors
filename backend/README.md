@@ -56,7 +56,7 @@ Ethereum Mainnet
 > - [`./contracts/util/ProtocolVersion.sol`](./contracts/util/ProtocolVersion.sol)
 ```shell
 npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network mainnet --deployment-id mainnet_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
-npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network mainnet --verify
+npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network mainnet --deployment-id mainnet_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network mainnet --verify
 npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network mainnet --verify
 
