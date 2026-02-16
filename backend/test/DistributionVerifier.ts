@@ -46,7 +46,7 @@ describe("DistributionVerifier", function () {
       const { distributionVerifier, account1, account2 } = await loadFixture(deployFixture);
 
       expect(await distributionVerifier.owner()).to.equal(account1.address);
-      await distributionVerifier.updateOwner(account2.address);
+      await distributionVerifier.transferOwnership(account2.address);
       expect(await distributionVerifier.owner()).to.equal(account2.address);
     });
   });

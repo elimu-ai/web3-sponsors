@@ -20,8 +20,7 @@ contract DistributionQueue is IDistributionQueue, ProtocolVersion, Ownable {
     mapping(uint24 => Distribution) public queue;
     uint24 public queueNumberFront = 1;
     uint24 public queueNumberNext = 1;
-
-    event OwnerUpdated(address);
+    
     event LanguagesUpdated(address);
     event QueueHandlerUpdated(address);
     event DistributionAdded(uint24 queueNumber, address indexed distributor);
