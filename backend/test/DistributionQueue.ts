@@ -35,7 +35,7 @@ describe("DistributionQueue", function () {
       const { distributionQueue, account1, account2 } = await loadFixture(deployFixture);
 
       expect(await distributionQueue.owner()).to.equal(account1.address);
-      await distributionQueue.updateOwner(account2.address);
+      await distributionQueue.transferOwnership(account2.address);
       expect(await distributionQueue.owner()).to.equal(account2.address);
     });
   });
