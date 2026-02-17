@@ -28,7 +28,7 @@ function LoadQueuePairProcessedEvents() {
         async function fetchContractEvents() {
             let allLogs: any[] = [];
 
-            const startBlock = BigInt(9_907_904); // https://sepolia.etherscan.io/tx/0x4ccdae0794c5061a019b8674d2117b22b3e85b343ece4390b2fb22eb41d76bc3
+            const startBlock = BigInt(24_470_279); // https://etherscan.io/tx/0x479fca44e2bc9afcaab1681dbf2b9294e2cf3f2764bcd9146055cd729610af7f
             const chunkSize = BigInt(50_000); // 50k blocks at a time
             const currentBlock = await publicClient.getBlockNumber();
             for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {

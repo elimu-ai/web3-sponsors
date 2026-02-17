@@ -24,7 +24,7 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
         async function fetchContractEvents() {
             let allLogs: any[] = [];
 
-            const startBlock = BigInt(9_907_896); // https://sepolia.etherscan.io/tx/0xb087a52b94f22eb49b7b288e7a8371241e0e5d7dcb11638b2f2ec7b829f6ab57
+            const startBlock = BigInt(24_470_251); // https://etherscan.io/tx/0x681a7a527160bf5077597a73f4798a76297bde0731269b9eeacecedf3708920d
             const chunkSize = BigInt(50_000); // 50k blocks at a time
             const currentBlock = await publicClient.getBlockNumber();
             for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {

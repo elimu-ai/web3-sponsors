@@ -72,7 +72,7 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
         async function fetchContractEvents() {
             let allLogs: any[] = [];
 
-            const startBlock = BigInt(9_907_880); // https://sepolia.etherscan.io/tx/0x12d1df9571a53d6b85911c1beae93f409c77a14d0f8e948a0021eb3f9da5e3d7
+            const startBlock = BigInt(24_470_201); // https://etherscan.io/tx/0xb55bf4d0fb7e32877ab9d132ec62bbbd5b882e3b0408244c3ed2b5d08bacdca9
             const chunkSize = BigInt(50_000); // 50k blocks at a time
             const currentBlock = await publicClient.getBlockNumber();
             for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {
