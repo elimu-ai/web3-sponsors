@@ -28,7 +28,7 @@ export const wagmiConfig = createConfig({
     mainnet
   ],
   transports: {
-    [mainnet.id]: http()
+    [mainnet.id]: http('https://ethereum-rpc.publicnode.com')
   },
 });
 
