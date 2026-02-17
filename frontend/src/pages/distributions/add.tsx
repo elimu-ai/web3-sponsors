@@ -195,7 +195,7 @@ export function WriteContractButton({ languageCode, androidId}: any) {
           <LoadingIndicator /> &nbsp; Finalizing... ⏳
         </button>
         <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
-          <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+          <Link href={`https://etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
             View on Etherscan ↗
           </Link>
         </div>
@@ -205,7 +205,7 @@ export function WriteContractButton({ languageCode, androidId}: any) {
     return (
       <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
         🎉 Your distribution has been added successfully! 🎉<br />
-        <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+        <Link href={`https://etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
           View on Etherscan ↗
         </Link>
       </div>

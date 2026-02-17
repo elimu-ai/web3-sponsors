@@ -122,7 +122,7 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
                     <tr key={i}>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">
                             {new Date(el.blockTimestamp * 1_000).toISOString().substring(0,10)} {new Date(el.blockTimestamp * 1_000).toISOString().substring(11,16)}
-                            <Link className="ml-2 text-purple-600" href={`https://sepolia.etherscan.io/tx/${el.transactionHash}`} target="_blank">
+                            <Link className="ml-2 text-purple-600" href={`https://etherscan.io/tx/${el.transactionHash}`} target="_blank">
                                 Tx ↗
                             </Link>
                         </td>

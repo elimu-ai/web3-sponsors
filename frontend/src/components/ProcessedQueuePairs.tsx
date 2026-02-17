@@ -64,7 +64,7 @@ function LoadQueuePairProcessedEvents() {
         events.map((el, i) =>
             <div key={i} className="mt-4 p-4 text-2xl bg-zinc-50 dark:bg-zinc-900 rounded-lg">
                 <div className="text-zinc-400">
-                    Block: <Link className="text-purple-600" href={`https://sepolia.etherscan.io/tx/${el.transactionHash}`} target="_blank">#{Number(el.blockNumber)}</Link> ({new Date(Number(el.blockTimestamp) * 1_000).toISOString().substring(0,10)} {new Date(Number(el.blockTimestamp) * 1_000).toISOString().substring(11,16)})
+                    Block: <Link className="text-purple-600" href={`https://etherscan.io/tx/${el.transactionHash}`} target="_blank">#{Number(el.blockNumber)}</Link> ({new Date(Number(el.blockTimestamp) * 1_000).toISOString().substring(0,10)} {new Date(Number(el.blockTimestamp) * 1_000).toISOString().substring(11,16)})
                 </div>
                 <div className="mt-4 flex gap-x-4">
                     <Link href={`/sponsorships/${el.args.sponsorshipQueueNumber}`} className="text-purple-600">
