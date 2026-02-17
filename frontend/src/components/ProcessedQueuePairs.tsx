@@ -1,7 +1,7 @@
 import { Address, createPublicClient, formatEther, http } from "viem"
 import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/QueueHandlerModule#QueueHandler.json"
 import deployed_addresses from "../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json"
-import { sepolia } from "viem/chains"
+import { mainnet } from "viem/chains"
 import { useEffect, useState } from "react"
 import LoadingIndicator from "./LoadingIndicator"
 import Link from "next/link"
@@ -19,8 +19,8 @@ function LoadQueuePairProcessedEvents() {
     console.debug("deploymentAddress:", deploymentAddress);
 
     const publicClient = createPublicClient({
-        chain: sepolia,
-        transport: http("https://ethereum-sepolia-rpc.publicnode.com") // Max 50k blocks per request
+        chain: mainnet,
+        transport: http("https://ethereum-rpc.publicnode.com") // Max 50k blocks per request
     })
 
     const [events, setEvents] = useState(Array(0))

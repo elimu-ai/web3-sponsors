@@ -2,10 +2,10 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { abi as abi_sponsorship_queue } from "../../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
-import deployed_addresses from "../../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
+import { abi as abi_sponsorship_queue } from "../../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import deployed_addresses from "../../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json";
 import { Address, createPublicClient, formatEther, http } from "viem";
-import { sepolia } from "viem/chains";
+import { mainnet } from "viem/chains";
 import { useEffect, useState } from "react";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import Link from "next/link";
@@ -63,8 +63,8 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
     console.debug("deploymentAddress:", deploymentAddress)
 
     const publicClient = createPublicClient({
-        chain: sepolia,
-        transport: http("https://ethereum-sepolia-rpc.publicnode.com") // Max 50k blocks per request
+        chain: mainnet,
+        transport: http("https://ethereum-rpc.publicnode.com") // Max 50k blocks per request
     })
 
     const [events, setEvents] = useState(Array(0))
