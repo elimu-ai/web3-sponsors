@@ -40,7 +40,7 @@ export default function DistributionDetails() {
         </div>
 
         <div className="mt-8">
-          <Link className="text-purple-600" href={`https://etherscan.io/address/${deploymentAddress}#writeContract#F3`} target="_blank">
+          <Link className="text-purple-600" href={`https://etherscan.io/address/${deploymentAddress}#writeContract#F4`} target="_blank">
             Add verification ↗
           </Link>
         </div>
