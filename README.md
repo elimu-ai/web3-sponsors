@@ -19,7 +19,7 @@ sequenceDiagram
     end
     Note right of DAO_Operator: Approve/reject distribution
     DAO_Operator-->>Distributor: Distribution rejected
-    DAO_Operator->>Sponsor: Pay sponsorhip to approved distribution
+    DAO_Operator->>Sponsor: Pay sponsorship to approved distribution
 ```
 
 ---
