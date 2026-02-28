@@ -8,6 +8,20 @@ URL: https://sponsors.elimu.ai
 
 [![](https://github.com/user-attachments/assets/993078ab-3e26-465b-a138-b18be71574d0)](https://sponsors.elimu.ai)
 
+## Workflow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    Distributor->>DAO_Operator: Verify my distribution
+    loop Verification
+        DAO_Operator->>DAO_Operator: Verify details of the distribution
+    end
+    Note right of DAO_Operator: Approve/reject distribution
+    DAO_Operator-->>Distributor: Distribution rejected
+    DAO_Operator->>Sponsor: Pay sponsorship to approved distribution
+```
+
 ---
 
 <p align="center">
