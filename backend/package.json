@@ -11,6 +11,6 @@
     "dotenv": "^17.4.0",
     "hardhat": "^2.26.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.2"
+    "typescript": "^6.0.3"
   }
 }
